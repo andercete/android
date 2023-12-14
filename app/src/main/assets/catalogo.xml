@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<articulos>
+    <articulo>
+        <idArticulo>1</idArticulo>
+        <categoria>CARNE POLLO</categoria>
+        <descripcion>Muslos</descripcion>
+        <cantidad>600gr</cantidad>
+        <proveedor>Euskal Okela</proveedor>
+        <prVenta>5</prVenta>
+        <prCoste>5</prCoste>
+        <existencias>5</existencias>
+        <sobre>5</sobre>
+        <maximo>5</maximo>
+        <bajo>5</bajo>
+        <minimo>5</minimo>
+        <imagen></imagen>
+    </articulo>
+
+
+</articulos>
