@@ -15,6 +15,8 @@
 
     public class Actividad_Partners extends AppCompatActivity {
 
+        //PUEDES ACCEDER A LA ACTIVIDAD PARA TESTEARLA YENDO A APP>EDIT CONFIGURATIONS>Launch(Specified Activity)>actividad_partners.
+
         ListAdapter mAdapter;
         List<Partner> partners;
         RecyclerView recyclerView;
