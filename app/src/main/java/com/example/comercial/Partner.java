@@ -1,16 +1,21 @@
 package com.example.comercial;
 //Clase Partner con constructores
 public class Partner {
-    private String nombre;
-    private String direccion;
-    private String telefono;
-    private String email;
+
+    public String color;
+    public String nombre;
+    public String direccion;
+    public String telefono;
+    public String email;
+
+
 
     public Partner () {
 
     }
     // Constructor
-    public Partner(String nombre, String direccion, String telefono, String email) {
+    public Partner(String color,String nombre, String direccion, String telefono, String email) {
+        this.color = color;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -18,6 +23,16 @@ public class Partner {
     }
 
     // Getters y Setters
+
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public String getNombre() {
         return nombre;
     }

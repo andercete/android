@@ -1,0 +1,16 @@
+<partners>
+    <partner>
+        <nombre>Alberto</nombre>
+        <direccion>Calle aduana, Irun</direccion>
+        <telefono>655110709</telefono>
+        <email>albertogil261@gmail.com</email>
+        <color>#007754</color>
+    </partner>
+    <partner>
+        <nombre>Ander</nombre>
+        <direccion>Legazpi</direccion>
+        <telefono>635425402</telefono>
+        <email>ander@gmail.com</email>
+        <color>#005789</color>
+    </partner>
+</partners>

@@ -15,25 +15,29 @@
 
     public class Actividad_Partners extends AppCompatActivity {
 
-        RecyclerView mRecyclerView;
-        MyAdapter mAdapter;
+        ListAdapter mAdapter;
+        List<Partner> partners;
+        RecyclerView recyclerView;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.layout_partners);
 
-            mRecyclerView = findViewById(R.id.mRecyclerview);
-
-            // Utilizando LinearLayoutManager
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            mRecyclerView.setLayoutManager(layoutManager);
 
             // Suponiendo que ya tienes una lista de partners parseada
             List<Partner> partnersList = parsePartnersXML();
 
-            mAdapter = new MyAdapter(partnersList);
-            mRecyclerView.setAdapter(mAdapter);
+            // Inicializa el RecyclerView con la lista de partners
+            initRecyclerView(partnersList);
+        }
+
+        private void initRecyclerView(List<Partner> partners) {
+            ListAdapter listAdapter = new ListAdapter(partners, this);
+            recyclerView = findViewById(R.id.listRecyclerView);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(listAdapter);
         }
 
         // Método para parsear tu XML de partners
@@ -75,6 +79,9 @@
                                     case "email":
                                         currentPartner.setEmail(parser.getText());
                                         break;
+                                    case "color":
+                                        currentPartner.setColor(parser.getText());
+                                        break;
                                 }
                             }
                             break;
@@ -97,4 +104,7 @@
 
             return partners;
         }
+
+
     }
+

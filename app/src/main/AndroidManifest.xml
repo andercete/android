@@ -20,7 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".Actividad_Partners"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Actividad_Agenda"
             android:exported="false" />
