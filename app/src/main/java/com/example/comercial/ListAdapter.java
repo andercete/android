@@ -1,8 +1,6 @@
 package com.example.comercial;
 //Clase MyAdapter, necesaria para el uso de RecyclerView (programado en Actividad_Partners)
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,21 +55,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Aquí defines los componentes de la vista, por ejemplo, un TextView
         ImageView iconImage;
-        TextView nombre,direccion,telefono,email;
+        TextView nombre,direccion,poblacion,cif,telefono,email;
         public ViewHolder(View itemView) {
             super(itemView);
             // Aquí inicializas los componentes de la vista
             iconImage = itemView.findViewById(R.id.iconImageView);
             nombre = itemView.findViewById(R.id.nombreTextView);
             direccion = itemView.findViewById(R.id.direccionTextView);
+            poblacion = itemView.findViewById(R.id.poblacionTextView);
+            cif = itemView.findViewById(R.id.cifTextView);
             telefono = itemView.findViewById(R.id.telefonoTextView);
             email = itemView.findViewById(R.id.emailTextView);
         }
 
         void bindData(final Partner item) {
-            iconImage.setColorFilter(Color.parseColor(item.getColor()), PorterDuff.Mode.SRC_IN);
             nombre.setText(item.getNombre());
             direccion.setText(item.getDireccion());
+            poblacion.setText(item.getPoblacion());
+            cif.setText(item.getCif());
             telefono.setText(item.getTelefono());
             email.setText(item.getEmail());
         }

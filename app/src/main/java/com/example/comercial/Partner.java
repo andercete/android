@@ -1,37 +1,29 @@
 package com.example.comercial;
-//Clase Partner con constructores
+
 public class Partner {
 
-    public String color;
-    public String nombre;
-    public String direccion;
-    public String telefono;
-    public String email;
+    private String nombre;
+    private String direccion;
+    private String poblacion;
+    private String cif;
+    private String telefono;
+    private String email;
 
-
-
-    public Partner () {
-
+    // Constructor vacío
+    public Partner() {
     }
-    // Constructor
-    public Partner(String color,String nombre, String direccion, String telefono, String email) {
-        this.color = color;
+
+    // Constructor con todos los campos
+    public Partner(String nombre, String direccion, String poblacion, String cif, String telefono, String email) {
         this.nombre = nombre;
         this.direccion = direccion;
+        this.poblacion = poblacion;
+        this.cif = cif;
         this.telefono = telefono;
         this.email = email;
     }
 
     // Getters y Setters
-
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public String getNombre() {
         return nombre;
@@ -47,6 +39,22 @@ public class Partner {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getPoblacion() {
+        return poblacion;
+    }
+
+    public void setPoblacion(String poblacion) {
+        this.poblacion = poblacion;
+    }
+
+    public String getCif() {
+        return cif;
+    }
+
+    public void setCif(String cif) {
+        this.cif = cif;
     }
 
     public String getTelefono() {
