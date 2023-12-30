@@ -11,31 +11,30 @@
     import android.widget.Button;
 
     import org.xmlpull.v1.XmlPullParser;
-    import org.xmlpull.v1.XmlSerializer;
 
     import java.io.File;
     import java.io.FileInputStream;
-    import java.io.FileOutputStream;
     import java.io.InputStream;
+    import java.text.SimpleDateFormat;
     import java.util.ArrayList;
+    import java.util.Date;
     import java.util.List;
+    import java.util.Locale;
 
     public class Actividad_Partners extends AppCompatActivity {
 
         //PUEDES ACCEDER A LA ACTIVIDAD PARA TESTEARLA YENDO A APP>EDIT CONFIGURATIONS>Launch(Specified Activity)>actividad_partners.
 
         ListAdapter mAdapter;
-        List<Partner> partners;
         RecyclerView recyclerView;
         Button bAgregar;
-        Button bBorrar;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.layout_partners);
             bAgregar = findViewById(R.id.bPartnerAgregar);
-            bBorrar = findViewById(R.id.bPartnerBorrar);
             bAgregar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -43,14 +42,6 @@
                     startActivity(intent);
                 }
             });
-
-            bBorrar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    borrarRegistros();
-                }
-            });
-
             // Suponiendo que ya tienes una lista de partners parseada
             List<Partner> partnersList = parsePartnersXML();
 
@@ -66,6 +57,12 @@
             recyclerView.setAdapter(listAdapter);
         }
 
+        private String getNombreArchivoFecha() {
+            String nombrearchivo;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            nombrearchivo = sdf.format(new Date()) + ".xml";
+            return nombrearchivo;
+        }
         // Método para parsear tu XML de partners
         private List<Partner> parsePartnersXML() {
             List<Partner> partners = new ArrayList<>();
@@ -73,7 +70,7 @@
             String currentTag = null;
 
             try {
-                File file = new File(getFilesDir(), "partners.xml");
+                File file = new File(new File(getFilesDir(), "partners"), getNombreArchivoFecha());
                 if (!file.exists()) {
                     return partners; // El archivo no existe, devolvemos la lista vacía
                 }
@@ -110,10 +107,13 @@
                                         currentPartner.setCif(parser.getText());
                                         break;
                                     case "telefono":
-                                        currentPartner.setTelefono(parser.getText());
+                                        currentPartner.setTelefono(Integer.parseInt(parser.getText()));
                                         break;
                                     case "email":
                                         currentPartner.setEmail(parser.getText());
+                                        break;
+                                    case "comercial":
+                                        currentPartner.setComercial(parser.getText());
                                         break;
                                 }
                             }
@@ -150,40 +150,19 @@
                 initRecyclerView(updatedPartnersList);
             }
         }
-        private void borrarRegistros() {
-            try {
-                File file = new File(getFilesDir(), "partners.xml");
-
-                // Leer el contenido actual del archivo XML en una estructura de datos
-                List<Partner> partners = parsePartnersXML();
-
-                Partner Socio = partners.isEmpty() ? null : partners.get(0);
-                partners.clear();
-
-                // Escribir la estructura de datos modificada en el archivo XML
-                writePartnersToXML(file, partners);
-                recreate();
-            } catch (Exception e) {
-                e.printStackTrace();
+     /*  Metodo para borrar registros, se puede asignar a un boton
+         En la linea de File file se pone el nombre del archivo xml a borrar (actualmente esta puesto para borrar archivos de el dia de hoy)
+      private void borrarRegistros() {
+            File file = new File(new File(getFilesDir(), "partners"), getNombreArchivoFecha());
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (deleted) {
+                    Toast.makeText(this, "Archivo borrado", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Error al borrar el archivo", Toast.LENGTH_SHORT).show();
+                }
             }
-        }
-
-        private void writePartnersToXML(File file, List<Partner> partners) {
-            try {
-                FileOutputStream fos = new FileOutputStream(file);
-                XmlSerializer serializer = Xml.newSerializer();
-                serializer.setOutput(fos, "UTF-8");
-                serializer.startDocument("UTF-8", true);
-                serializer.text("\n");
-                serializer.startTag(null, "partners");
-                serializer.text("\n");
-                serializer.endTag(null, "partners");
-                serializer.endDocument();
-                serializer.flush();
-                fos.close();
-            } catch (Exception e) {
-                e.printStackTrace(); // Manejo de errores
-            }
-        }
+            recreate();
+        } */
     }
 

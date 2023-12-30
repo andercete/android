@@ -1,11 +1,3 @@
-<!--ESTO ES UNA PLANTILLA, EL ARCHIVO DONDE SE ACTUALIZAN LOS PARTNERS ESTA EN DEVICE EXPLORER > DATA > USER > COM.EXAMPLE.COMERCIAL > FILES -->
+<?xml version="1.0" encoding="UTF-8"?>
 <partners>
-    <partner>
-        <nombre></nombre>
-        <direccion></direccion>
-        <poblacion></poblacion>
-        <cif></cif>
-        <telefono></telefono>
-        <email></email>
-    </partner>
 </partners>

@@ -92,22 +92,34 @@
         app:layout_constraintTop_toBottomOf="@+id/eAltaTelefono" />
 
     <Button
-        android:id="@+id/bAlta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="76dp"
-        android:text="Dar de alta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eAltaEmail" />
-
-    <Button
         android:id="@+id/bAltaLimpiar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="84dp"
         android:text="Limpiar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eAltaEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/sAlta" />
+
+    <Button
+        android:id="@+id/bAlta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="28dp"
+        android:text="Dar de alta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sAlta" />
+
+    <Spinner
+        android:id="@+id/sAlta"
+        android:layout_width="210dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
+        android:text="Dar de alta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eAltaEmail"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,21 +6,24 @@ public class Partner {
     private String direccion;
     private String poblacion;
     private String cif;
-    private String telefono;
+    private int telefono;
     private String email;
+    private String comercial;
+
 
     // Constructor vacío
     public Partner() {
     }
 
     // Constructor con todos los campos
-    public Partner(String nombre, String direccion, String poblacion, String cif, String telefono, String email) {
+    public Partner(String nombre, String direccion, String poblacion, String cif, int telefono, String email, String comercial) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.poblacion = poblacion;
         this.cif = cif;
         this.telefono = telefono;
         this.email = email;
+        this.comercial = comercial;
     }
 
     // Getters y Setters
@@ -57,11 +60,11 @@ public class Partner {
         this.cif = cif;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 
@@ -72,4 +75,12 @@ public class Partner {
     public void setEmail(String email) {
         this.email = email;
     }
+    public void setComercial(String comercial) {
+        this.comercial = comercial;
+    }
+
+    public String getComercial() {
+        return comercial;
+    }
 }
+
