@@ -9,6 +9,7 @@
     import android.util.Xml;
     import android.view.View;
     import android.widget.Button;
+    import android.widget.Toast;
 
     import org.xmlpull.v1.XmlPullParser;
 
@@ -28,6 +29,7 @@
         ListAdapter mAdapter;
         RecyclerView recyclerView;
         Button bAgregar;
+        Button bBorrar;
 
 
         @Override
@@ -40,6 +42,13 @@
                 public void onClick(View v) {
                     Intent intent = new Intent(Actividad_Partners.this, Actividad_Altasocio.class);
                     startActivity(intent);
+                }
+            });
+            bBorrar = findViewById(R.id.bBorrar);
+            bBorrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    borrarRegistros();
                 }
             });
             // Suponiendo que ya tienes una lista de partners parseada
@@ -63,17 +72,31 @@
             nombrearchivo = sdf.format(new Date()) + ".xml";
             return nombrearchivo;
         }
-        // Método para parsear tu XML de partners
         private List<Partner> parsePartnersXML() {
             List<Partner> partners = new ArrayList<>();
+            File directory = new File(getFilesDir(), "partners");
+
+            // Verificar si el directorio existe y contiene archivos
+            if (directory.exists() && directory.isDirectory()) {
+                File[] files = directory.listFiles();
+
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.isFile() && file.getName().endsWith(".xml")) {
+                            partners.addAll(parseXMLFile(file));
+                        }
+                    }
+                }
+            }
+            return partners;
+        }
+        // Método para parsear tu XML de partners
+        private List<Partner> parseXMLFile(File file) {
+            List<Partner> partnersInFile = new ArrayList<>();
             Partner currentPartner = null;
             String currentTag = null;
 
             try {
-                File file = new File(new File(getFilesDir(), "partners"), getNombreArchivoFecha());
-                if (!file.exists()) {
-                    return partners; // El archivo no existe, devolvemos la lista vacía
-                }
                 InputStream inputStream = new FileInputStream(file);
                 XmlPullParser parser = Xml.newPullParser();
                 parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -121,7 +144,7 @@
 
                         case XmlPullParser.END_TAG:
                             if ("partner".equals(tagName) && currentPartner != null) {
-                                partners.add(currentPartner);
+                                partnersInFile.add(currentPartner);
                                 currentPartner = null;
                             }
                             currentTag = null;
@@ -135,7 +158,7 @@
                 e.printStackTrace(); // Manejo de errores
             }
 
-            return partners;
+            return partnersInFile;
         }
         @Override
         protected void onResume() {
@@ -150,8 +173,8 @@
                 initRecyclerView(updatedPartnersList);
             }
         }
-     /*  Metodo para borrar registros, se puede asignar a un boton
-         En la linea de File file se pone el nombre del archivo xml a borrar (actualmente esta puesto para borrar archivos de el dia de hoy)
+     //  Metodo para borrar registros, se puede asignar a un boton
+        // En la linea de File file se pone el nombre del archivo xml a borrar (actualmente esta puesto para borrar archivos de el dia de hoy)
       private void borrarRegistros() {
             File file = new File(new File(getFilesDir(), "partners"), getNombreArchivoFecha());
             if (file.exists()) {
@@ -163,6 +186,6 @@
                 }
             }
             recreate();
-        } */
+        }
     }
 

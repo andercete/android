@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Comercial"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAwCyMqvTkOIQSN77UfWbicNzP-8E846bY" />
+
         <activity
             android:name=".Actividad_Altasocio"
             android:exported="false" />

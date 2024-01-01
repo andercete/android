@@ -57,11 +57,7 @@ public class Actividad_Altasocio extends AppCompatActivity {
         bAlta = findViewById(R.id.bAlta);
         bLimpiar = findViewById(R.id.bAltaLimpiar);
 
-        //CREO CARPETA, ESTO MEJOR IMPLEMENTAR EN ACTIVIDAD PARTNERS, MAÑANA LO MIRO MEJOR
-        File directorioPartners = new File(getFilesDir(), "partners");
-        if (!directorioPartners.exists()) {
-            directorioPartners.mkdir(); // Crear la carpeta si no existe
-        }
+
 
         sAlta = findViewById(R.id.sAlta);
         List<String> opciones = new ArrayList<>();
@@ -70,6 +66,7 @@ public class Actividad_Altasocio extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sAlta.setAdapter(adapter);
+
 
         bLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
