@@ -33,6 +33,9 @@
             android:name=".Actividad_Partners"
             android:exported="true" />
         <activity
+            android:name=".CrearEventoActivity"
+            android:exported="true" />
+        <activity
             android:name=".Actividad_Agenda"
             android:exported="false" />
         <activity
