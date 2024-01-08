@@ -69,6 +69,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarCampos()) {
+                    copiarXMLaAlmacenamientoInterno();
                     realizarPedido();
                     limpiar_vistas();
                     // Puedes agregar aquí cualquier otra lógica después de realizar el pedido
@@ -78,13 +79,15 @@ public class Actividad_AltaPedido extends AppCompatActivity {
     }
 
     private void realizarPedido() {
-        String idPedido = eIdPedido.getText().toString();
-        String idPartner = eIdPartner.getText().toString();
-        String idLinea = eIdLinea.getText().toString();
-        String idArticulo = eIdArticulo.getText().toString();
-        String cantidad = eCantidad.getText().toString();
-        String descuento = eDescuento.getText().toString();
-        String precio = ePrecio.getText().toString();
+        Pedido nuevoPedido = new Pedido(
+                eIdPedido.getText().toString(),
+                eIdPartner.getText().toString(),
+                eIdLinea.getText().toString(),
+                eIdArticulo.getText().toString(),
+                Integer.parseInt(eCantidad.getText().toString()),
+                Float.parseFloat(eDescuento.getText().toString()),
+                Float.parseFloat(ePrecio.getText().toString())
+        );
 
         try {
             File file = new File(new File(getFilesDir(), "pedidos"), getNombreArchivoFecha());
@@ -108,13 +111,13 @@ public class Actividad_AltaPedido extends AppCompatActivity {
 
             // Crear un nuevo elemento pedido y añadirlo al documento
             Element pedidoElement = doc.createElement("pedido");
-            pedidoElement.appendChild(createElementWithText(doc, "idPedido", idPedido));
-            pedidoElement.appendChild(createElementWithText(doc, "idPartner", idPartner));
-            pedidoElement.appendChild(createElementWithText(doc, "idLinea", idLinea));
-            pedidoElement.appendChild(createElementWithText(doc, "idArticulo", idArticulo));
-            pedidoElement.appendChild(createElementWithText(doc, "cantidad", cantidad));
-            pedidoElement.appendChild(createElementWithText(doc, "descuento", descuento));
-            pedidoElement.appendChild(createElementWithText(doc, "precio", precio));
+            pedidoElement.appendChild(createElementWithText(doc, "idPedido", nuevoPedido.getIdPedido()));
+            pedidoElement.appendChild(createElementWithText(doc, "idPartner", nuevoPedido.getIdPartner()));
+            pedidoElement.appendChild(createElementWithText(doc, "idLinea", nuevoPedido.getIdLinea()));
+            pedidoElement.appendChild(createElementWithText(doc, "idArticulo", nuevoPedido.getIdArticulo()));
+            pedidoElement.appendChild(createElementWithText(doc, "cantidad", String.valueOf(nuevoPedido.getCantidad())));
+            pedidoElement.appendChild(createElementWithText(doc, "descuento", String.valueOf(nuevoPedido.getDescuento())));
+            pedidoElement.appendChild(createElementWithText(doc, "precio", String.valueOf(nuevoPedido.getPrecio())));
             root.appendChild(pedidoElement);
 
             // Guardar el documento modificado de nuevo en el archivo
@@ -136,6 +139,33 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         element.appendChild(doc.createTextNode(text));
         return element;
     }
+    private void copiarXMLaAlmacenamientoInterno() {
+        // Crear la carpeta 'partners' dentro de 'files'
+        File directorioPedidos = new File(getFilesDir(), "pedidos");
+        if (!directorioPedidos.exists()) {
+            directorioPedidos.mkdirs();
+        }
+
+
+        // Crear el archivo en la carpeta 'partners'
+        File file = new File(directorioPedidos, getNombreArchivoFecha());
+        if (!file.exists()) {
+            try {
+                InputStream in = getAssets().open("pedidos.xml");
+                OutputStream out = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+                in.close();
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private String getNombreArchivoFecha() {
         String nombrearchivo;
@@ -145,24 +175,45 @@ public class Actividad_AltaPedido extends AppCompatActivity {
     }
 
     private boolean validarCampos() {
-        if (eIdPedido.length() == 0 || eIdPartner.length() == 0 || eIdLinea.length() == 0 ||
-                eIdArticulo.length() == 0 || eCantidad.length() == 0 || eDescuento.length() == 0 || ePrecio.length() == 0) {
-
-            dialog = new AlertDialog.Builder(Actividad_AltaPedido.this);
-            dialog.setTitle("Error");
-            dialog.setMessage("Por favor, complete todos los campos");
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogo, int id) {
-                    dialogo.cancel();
-                }
-            });
-            dialog.show();
+        if (eIdPedido.length() == 0) {
+            mostrarError("Por favor, ingrese un ID de Pedido", eIdPedido);
+            return false;
+        } else if (eIdPartner.length() == 0) {
+            mostrarError("Por favor, ingrese un ID de Partner", eIdPartner);
+            return false;
+        } else if (eIdLinea.length() == 0) {
+            mostrarError("Por favor, ingrese un ID de Línea", eIdLinea);
+            return false;
+        } else if (eIdArticulo.length() == 0) {
+            mostrarError("Por favor, ingrese un ID de Artículo", eIdArticulo);
+            return false;
+        } else if (eCantidad.length() == 0) {
+            mostrarError("Por favor, ingrese una Cantidad", eCantidad);
+            return false;
+        } else if (eDescuento.length() == 0) {
+            mostrarError("Por favor, ingrese un Descuento", eDescuento);
+            return false;
+        } else if (ePrecio.length() == 0) {
+            mostrarError("Por favor, ingrese un Precio", ePrecio);
             return false;
         }
-        // Aquí puedes agregar más validaciones según tus requisitos, como verificar si los campos numéricos son válidos, etc.
+
+        // Puedes agregar más validaciones según sea necesario
         return true;
+    }
+    private void mostrarError(String mensaje, final EditText editText) {
+        dialog = new AlertDialog.Builder(Actividad_AltaPedido.this);
+        dialog.setTitle("Error");
+        dialog.setMessage(mensaje);
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogo, int id) {
+                dialogo.cancel();
+                editText.requestFocus();
+            }
+        });
+        dialog.show();
     }
 
     public void limpiar_vistas() {

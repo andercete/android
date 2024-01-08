@@ -15,17 +15,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class Actividad_Presentacion extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
+public class Actividad_Presentacion extends AppCompatActivity {
     GoogleMap mMap;
-    Button bCitas,bPartner,bPedidos,bDelegacion;
+    Button bCitas, bPartner, bPedidos, bDelegacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_presentacion);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+       /* SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this); */
 
         bCitas = findViewById(R.id.bPresentacionCitas);
         bPartner = findViewById(R.id.bPresentacionPartners);
@@ -35,35 +35,35 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCitas = new Intent (Actividad_Presentacion.this, Actividad_Agenda.class);
+                Intent intentCitas = new Intent(Actividad_Presentacion.this, Actividad_Agenda.class);
                 startActivity(intentCitas);
             }
         });
         bPartner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPartner = new Intent (Actividad_Presentacion.this, Actividad_Partners.class);
+                Intent intentPartner = new Intent(Actividad_Presentacion.this, Actividad_Partners.class);
                 startActivity(intentPartner);
             }
         });
         bPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPedidos = new Intent (Actividad_Presentacion.this, Actividad_Pedidos.class);
+                Intent intentPedidos = new Intent(Actividad_Presentacion.this, Actividad_Pedidos.class);
                 startActivity(intentPedidos);
             }
         });
         bDelegacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentDelegacion = new Intent (Actividad_Presentacion.this, Actividad_EnvioDelegacion.class);
+                Intent intentDelegacion = new Intent(Actividad_Presentacion.this, Actividad_EnvioDelegacion.class);
                 startActivity(intentDelegacion);
             }
         });
     }
 
 
-    @Override
+  /*  @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         this.mMap.setOnMapClickListener(this);
@@ -72,15 +72,5 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         LatLng donosti = new LatLng(43.30419712367967, -2.0165662074674695);
         mMap.addMarker(new MarkerOptions().position(donosti).title("Gurmet Euskadi Market"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(donosti));
-    }
-
-    @Override
-    public void onMapClick(@NonNull LatLng latLng) {
-
-    }
-
-    @Override
-    public void onMapLongClick(@NonNull LatLng latLng) {
-
-    }
+    } */
 }

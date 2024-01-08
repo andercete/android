@@ -21,6 +21,9 @@
             android:name=".Actividad_Altasocio"
             android:exported="false" />
         <activity
+            android:name=".Actividad_AltaPedido"
+            android:exported="false" />
+        <activity
             android:name=".Actividad_EnvioDelegacion"
             android:exported="false" />
         <activity

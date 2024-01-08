@@ -189,6 +189,7 @@ public class Actividad_Altasocio extends AppCompatActivity {
         });
     }
 
+
     private String getNombreArchivoFecha() {
         String nombrearchivo;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());

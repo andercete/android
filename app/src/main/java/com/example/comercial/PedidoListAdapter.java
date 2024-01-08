@@ -29,13 +29,13 @@ public class PedidoListAdapter extends RecyclerView.Adapter<PedidoListAdapter.Vi
     }
 
     @Override
-    public PedidoListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.list_element, parent, false);
-        return new PedidoListAdapter.ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.list_element_pedidos, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final PedidoListAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.bindData(pedidoList.get(position));
     }
 
