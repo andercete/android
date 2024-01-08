@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Actividad_Presentacion extends AppCompatActivity {
     GoogleMap mMap;
     Button bCitas,bPartner,bPedidos,bDelegacion;
+    ImageButton bTelefono,bEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class Actividad_Presentacion extends AppCompatActivity {
         bPartner = findViewById(R.id.bPresentacionPartners);
         bPedidos = findViewById(R.id.bPresentacionPedidos);
         bDelegacion = findViewById(R.id.bPresentacionDelegacion);
+        bTelefono = findViewById(R.id.bTelefono);
+        bEmail = findViewById(R.id.bEmail);
 
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +62,15 @@ public class Actividad_Presentacion extends AppCompatActivity {
         bDelegacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentDelegacion = new Intent (Actividad_Presentacion.this, Actividad_EnvioDelegacion.class);
-                startActivity(intentDelegacion);
+                /* */
+            }
+        });
+        bTelefono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTelefono = new Intent(Intent.ACTION_DIAL);
+                intentTelefono.setData(Uri.parse("tel:+34 635985923"));
+                startActivity(intentTelefono);
             }
         });
     }
