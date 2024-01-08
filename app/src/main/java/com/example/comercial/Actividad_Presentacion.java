@@ -2,9 +2,13 @@ package com.example.comercial;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,56 +68,67 @@ public class Actividad_Presentacion extends AppCompatActivity {
                 startActivity(intentPedidos);
             }
         });
+
         bDelegacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String para = "DelegeacionGuipuzcoa@gem.com";
-                String para = "jiz.j12.a4@gmail.com";
+                String para = "DelegeacionGuipuzcoa@gem.com";
+                String cc = "jiz.j12.a4@gmail.com";
+
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
-
                 emailIntent.setType("message/rfc822");
-
-
-
-
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{para});
+                emailIntent.putExtra(Intent.EXTRA_CC, new String[]{cc});
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Partners y pedidos de " + obtenerFechaActual());
 
-                // Obtain the file paths
-                String rutaArchivoPartner = "/data/data/com.example.comercial/files/partners/" + getNombreArchivoPartner();
-//                String rutaArchivo2 = "/ruta/del/segundo/archivo";
+                // Update file path using context.getFilesDir()
+                String rutaArchivoPartner = new File(getFilesDir(), "partners/" + getNombreArchivoPartners()).getAbsolutePath();
+                String rutaArchivoPedidos = new File(getFilesDir(), "pedidos/" + getNombreArchivoPedidos()).getAbsolutePath();
 
                 File archivoPartners = new File(rutaArchivoPartner);
                 if (!archivoPartners.exists() || !archivoPartners.canRead()) {
                     Log.e("info", "No existe el archivo: " + rutaArchivoPartner);
-
+                    lanzarToast("No existe el archivo: " + rutaArchivoPartner);
                     return;
                 }
 
-                Log.e("info", "Si existe el archivo: " + rutaArchivoPartner);
+                File archivoPedidos = new File(rutaArchivoPedidos);
+                if (!archivoPedidos.exists() || !archivoPedidos.canRead()) {
+                    Log.e("info", "No existe el archivo: " + rutaArchivoPedidos);
+                    lanzarToast("No existe el archivo: " + rutaArchivoPedidos);
+                    return;
+                }
 
-                // Convert the file paths to Uris
-                Uri uriArchivoPartner = Uri.fromFile(archivoPartners);
-//                Uri uriArchivo2 = Uri.fromFile(new File(rutaArchivo2));
+                Log.e("info", "Si existe el archivo: " + rutaArchivoPedidos);
 
-                // Create an ArrayList of Uris
-                ArrayList<Uri> archivosAdjuntos = new ArrayList<>();
-                archivosAdjuntos.add(uriArchivoPartner);
-//                archivosAdjuntos.add(uriArchivo2);
+                // Convert the file path to Uri using FileProvider
+                Uri uriArchivoPartner = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPartners);
+                Uri uriArchivoPedidos = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPedidos);
 
-                // Add the attachments to the intent
-                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, archivosAdjuntos);
+                // Add the attachment to the intent
+                emailIntent.putExtra(Intent.EXTRA_STREAM, uriArchivoPartner);
+                emailIntent.putExtra(Intent.EXTRA_STREAM, uriArchivoPedidos);
+
+                // Grant read permissions to the receiving app
+                emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Envío de partners y pedidos"));
                     finish();
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(Actividad_Presentacion.this,
-                            "Ha habido un error al intentar abrir el correo electrónico.", Toast.LENGTH_SHORT).show();
+                    lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
                 }
             }
         });
+
+
+    }
+
+    private void lanzarToast(String mensaje)
+    {
+        Toast.makeText(Actividad_Presentacion.this,
+                mensaje, Toast.LENGTH_SHORT).show();
     }
 
     private String obtenerFechaActual() {
@@ -123,10 +138,17 @@ public class Actividad_Presentacion extends AppCompatActivity {
         return fechaActual;
     }
 
-    private String getNombreArchivoPartner() {
+    private String getNombreArchivoPartners() {
         String nombrearchivo;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         nombrearchivo = sdf.format(new Date()) + ".xml";
+        return nombrearchivo;
+    }
+
+    private String getNombreArchivoPedidos() {
+        String nombrearchivo;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        nombrearchivo = sdf.format(new Date()) + "_pedidos.xml";
         return nombrearchivo;
     }
 
