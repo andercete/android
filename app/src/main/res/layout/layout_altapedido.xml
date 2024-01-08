@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Alta Pedido"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/eIdPedido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bLimpiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="-500dp"
+        android:text="Limpiar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bRealizarPedido" />
+
+    <EditText
+        android:id="@+id/eIdPartner"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Partner"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eIdLinea"
+        app:layout_constraintStart_toStartOf="@+id/eIdPedido"
+        app:layout_constraintTop_toBottomOf="@+id/eIdPedido" />
+
+    <EditText
+        android:id="@+id/eDescuento"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Descuento"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/ePrecio"
+        app:layout_constraintStart_toStartOf="@+id/eAltaPoblacion3"
+        app:layout_constraintTop_toBottomOf="@+id/eAltaPoblacion3" />
+
+    <EditText
+        android:id="@+id/eIdArticulo"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Articulo"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eCantidad"
+        app:layout_constraintStart_toStartOf="@+id/eIdLinea"
+        app:layout_constraintTop_toBottomOf="@+id/eIdLinea" />
+
+    <EditText
+        android:id="@+id/eCantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/eAltaPoblacion3"
+        app:layout_constraintStart_toStartOf="@+id/eIdArticulo"
+        app:layout_constraintTop_toBottomOf="@+id/eIdArticulo" />
+
+    <EditText
+        android:id="@+id/eAltaPoblacion3"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Poblacion"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eDescuento"
+        app:layout_constraintStart_toStartOf="@+id/eCantidad"
+        app:layout_constraintTop_toBottomOf="@+id/eCantidad" />
+
+    <Button
+        android:id="@+id/bRealizarPedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-100000dp"
+        android:text="Realizar Pedido"
+        app:layout_constraintBottom_toTopOf="@+id/bLimpiar"
+        app:layout_constraintEnd_toEndOf="@+id/ePrecio"
+        app:layout_constraintStart_toStartOf="@+id/ePrecio"
+        app:layout_constraintTop_toBottomOf="@+id/ePrecio" />
+
+    <EditText
+        android:id="@+id/ePrecio"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Precio"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/bRealizarPedido"
+        app:layout_constraintStart_toStartOf="@+id/eDescuento"
+        app:layout_constraintTop_toBottomOf="@+id/eDescuento" />
+
+    <EditText
+        android:id="@+id/eIdLinea"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Linea"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eIdArticulo"
+        app:layout_constraintStart_toStartOf="@+id/eIdPartner"
+        app:layout_constraintTop_toBottomOf="@+id/eIdPartner" />
+
+    <EditText
+        android:id="@+id/eIdPedido"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="ID Pedido"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eIdPartner"
+        app:layout_constraintEnd_toEndOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

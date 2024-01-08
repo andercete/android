@@ -1,0 +1,120 @@
+<!-- list_element_pedidos.xml -->
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <ImageView
+                android:id="@+id/iconImageView"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                app:srcCompat="@drawable/pedidoimage"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@+id/iconImageView"
+                android:layout_toRightOf="@+id/iconImageView"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/idPedidoTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:text="Pedido ID: 123"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <!-- Define other TextViews for idPartner, idLinea, idArticulo, cantidad, descuento, precio, etc. -->
+                <!-- Example for idPartner -->
+                <TextView
+                    android:id="@+id/idPartnerTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="Partner ID: P123"
+                    android:textSize="15sp" />
+
+                <!-- Example for idLinea -->
+                <TextView
+                    android:id="@+id/idLineaTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="Linea ID: L456"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/idArticuloTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:paddingLeft="8dp"
+                    android:text="TuTextoAqui"
+                    android:textSize="13sp" />
+
+                <!-- Repeat the pattern for other TextViews -->
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Add additional TextViews for cantidad, descuento, precio, etc. -->
+        <TextView
+            android:id="@+id/cantidadTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:paddingLeft="8dp"
+            android:text="Cantidad: 5"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/descuentoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:paddingLeft="8dp"
+            android:text="Descuento: 10%"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/precioTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:paddingLeft="8dp"
+            android:text="Precio: $50.00"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
