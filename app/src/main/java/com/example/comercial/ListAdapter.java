@@ -55,7 +55,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Aquí defines los componentes de la vista, por ejemplo, un TextView
         ImageView iconImage;
-        TextView nombre,direccion,poblacion,cif,telefono,email,comercial;
+        TextView nombre,direccion,poblacion,cif,telefono,email;
         public ViewHolder(View itemView) {
             super(itemView);
             // Aquí inicializas los componentes de la vista
@@ -66,7 +66,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             cif = itemView.findViewById(R.id.cifTextView);
             telefono = itemView.findViewById(R.id.telefonoTextView);
             email = itemView.findViewById(R.id.emailTextView);
-            comercial = itemView.findViewById(R.id.comercialTextView);
         }
 
         void bindData(final Partner item) {
@@ -76,7 +75,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             cif.setText(item.getCif());
             telefono.setText(String.valueOf(item.getTelefono()));
             email.setText(item.getEmail());
-            comercial.setText(item.getComercial());
 
         }
     }

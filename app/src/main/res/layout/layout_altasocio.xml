@@ -5,28 +5,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView7"
+
+    <Button
+        android:id="@+id/bAlta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="171dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="170dp"
-        android:text="Alta Socios"
+        android:layout_marginBottom="100dp"
+        android:text="Dar de alta"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="26sp"/>
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/eAltaEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/bAlta"
+        app:layout_constraintStart_toStartOf="@+id/eAltaTelefono"
+        app:layout_constraintTop_toBottomOf="@+id/eAltaTelefono" />
+
+    <Button
+        android:id="@+id/bAltaLimpiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:text="Limpiar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bAlta" />
+
+    <EditText
+        android:id="@+id/eAltaPoblacion"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Poblacion"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eAltaCif"
+        app:layout_constraintStart_toStartOf="@+id/eAltaDireccion"
+        app:layout_constraintTop_toBottomOf="@+id/eAltaDireccion" />
 
     <EditText
         android:id="@+id/eAltaNombre"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="72dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Nombre"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eAltaDireccion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -34,92 +65,45 @@
         android:id="@+id/eAltaDireccion"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Direccion"
         android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/eAltaPoblacion"
+        app:layout_constraintStart_toStartOf="@+id/eAltaNombre"
         app:layout_constraintTop_toBottomOf="@+id/eAltaNombre" />
-
-
-    <EditText
-        android:id="@+id/eAltaPoblacion"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Poblacion"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eAltaDireccion" />
-
-    <EditText
-        android:id="@+id/eAltaCif"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="CIF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eAltaPoblacion" />
 
     <EditText
         android:id="@+id/eAltaTelefono"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Telefono"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/eAltaEmail"
+        app:layout_constraintStart_toStartOf="@+id/eAltaCif"
         app:layout_constraintTop_toBottomOf="@+id/eAltaCif" />
 
-    <EditText
-        android:id="@+id/eAltaEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eAltaTelefono" />
-
-    <Button
-        android:id="@+id/bAltaLimpiar"
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="84dp"
-        android:text="Limpiar"
+        android:text="Alta Socios"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/eAltaNombre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sAlta" />
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/bAlta"
+    <EditText
+        android:id="@+id/eAltaCif"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="28dp"
-        android:text="Dar de alta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sAlta" />
-
-    <Spinner
-        android:id="@+id/sAlta"
-        android:layout_width="210dp"
         android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:text="Dar de alta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eAltaEmail"
-        />
+        android:ems="10"
+        android:hint="CIF"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/eAltaTelefono"
+        app:layout_constraintStart_toStartOf="@+id/eAltaPoblacion"
+        app:layout_constraintTop_toBottomOf="@+id/eAltaPoblacion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,11 +43,12 @@ public class Actividad_Altasocio extends AppCompatActivity {
     Button bAlta;
     Button bLimpiar;
     AlertDialog.Builder dialog;
-    Spinner sAlta;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_altasocio);
+
         eNombre = findViewById(R.id.eAltaNombre);
         eDireccion = findViewById(R.id.eAltaDireccion);
         ePoblacion = findViewById(R.id.eAltaPoblacion);
@@ -57,148 +58,25 @@ public class Actividad_Altasocio extends AppCompatActivity {
         bAlta = findViewById(R.id.bAlta);
         bLimpiar = findViewById(R.id.bAltaLimpiar);
 
-
-
-        sAlta = findViewById(R.id.sAlta);
-        List<String> opciones = new ArrayList<>();
-        opciones.add("Gourmet Euskadi Market"); // Única opción real
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sAlta.setAdapter(adapter);
-
-
         bLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 limpiar_vistas();
             }
         });
+
         bAlta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (eNombre.length() == 0) {
-                    dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
-                    dialog.setTitle("Error");
-                    dialog.setMessage("Porfavor ingrese un nombre");
-                    dialog.setCancelable(false);
-                    dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogo, int id) {
-                            dialogo.cancel();
-                            eNombre.requestFocus();
-                        }
-                    });
-                    dialog.show();
-                } else {
-                    if (eDireccion.length() == 0) {
-                        dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
-                        dialog.setTitle("Error");
-                        dialog.setMessage("Porfavor ingrese una direccion");
-                        dialog.setCancelable(false);
-                        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogo, int id) {
-                                dialogo.cancel();
-                                eDireccion.requestFocus();
-                            }
-                        });
-                        dialog.show();
-                    } else {
-                        if (ePoblacion.length() == 0) {
-                            dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
-                            dialog.setTitle("Error");
-                            dialog.setMessage("Porfavor ingrese una poblacion");
-                            dialog.setCancelable(false);
-                            dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogo, int id) {
-                                    dialogo.cancel();
-                                    ePoblacion.requestFocus();
-                                }
-                            });
-                            dialog.show();
-                        } else {
-                            if (eCif.length() == 0) {
-                                dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
-                                dialog.setTitle("Error");
-                                dialog.setMessage("Porfavor ingrese un cif");
-                                dialog.setCancelable(false);
-                                dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogo, int id) {
-                                        dialogo.cancel();
-                                        eCif.requestFocus();
-                                    }
-                                });
-                                dialog.show();
-                            } else {
-                                if (eTelefono.length() == 0) {
-                                    dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
-                                    dialog.setTitle("Error");
-                                    dialog.setMessage("Porfavor ingrese un telefono");
-                                    dialog.setCancelable(false);
-                                    dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogo, int id) {
-                                            dialogo.cancel();
-                                            eTelefono.requestFocus();
-                                        }
-                                    });
-                                    dialog.show();
-                                } else {
-                                    if (eEmail.length() == 0) {
-                                        dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
-                                        dialog.setTitle("Error");
-                                        dialog.setMessage("Porfavor ingrese un email");
-                                        dialog.setCancelable(false);
-                                        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogo, int id) {
-                                                dialogo.cancel();
-                                                eEmail.requestFocus();
-                                            }
-                                        });
-                                        dialog.show();
-                                    } else {
-                                        if (sAlta.getSelectedItemPosition() != 0) {
-                                            dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
-                                            dialog.setTitle("Error");
-                                            dialog.setMessage("Porfavor elige un comercial");
-                                            dialog.setCancelable(false);
-                                            dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogo, int id) {
-                                                    dialogo.cancel();
-                                                    sAlta.requestFocus();
-                                                }
-                                            });
-                                            dialog.show();
-                                        } else {
-                                            copiarXMLaAlmacenamientoInterno();
-                                            altaSocio();
-                                            finish();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if (validarCampos()) {
+                    copiarXMLaAlmacenamientoInterno();
+                    altaSocio();
+                    finish();
                 }
             }
         });
     }
 
-
-    private String getNombreArchivoFecha() {
-        String nombrearchivo;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        nombrearchivo = sdf.format(new Date()) + ".xml";
-        return nombrearchivo;
-    }
-
-    //metodo usado para crear copia del XML en almacenamiento interno de assets > partners.xml
-    // (solo los archivos en almacenamiento interno permiten actualizarse cuando el programa esta en ejecucion)
     private void copiarXMLaAlmacenamientoInterno() {
         // Crear la carpeta 'partners' dentro de 'files'
         File directorioPartners = new File(getFilesDir(), "partners");
@@ -210,30 +88,65 @@ public class Actividad_Altasocio extends AppCompatActivity {
         File file = new File(directorioPartners, getNombreArchivoFecha());
         if (!file.exists()) {
             try {
-                InputStream in = getAssets().open("partners.xml");
+                // Obtener el nombre del archivo desde los recursos
+                String nombreArchivo = "partners.xml";  // Reemplazar con el nombre correcto si es diferente
+
+                // Abrir el archivo desde los recursos de la aplicación
+                InputStream in = getAssets().open(nombreArchivo);
+
+                // Crear un nuevo archivo en la carpeta 'partners'
                 OutputStream out = new FileOutputStream(file);
+
+                // Copiar el contenido del archivo desde los recursos al almacenamiento interno
                 byte[] buffer = new byte[1024];
                 int read;
                 while ((read = in.read(buffer)) != -1) {
                     out.write(buffer, 0, read);
                 }
+
+                // Cerrar los flujos de entrada y salida
                 in.close();
                 out.flush();
                 out.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    private boolean validarCampos() {
+        if (!isValidCampo(eNombre, "Nombre", FieldType.STRING)) {
+            return false;
+        }
+        if (!isValidCampo(eDireccion, "Dirección", FieldType.STRING)) {
+            return false;
+        }
+        if (!isValidCampo(ePoblacion, "Población", FieldType.STRING)) {
+            return false;
+        }
+        if (!isValidCampo(eCif, "CIF", FieldType.STRING)) {
+            return false;
+        }
+        if (!isValidCampo(eTelefono, "Teléfono", FieldType.INTEGER)) {
+            return false;
+        }
+        if (!isValidCampo(eEmail, "Email", FieldType.EMAIL)) {
+            return false;
+        }
+
+        // Puedes agregar más validaciones según sea necesario
+        return true;
+    }
+
     private void altaSocio() {
-        String comercialSeleccionado = sAlta.getSelectedItem().toString();
         Partner nuevoSocio = new Partner(
                 eNombre.getText().toString(),
                 eDireccion.getText().toString(),
                 ePoblacion.getText().toString(),
                 eCif.getText().toString(),
                 Integer.parseInt(eTelefono.getText().toString()),
-                eEmail.getText().toString(),comercialSeleccionado
+                eEmail.getText().toString()
         );
 
         try {
@@ -241,12 +154,10 @@ public class Actividad_Altasocio extends AppCompatActivity {
             Document doc;
             Element root;
 
-            // Si el archivo no existe, inicializamos un nuevo documento XML
             if (!file.exists()) {
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                 doc = dBuilder.newDocument();
-                // Crear el elemento raíz 'partners'
                 root = doc.createElement("partners");
                 doc.appendChild(root);
             } else {
@@ -256,7 +167,6 @@ public class Actividad_Altasocio extends AppCompatActivity {
                 root = doc.getDocumentElement();
             }
 
-            // Crear un nuevo elemento partner y añadirlo al documento
             Element partnerElement = doc.createElement("partner");
             partnerElement.appendChild(createElementWithText(doc, "nombre", nuevoSocio.getNombre()));
             partnerElement.appendChild(createElementWithText(doc, "direccion", nuevoSocio.getDireccion()));
@@ -264,13 +174,11 @@ public class Actividad_Altasocio extends AppCompatActivity {
             partnerElement.appendChild(createElementWithText(doc, "cif", nuevoSocio.getCif()));
             partnerElement.appendChild(createElementWithText(doc, "telefono", String.valueOf(nuevoSocio.getTelefono())));
             partnerElement.appendChild(createElementWithText(doc, "email", nuevoSocio.getEmail()));
-            partnerElement.appendChild(createElementWithText(doc, "comercial", nuevoSocio.getComercial()));
             root.appendChild(partnerElement);
 
-            // Guardar el documento modificado de nuevo en el archivo
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); // Ajusta el número para controlar el nivel de indentación
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(file);
@@ -287,6 +195,11 @@ public class Actividad_Altasocio extends AppCompatActivity {
         return element;
     }
 
+    private String getNombreArchivoFecha() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return sdf.format(new Date()) + ".xml";
+    }
+
     public void limpiar_vistas() {
         eNombre.setText("");
         eDireccion.setText("");
@@ -296,4 +209,71 @@ public class Actividad_Altasocio extends AppCompatActivity {
         eEmail.setText("");
     }
 
+    private enum FieldType {
+        STRING,
+        INTEGER,
+        EMAIL
+    }
+
+    private boolean isValidCampo(EditText editText, String campoName, FieldType fieldType) {
+        String input = editText.getText().toString().trim();
+
+        if (input.length() == 0) {
+            mostrarError("Por favor, ingrese un " + campoName, editText);
+            return false;
+        }
+
+        switch (fieldType) {
+            case STRING:
+                if (input.length() <= 1) {
+                    mostrarError(campoName + " debe tener más de un carácter", editText);
+                    return false;
+                }
+                // Verificar que no haya solo números en el campo de texto
+                if (isNumeric(input)) {
+                    mostrarError("El campo " + campoName + " no puede contener solo números", editText);
+                    return false;
+                }
+                // Puedes agregar más lógica específica para cadenas si es necesario
+                break;
+            case INTEGER:
+                try {
+                    int value = Integer.parseInt(input);
+                    if (value <= 0) {
+                        mostrarError(campoName + " debe ser mayor que cero", editText);
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
+                    return false;
+                }
+                break;
+            case EMAIL:
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(input).matches()) {
+                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
+                    return false;
+                }
+                break;
+        }
+
+        return true;
+    }
+    private boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    private void mostrarError(String mensaje, final EditText editText) {
+        dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
+        dialog.setTitle("Error");
+        dialog.setMessage(mensaje);
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogo, int id) {
+                dialogo.cancel();
+                editText.requestFocus();
+            }
+        });
+        dialog.show();
+    }
 }

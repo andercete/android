@@ -45,28 +45,22 @@ public class PedidoListAdapter extends RecyclerView.Adapter<PedidoListAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iconImage;
-        TextView idPedido, idPartner, idLinea, idArticulo, cantidad, descuento, precio;
+        TextView idPartner, idArticulo, cantidad, descuento;
 
         public ViewHolder(View itemView) {
             super(itemView);
             iconImage = itemView.findViewById(R.id.iconImageView); // Puedes personalizar la vista según tus necesidades
-            idPedido = itemView.findViewById(R.id.idPedidoTextView);
             idPartner = itemView.findViewById(R.id.idPartnerTextView);
-            idLinea = itemView.findViewById(R.id.idLineaTextView);
             idArticulo = itemView.findViewById(R.id.idArticuloTextView);
             cantidad = itemView.findViewById(R.id.cantidadTextView);
             descuento = itemView.findViewById(R.id.descuentoTextView);
-            precio = itemView.findViewById(R.id.precioTextView);
         }
 
         void bindData(final Pedido item) {
-            idPedido.setText(item.getIdPedido());
             idPartner.setText(item.getIdPartner());
-            idLinea.setText(item.getIdLinea());
             idArticulo.setText(item.getIdArticulo());
             cantidad.setText(String.valueOf(item.getCantidad()));
             descuento.setText(String.valueOf(item.getDescuento()));
-            precio.setText(String.valueOf(item.getPrecio()));
         }
     }
 }
