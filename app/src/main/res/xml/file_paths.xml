@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- ⬇️ Para poder adjuntar archivos del sistema en un correo electrónico ️ ⬇️ ️-->
+    <files-path name="partners" path="partners/" />
+    <files-path name="pedidos" path="pedidos/" />
+</paths>

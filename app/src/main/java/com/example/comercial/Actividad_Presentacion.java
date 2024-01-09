@@ -2,15 +2,21 @@ package com.example.comercial;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +35,7 @@ import java.util.Locale;
 public class Actividad_Presentacion extends AppCompatActivity {
     GoogleMap mMap;
     Button bCitas,bPartner,bPedidos,bDelegacion;
+    ImageButton bTelefono,bEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,9 @@ public class Actividad_Presentacion extends AppCompatActivity {
         bPartner = findViewById(R.id.bPresentacionPartners);
         bPedidos = findViewById(R.id.bPresentacionPedidos);
         bDelegacion = findViewById(R.id.bPresentacionDelegacion);
+
+        bTelefono = findViewById(R.id.bTelefono);
+        bEmail = findViewById(R.id.bEmail);
 
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,56 +74,111 @@ public class Actividad_Presentacion extends AppCompatActivity {
                 startActivity(intentPedidos);
             }
         });
+
         bDelegacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String para = "DelegeacionGuipuzcoa@gem.com";
-                String para = "jiz.j12.a4@gmail.com";
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                boolean existePedido = true;
+                boolean existePartner = true;
+
+                String para = "DelegacionGuipuzcoa@gem.com";
+
+                Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
                 emailIntent.setData(Uri.parse("mailto:"));
-
                 emailIntent.setType("message/rfc822");
-
-
-
-
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{para});
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Partners y pedidos de " + obtenerFechaActual());
 
-                // Obtain the file paths
-                String rutaArchivoPartner = "/data/data/com.example.comercial/files/partners/" + getNombreArchivoPartner();
-//                String rutaArchivo2 = "/ruta/del/segundo/archivo";
+                // Obtener las rutas de los archivos
+                String rutaArchivoPartner = new File(getFilesDir(), "partners/" + getNombreArchivoPartners()).getAbsolutePath();
+                String rutaArchivoPedidos = new File(getFilesDir(), "pedidos/" + getNombreArchivoPedidos()).getAbsolutePath();
 
+                // Validar si existen los archivos
                 File archivoPartners = new File(rutaArchivoPartner);
                 if (!archivoPartners.exists() || !archivoPartners.canRead()) {
                     Log.e("info", "No existe el archivo: " + rutaArchivoPartner);
-
-                    return;
+                    existePartner = false;
                 }
 
-                Log.e("info", "Si existe el archivo: " + rutaArchivoPartner);
+                File archivoPedidos = new File(rutaArchivoPedidos);
+                if (!archivoPedidos.exists() || !archivoPedidos.canRead()) {
+                    Log.e("info", "No existe el archivo: " + rutaArchivoPedidos);
+                    existePedido = false;
+                }
 
-                // Convert the file paths to Uris
-                Uri uriArchivoPartner = Uri.fromFile(archivoPartners);
-//                Uri uriArchivo2 = Uri.fromFile(new File(rutaArchivo2));
+                // Convertir las rutas de los archivos a  Uri usando FileProvider
+                Uri uriArchivoPartner = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPartners);
+                Uri uriArchivoPedidos = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPedidos);
 
-                // Create an ArrayList of Uris
+                // Crear un ArrayList para guardar las URIs de los archivos adjuntados
                 ArrayList<Uri> archivosAdjuntos = new ArrayList<>();
-                archivosAdjuntos.add(uriArchivoPartner);
-//                archivosAdjuntos.add(uriArchivo2);
 
-                // Add the attachments to the intent
+                // Si no existen ni nuevos pedidos ni nuevos partners no se abrirá le correo y aparecerá el mensaje.
+                // Si solo hay un nuevo pedido/partner, solo se adjuntara ese archivo.
+                if (!existePedido && !existePartner){
+                    lanzarToast("No existen nuevos partners ni pedidos este día.");
+                    return;
+                } else
+                {
+                    if (existePartner)
+                    {
+                        archivosAdjuntos.add(uriArchivoPartner);
+                    }
+
+                    if (existePedido)
+                    {
+                        archivosAdjuntos.add(uriArchivoPedidos);
+                    }
+                }
+
+                // Añadir el ArrayList de los archivos adjuntos al intent
                 emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, archivosAdjuntos);
+
+                // Dar permisos a la aplicación
+                emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Envío de partners y pedidos"));
                     finish();
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(Actividad_Presentacion.this,
-                            "Ha habido un error al intentar abrir el correo electrónico.", Toast.LENGTH_SHORT).show();
+                    lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
                 }
             }
+
         });
+
+        bTelefono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTelefono = new Intent(Intent.ACTION_DIAL);
+                intentTelefono.setData(Uri.parse("tel:+34 635985923"));
+                startActivity(intentTelefono);
+            }
+        });
+
+        bEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String para = "DelegacionGuipuzcoa@gem.com";
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:" + para));
+
+                try {
+                    startActivity(emailIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
+                }
+            }
+
+        });
+    }
+
+
+
+    private void lanzarToast(String mensaje)
+    {
+        Toast.makeText(Actividad_Presentacion.this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
     private String obtenerFechaActual() {
@@ -123,10 +188,17 @@ public class Actividad_Presentacion extends AppCompatActivity {
         return fechaActual;
     }
 
-    private String getNombreArchivoPartner() {
+    private String getNombreArchivoPartners() {
         String nombrearchivo;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         nombrearchivo = sdf.format(new Date()) + ".xml";
+        return nombrearchivo;
+    }
+
+    private String getNombreArchivoPedidos() {
+        String nombrearchivo;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        nombrearchivo = sdf.format(new Date()) + "_pedidos.xml";
         return nombrearchivo;
     }
 
