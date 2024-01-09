@@ -25,6 +25,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="165dp"
         android:text="Gourmet Euskadi Market"
+        android:textStyle="bold"
+        android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,27 +51,53 @@
         android:text="Delegacion de Guipúzcoa"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-    <!--
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="349dp"
-        android:layout_height="191dp"
+        android:layout_width="384dp"
+        android:layout_height="201dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bPresentacionDelegacion"
         map:cameraZoom="13"
-        map:uiZoomControls="true" /> -->
+        map:uiZoomControls="true" />
+
+    <Button
+        android:id="@+id/bPresentacionPartners"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="100dp"
+        android:text="Gestion de Partners"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bPresentacionCitas" />
+
+    <Button
+        android:id="@+id/bPresentacionDelegacion"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="100dp"
+        android:text="Envios a delegacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bPresentacionPedidos" />
 
     <Button
         android:id="@+id/bPresentacionCitas"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="73dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
         android:text="Calendario de Citas"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,24 +107,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/bPresentacionDelegacion"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="100dp"
-        android:text="Envios a delegacion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bPresentacionPedidos" />
-
-    <Button
         android:id="@+id/bPresentacionPedidos"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
         android:text="Gestion de pedidos"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,45 +119,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bPresentacionPartners" />
 
-    <Button
-        android:id="@+id/bPresentacionPartners"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="100dp"
-        android:text="Gestion de Partners"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bPresentacionCitas" />
-
     <ImageButton
         android:id="@+id/bTelefono"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="18dp"
         android:background="@android:color/transparent"
         android:contentDescription="Icono email"
         android:scaleType="centerInside"
         android:src="@drawable/iconotlf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bPresentacionDelegacion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bEmail"
+        app:layout_constraintTop_toBottomOf="@+id/map" />
 
     <ImageButton
         android:id="@+id/bEmail"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="18dp"
         android:background="@android:color/transparent"
         android:contentDescription="Icono telefono"
         android:scaleType="centerInside"
         android:src="@drawable/iconemail"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bTelefono" />
+        app:layout_constraintTop_toBottomOf="@+id/map" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
