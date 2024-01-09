@@ -32,18 +32,18 @@ import java.util.Date;
 import java.util.Locale;
 
 // implements OnMapReadyCallback
-public class Actividad_Presentacion extends AppCompatActivity {
+public class Actividad_Presentacion extends AppCompatActivity implements OnMapReadyCallback {
     GoogleMap mMap;
-    Button bCitas,bPartner,bPedidos,bDelegacion;
-    ImageButton bTelefono,bEmail;
+    Button bCitas, bPartner, bPedidos, bDelegacion;
+    ImageButton bTelefono, bEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_presentacion);
 
-      /*  SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this); */
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         bCitas = findViewById(R.id.bPresentacionCitas);
         bPartner = findViewById(R.id.bPresentacionPartners);
@@ -56,21 +56,21 @@ public class Actividad_Presentacion extends AppCompatActivity {
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCitas = new Intent (Actividad_Presentacion.this, Actividad_Agenda.class);
+                Intent intentCitas = new Intent(Actividad_Presentacion.this, Actividad_Agenda.class);
                 startActivity(intentCitas);
             }
         });
         bPartner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPartner = new Intent (Actividad_Presentacion.this, Actividad_Partners.class);
+                Intent intentPartner = new Intent(Actividad_Presentacion.this, Actividad_Partners.class);
                 startActivity(intentPartner);
             }
         });
         bPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPedidos = new Intent (Actividad_Presentacion.this, Actividad_Pedidos.class);
+                Intent intentPedidos = new Intent(Actividad_Presentacion.this, Actividad_Pedidos.class);
                 startActivity(intentPedidos);
             }
         });
@@ -115,18 +115,15 @@ public class Actividad_Presentacion extends AppCompatActivity {
 
                 // Si no existen ni nuevos pedidos ni nuevos partners no se abrirá le correo y aparecerá el mensaje.
                 // Si solo hay un nuevo pedido/partner, solo se adjuntara ese archivo.
-                if (!existePedido && !existePartner){
+                if (!existePedido && !existePartner) {
                     lanzarToast("No existen nuevos partners ni pedidos este día.");
                     return;
-                } else
-                {
-                    if (existePartner)
-                    {
+                } else {
+                    if (existePartner) {
                         archivosAdjuntos.add(uriArchivoPartner);
                     }
 
-                    if (existePedido)
-                    {
+                    if (existePedido) {
                         archivosAdjuntos.add(uriArchivoPedidos);
                     }
                 }
@@ -175,9 +172,7 @@ public class Actividad_Presentacion extends AppCompatActivity {
     }
 
 
-
-    private void lanzarToast(String mensaje)
-    {
+    private void lanzarToast(String mensaje) {
         Toast.makeText(Actividad_Presentacion.this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
@@ -202,15 +197,15 @@ public class Actividad_Presentacion extends AppCompatActivity {
         return nombrearchivo;
     }
 
-   /* @Override
+    @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        this.mMap.setOnMapClickListener(this);
-        this.mMap.setOnMapLongClickListener(this);
+        // this.mMap.setOnMapClickListener(this);
+        // this.mMap.setOnMapLongClickListener(this);
 
         LatLng donosti = new LatLng(43.30419712367967, -2.0165662074674695);
         mMap.addMarker(new MarkerOptions().position(donosti).title("Gurmet Euskadi Market"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(donosti));
-    }*/
 
+    }
 }
