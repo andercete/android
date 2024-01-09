@@ -72,45 +72,63 @@ public class Actividad_Presentacion extends AppCompatActivity {
         bDelegacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String para = "DelegeacionGuipuzcoa@gem.com";
-                String cc = "jiz.j12.a4@gmail.com";
+                boolean existePedido = true;
+                boolean existePartner = true;
 
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                String para = "DelegeacionGuipuzcoa@gem.com";
+
+                Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("message/rfc822");
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{para});
-                emailIntent.putExtra(Intent.EXTRA_CC, new String[]{cc});
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Partners y pedidos de " + obtenerFechaActual());
 
-                // Update file path using context.getFilesDir()
+                // Obtener las rutas de los archivos
                 String rutaArchivoPartner = new File(getFilesDir(), "partners/" + getNombreArchivoPartners()).getAbsolutePath();
                 String rutaArchivoPedidos = new File(getFilesDir(), "pedidos/" + getNombreArchivoPedidos()).getAbsolutePath();
 
+                // Validar si existen los archivos
                 File archivoPartners = new File(rutaArchivoPartner);
                 if (!archivoPartners.exists() || !archivoPartners.canRead()) {
                     Log.e("info", "No existe el archivo: " + rutaArchivoPartner);
-                    lanzarToast("No existe el archivo: " + rutaArchivoPartner);
-                    return;
+                    existePartner = false;
                 }
 
                 File archivoPedidos = new File(rutaArchivoPedidos);
                 if (!archivoPedidos.exists() || !archivoPedidos.canRead()) {
                     Log.e("info", "No existe el archivo: " + rutaArchivoPedidos);
-                    lanzarToast("No existe el archivo: " + rutaArchivoPedidos);
-                    return;
+                    existePedido = false;
                 }
 
-                Log.e("info", "Si existe el archivo: " + rutaArchivoPedidos);
-
-                // Convert the file path to Uri using FileProvider
+                // Convertir las rutas de los archivos a  Uri usando FileProvider
                 Uri uriArchivoPartner = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPartners);
                 Uri uriArchivoPedidos = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPedidos);
 
-                // Add the attachment to the intent
-                emailIntent.putExtra(Intent.EXTRA_STREAM, uriArchivoPartner);
-                emailIntent.putExtra(Intent.EXTRA_STREAM, uriArchivoPedidos);
+                // Crear un ArrayList para guardar las URIs de los archivos adjuntados
+                ArrayList<Uri> archivosAdjuntos = new ArrayList<>();
 
-                // Grant read permissions to the receiving app
+                // Si no existen ni nuevos pedidos ni nuevos partners no se abrirá le correo y aparecerá el mensaje.
+                // Si solo hay un nuevo pedido/partner, solo se adjuntara ese archivo.
+                if (!existePedido && !existePartner){
+                    lanzarToast("No existen nuevos partners ni pedidos este día.");
+                    return;
+                } else
+                {
+                    if (existePartner)
+                    {
+                        archivosAdjuntos.add(uriArchivoPartner);
+                    }
+
+                    if (existePedido)
+                    {
+                        archivosAdjuntos.add(uriArchivoPedidos);
+                    }
+                }
+
+                // Añadir el ArrayList de los archivos adjuntos al intent
+                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, archivosAdjuntos);
+
+                // Dar permisos a la aplicación
                 emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                 try {
@@ -120,15 +138,13 @@ public class Actividad_Presentacion extends AppCompatActivity {
                     lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
                 }
             }
+
         });
-
-
     }
 
     private void lanzarToast(String mensaje)
     {
-        Toast.makeText(Actividad_Presentacion.this,
-                mensaje, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Actividad_Presentacion.this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
     private String obtenerFechaActual() {
