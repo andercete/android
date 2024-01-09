@@ -9,28 +9,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="165dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="165dp"
-        android:text="Gourmet Euskadi Market"
-        android:textStyle="bold"
-        android:textSize="26dp"
+        android:layout_width="182dp"
+        android:layout_height="185dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView3"
@@ -123,30 +108,28 @@
         android:id="@+id/bTelefono"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="18dp"
         android:background="@android:color/transparent"
         android:contentDescription="Icono email"
         android:scaleType="centerInside"
         android:src="@drawable/iconotlf"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bEmail"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map" />
 
     <ImageButton
         android:id="@+id/bEmail"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="18dp"
         android:background="@android:color/transparent"
         android:contentDescription="Icono telefono"
         android:scaleType="centerInside"
         android:src="@drawable/iconemail"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/bTelefono"
         app:layout_constraintTop_toBottomOf="@+id/map" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
