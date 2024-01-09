@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +35,7 @@ import java.util.Locale;
 public class Actividad_Presentacion extends AppCompatActivity {
     GoogleMap mMap;
     Button bCitas,bPartner,bPedidos,bDelegacion;
+    ImageButton bTelefono,bEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class Actividad_Presentacion extends AppCompatActivity {
         bPartner = findViewById(R.id.bPresentacionPartners);
         bPedidos = findViewById(R.id.bPresentacionPedidos);
         bDelegacion = findViewById(R.id.bPresentacionDelegacion);
+
+        bTelefono = findViewById(R.id.bTelefono);
+        bEmail = findViewById(R.id.bEmail);
 
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +81,7 @@ public class Actividad_Presentacion extends AppCompatActivity {
                 boolean existePedido = true;
                 boolean existePartner = true;
 
-                String para = "DelegeacionGuipuzcoa@gem.com";
+                String para = "DelegacionGuipuzcoa@gem.com";
 
                 Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
                 emailIntent.setData(Uri.parse("mailto:"));
@@ -140,7 +146,35 @@ public class Actividad_Presentacion extends AppCompatActivity {
             }
 
         });
+
+        bTelefono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTelefono = new Intent(Intent.ACTION_DIAL);
+                intentTelefono.setData(Uri.parse("tel:+34 635985923"));
+                startActivity(intentTelefono);
+            }
+        });
+
+        bEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String para = "DelegacionGuipuzcoa@gem.com";
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:" + para));
+
+                try {
+                    startActivity(emailIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
+                }
+            }
+
+        });
     }
+
+
 
     private void lanzarToast(String mensaje)
     {
