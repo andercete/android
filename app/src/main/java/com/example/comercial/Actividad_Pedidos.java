@@ -115,14 +115,8 @@ public class Actividad_Pedidos extends AppCompatActivity {
                     case XmlPullParser.TEXT:
                         if (currentPedido != null && currentTag != null) {
                             switch (currentTag) {
-                                case "idPedido":
-                                    currentPedido.setIdPedido(parser.getText());
-                                    break;
                                 case "idPartner":
                                     currentPedido.setIdPartner(parser.getText());
-                                    break;
-                                case "idLinea":
-                                    currentPedido.setIdLinea(parser.getText());
                                     break;
                                 case "idArticulo":
                                     currentPedido.setIdArticulo(parser.getText());
@@ -132,9 +126,6 @@ public class Actividad_Pedidos extends AppCompatActivity {
                                     break;
                                 case "descuento":
                                     currentPedido.setDescuento(Float.parseFloat(parser.getText()));
-                                    break;
-                                case "precio":
-                                    currentPedido.setPrecio(Float.parseFloat(parser.getText()));
                                     break;
                             }
                         }

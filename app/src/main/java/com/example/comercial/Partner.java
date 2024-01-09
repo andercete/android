@@ -8,7 +8,6 @@ public class Partner {
     private String cif;
     private int telefono;
     private String email;
-    private String comercial;
 
 
     // Constructor vacío
@@ -16,14 +15,13 @@ public class Partner {
     }
 
     // Constructor con todos los campos
-    public Partner(String nombre, String direccion, String poblacion, String cif, int telefono, String email, String comercial) {
+    public Partner(String nombre, String direccion, String poblacion, String cif, int telefono, String email) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.poblacion = poblacion;
         this.cif = cif;
         this.telefono = telefono;
         this.email = email;
-        this.comercial = comercial;
     }
 
     // Getters y Setters
@@ -74,13 +72,6 @@ public class Partner {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-    public void setComercial(String comercial) {
-        this.comercial = comercial;
-    }
-
-    public String getComercial() {
-        return comercial;
     }
 }
 

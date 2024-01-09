@@ -135,9 +135,6 @@
                                     case "email":
                                         currentPartner.setEmail(parser.getText());
                                         break;
-                                    case "comercial":
-                                        currentPartner.setComercial(parser.getText());
-                                        break;
                                 }
                             }
                             break;

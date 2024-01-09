@@ -2,38 +2,28 @@ package com.example.comercial;
 
 public class Pedido {
 
-    private String idPedido;
     private String idPartner;
-    private String idLinea;
     private String idArticulo;
     private int cantidad;
+    private  String poblacion;
     private float descuento;
-    private float precio;
 
     // Constructor vacío
     public Pedido() {
     }
 
     // Constructor con todos los campos
-    public Pedido(String idPedido, String idPartner, String idLinea, String idArticulo, int cantidad, float descuento, float precio) {
-        this.idPedido = idPedido;
+    public Pedido( String idPartner, String idArticulo, int cantidad, String poblacion, float descuento) {
         this.idPartner = idPartner;
-        this.idLinea = idLinea;
         this.idArticulo = idArticulo;
         this.cantidad = cantidad;
+        this.poblacion = poblacion;
         this.descuento = descuento;
-        this.precio = precio;
     }
 
     // Getters y Setters
 
-    public String getIdPedido() {
-        return idPedido;
-    }
 
-    public void setIdPedido(String idPedido) {
-        this.idPedido = idPedido;
-    }
 
     public String getIdPartner() {
         return idPartner;
@@ -41,14 +31,6 @@ public class Pedido {
 
     public void setIdPartner(String idPartner) {
         this.idPartner = idPartner;
-    }
-
-    public String getIdLinea() {
-        return idLinea;
-    }
-
-    public void setIdLinea(String idLinea) {
-        this.idLinea = idLinea;
     }
 
     public String getIdArticulo() {
@@ -66,6 +48,13 @@ public class Pedido {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+    public String getPoblacion() {
+        return poblacion;
+    }
+
+    public void setPoblacion(String  poblacion) {
+        this.poblacion = poblacion;
+    }
 
     public float getDescuento() {
         return descuento;
@@ -75,11 +64,4 @@ public class Pedido {
         this.descuento = descuento;
     }
 
-    public float getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(float precio) {
-        this.precio = precio;
-    }
 }
