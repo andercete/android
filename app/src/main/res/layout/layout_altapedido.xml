@@ -9,8 +9,9 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alta Pedido"
-        android:textSize="26sp"
+        android:layout_marginTop="50dp"
+        android:text="ALTA PEDIDO"
+        android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/eIdPartner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,18 +19,20 @@
 
     <Button
         android:id="@+id/bLimpiar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="#00FFFFFF"
         android:text="Limpiar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bRealizarPedido" />
+        android:textColor="#787878"
+        app:layout_constraintEnd_toEndOf="@+id/eDescuento"
+        app:layout_constraintTop_toBottomOf="@+id/eDescuento" />
 
     <EditText
         android:id="@+id/eIdPartner"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="55dp"
         android:ems="10"
         android:hint="Partner"
         android:inputType="text"
@@ -41,10 +44,10 @@
         android:id="@+id/eDescuento"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Descuento"
         android:inputType="numberSigned"
-        app:layout_constraintBottom_toTopOf="@+id/bRealizarPedido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eAltaPoblacion3" />
@@ -53,6 +56,7 @@
         android:id="@+id/eIdArticulo"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Articulo"
         android:inputType="text"
@@ -64,6 +68,7 @@
         android:id="@+id/eCantidad"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Cantidad"
         android:inputType="numberSigned"
@@ -75,6 +80,7 @@
         android:id="@+id/eAltaPoblacion3"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Poblacion"
         android:inputType="text"
@@ -84,13 +90,13 @@
 
     <Button
         android:id="@+id/bRealizarPedido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="20dp"
         android:text="Realizar Pedido"
-        app:layout_constraintBottom_toTopOf="@+id/bLimpiar"
+        app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eDescuento" />
+        app:layout_constraintTop_toBottomOf="@+id/bLimpiar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
