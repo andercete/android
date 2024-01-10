@@ -1,13 +1,10 @@
     package com.example.comercial;
 
     import androidx.appcompat.app.AppCompatActivity;
-    import androidx.appcompat.app.AppCompatDelegate;
-    import androidx.core.content.ContextCompat;
     import androidx.recyclerview.widget.LinearLayoutManager;
     import androidx.recyclerview.widget.RecyclerView;
 
     import android.content.Intent;
-    import android.content.res.Configuration;
     import android.os.Bundle;
     import android.util.Xml;
     import android.view.View;
@@ -35,15 +32,11 @@
         Button bBorrar;
 
 
-
-
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.layout_partners);
             bAgregar = findViewById(R.id.bPartnerAgregar);
-            actualizarColorBoton();
-            setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             bAgregar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -63,22 +56,6 @@
 
             // Inicializa el RecyclerView con la lista de partners
             initRecyclerView(partnersList);
-        }
-        private void actualizarColorBoton() {
-            // Obtén el tema actual de la aplicación
-            int currentTheme = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-
-            // Determina si el tema actual es oscuro
-            boolean isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES;
-
-            // Configura el color de fondo del botón según el tema
-            if (isDarkTheme) {
-                bAgregar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-                bBorrar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-            } else {
-                bAgregar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-                bBorrar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-            }
         }
 
         private void initRecyclerView(List<Partner> partners) {

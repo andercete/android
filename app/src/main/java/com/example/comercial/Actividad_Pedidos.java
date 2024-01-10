@@ -1,7 +1,6 @@
 package com.example.comercial;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Xml;
 import android.view.View;
@@ -9,8 +8,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,16 +28,11 @@ public class Actividad_Pedidos extends AppCompatActivity {
     RecyclerView recyclerView;
     Button bAgregarPedido;
     Button bBorrarPedido;
-    
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_pedidos);
-        actualizarColorBoton();
-        setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
         bAgregarPedido = findViewById(R.id.bPedidoAgregar);
         bAgregarPedido.setOnClickListener(new View.OnClickListener() {
@@ -62,22 +54,6 @@ public class Actividad_Pedidos extends AppCompatActivity {
         List<Pedido> pedidosList = parsePedidosXML();
 
         initRecyclerView(pedidosList);
-    }
-    private void actualizarColorBoton() {
-        // Obtén el tema actual de la aplicación
-        int currentTheme = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-
-        // Determina si el tema actual es oscuro
-        boolean isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES;
-
-        // Configura el color de fondo del botón según el tema
-        if (isDarkTheme) {
-            bAgregarPedido.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-            bBorrarPedido.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-        } else {
-            bAgregarPedido.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-            bBorrarPedido.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-        }
     }
 
     private void initRecyclerView(List<Pedido> pedidos) {
