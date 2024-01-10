@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -128,7 +129,7 @@ public class Actividad_Altasocio extends AppCompatActivity {
         if (!isValidCampo(eCif, "CIF", FieldType.STRING)) {
             return false;
         }
-        if (!isValidCampo(eTelefono, "Teléfono", FieldType.INTEGER)) {
+        if (!isValidCampo(eTelefono, "Teléfono", FieldType.TELEPHONE)) {
             return false;
         }
         if (!isValidCampo(eEmail, "Email", FieldType.EMAIL)) {
@@ -212,7 +213,8 @@ public class Actividad_Altasocio extends AppCompatActivity {
     private enum FieldType {
         STRING,
         INTEGER,
-        EMAIL
+        EMAIL,
+        TELEPHONE
     }
 
     private boolean isValidCampo(EditText editText, String campoName, FieldType fieldType) {
@@ -249,7 +251,13 @@ public class Actividad_Altasocio extends AppCompatActivity {
                 }
                 break;
             case EMAIL:
-                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(input).matches()) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(input).matches()) {
+                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
+                    return false;
+                }
+                break;
+            case TELEPHONE:
+                if (!Patterns.PHONE.matcher(input).matches()) {
                     mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
                     return false;
                 }

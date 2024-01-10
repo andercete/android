@@ -96,13 +96,5 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/comercialTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:paddingLeft="8dp"
-            android:text="Gurmet Euskadi Market"
-            android:textSize="13sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

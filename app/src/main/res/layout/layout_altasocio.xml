@@ -84,7 +84,7 @@
         android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Telefono"
-        android:inputType="number"
+        android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@+id/eAltaEmail"
         app:layout_constraintStart_toStartOf="@+id/eAltaCif"
         app:layout_constraintTop_toBottomOf="@+id/eAltaCif" />
