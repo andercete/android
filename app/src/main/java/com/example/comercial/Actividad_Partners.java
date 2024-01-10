@@ -12,13 +12,17 @@
     import android.util.Xml;
     import android.view.View;
     import android.widget.Button;
+    import android.widget.EditText;
     import android.widget.Toast;
 
     import org.xmlpull.v1.XmlPullParser;
 
     import java.io.File;
     import java.io.FileInputStream;
+    import java.io.FileOutputStream;
+    import java.io.IOException;
     import java.io.InputStream;
+    import java.io.OutputStream;
     import java.text.SimpleDateFormat;
     import java.util.ArrayList;
     import java.util.Date;
@@ -41,6 +45,7 @@
             super.onCreate(savedInstanceState);
             setContentView(R.layout.layout_partners);
             bAgregar = findViewById(R.id.bPartnerAgregar);
+            bBorrar = findViewById(R.id.bBorrar);
             bAgregar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -48,19 +53,61 @@
                     startActivity(intent);
                 }
             });
-            bBorrar = findViewById(R.id.bBorrar);
             bBorrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     borrarRegistros();
                 }
             });
+
+            // Copiar el contenido de assets/partners.xml (los partners que nos envian de delegación) en el almacenamiento interno
+            copiarXMLaAlmacenamientoInterno();
+
             // Suponiendo que ya tienes una lista de partners parseada
             List<Partner> partnersList = parsePartnersXML();
 
             // Inicializa el RecyclerView con la lista de partners
             initRecyclerView(partnersList);
         }
+
+
+        private void copiarXMLaAlmacenamientoInterno() {
+            // Crear la carpeta 'partners' dentro de 'files'
+            File directorioPartners = new File(getFilesDir(), "partners");
+            if (!directorioPartners.exists()) {
+                directorioPartners.mkdirs();
+            }
+
+            // Crear el archivo en la carpeta 'partners'
+            File file = new File(directorioPartners, "PARTNERS.xml");
+
+            try {
+                // Obtener el nombre del archivo desde los recursos
+                String nombreArchivo = "partners.xml";  // Reemplazar con el nombre correcto si es diferente
+
+                // Abrir el archivo desde los recursos de la aplicación
+                InputStream in = getAssets().open(nombreArchivo);
+
+                // Crear un nuevo archivo en la carpeta 'partners'
+                OutputStream out = new FileOutputStream(file);
+
+                // Copiar el contenido del archivo desde los recursos al almacenamiento interno
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Cerrar los flujos de entrada y salida
+                in.close();
+                out.flush();
+                out.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         private void initRecyclerView(List<Partner> partners) {
             ListAdapter listAdapter = new ListAdapter(partners, this);
@@ -80,6 +127,14 @@
             List<Partner> partners = new ArrayList<>();
             File directory = new File(getFilesDir(), "partners");
 
+            File partnersDelegacion = new File("/data/user/0/com.example.comercial/files/partners/PARTNERS.xml");
+
+            if (partnersDelegacion.isFile() && partnersDelegacion.getName().endsWith(".xml")) {
+                    partners.addAll(parseXMLFile(partnersDelegacion));
+            } else
+            {
+                mostrarError("Ha habido un error al intentar importar los partners enviados desde delegación");
+            }
 
             // Verificar si el directorio existe y contiene archivos
             if (directory.exists() && directory.isDirectory()) {
@@ -96,6 +151,20 @@
                 }
             }
             return partners;
+        }
+
+        private void mostrarError(String mensaje) {
+            dialog = new AlertDialog.Builder(Actividad_Partners.this);
+            dialog.setTitle("Error");
+            dialog.setMessage(mensaje);
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogo, int id) {
+                    dialogo.cancel();
+                }
+            });
+            dialog.show();
         }
 
         // Método para parsear tu XML de partners

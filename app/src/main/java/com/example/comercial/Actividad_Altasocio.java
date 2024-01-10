@@ -71,50 +71,11 @@ public class Actividad_Altasocio extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarCampos()) {
-                    copiarXMLaAlmacenamientoInterno();
                     altaSocio();
                     finish();
                 }
             }
         });
-    }
-
-    private void copiarXMLaAlmacenamientoInterno() {
-        // Crear la carpeta 'partners' dentro de 'files'
-        File directorioPartners = new File(getFilesDir(), "partners");
-        if (!directorioPartners.exists()) {
-            directorioPartners.mkdirs();
-        }
-
-        // Crear el archivo en la carpeta 'partners'
-        File file = new File(directorioPartners, getNombreArchivoFecha());
-        if (!file.exists()) {
-            try {
-                // Obtener el nombre del archivo desde los recursos
-                String nombreArchivo = "partners.xml";  // Reemplazar con el nombre correcto si es diferente
-
-                // Abrir el archivo desde los recursos de la aplicación
-                InputStream in = getAssets().open(nombreArchivo);
-
-                // Crear un nuevo archivo en la carpeta 'partners'
-                OutputStream out = new FileOutputStream(file);
-
-                // Copiar el contenido del archivo desde los recursos al almacenamiento interno
-                byte[] buffer = new byte[1024];
-                int read;
-                while ((read = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, read);
-                }
-
-                // Cerrar los flujos de entrada y salida
-                in.close();
-                out.flush();
-                out.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private boolean validarCampos() {
