@@ -2,6 +2,7 @@ package com.example.comercial;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -9,6 +10,7 @@ import androidx.core.content.FileProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +55,8 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         bTelefono = findViewById(R.id.bTelefono);
         bEmail = findViewById(R.id.bEmail);
 
+        actualizarColorBoton();
+        setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +185,26 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         fechaActual = sdf.format(new Date());
         return fechaActual;
+    }
+    private void actualizarColorBoton() {
+        // Obtén el tema actual de la aplicación
+        int currentTheme = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        // Determina si el tema actual es oscuro
+        boolean isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES;
+
+        // Configura el color de fondo del botón según el tema
+        if (isDarkTheme) {
+            bCitas.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+            bDelegacion.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+            bPedidos.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+            bPartner.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+        } else {
+            bCitas.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
+            bDelegacion.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
+            bPedidos.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
+            bPartner.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
+        }
     }
 
     private String getNombreArchivoPartners() {

@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorBotonClaro">#262626</color> <!-- Color azul claro -->
+    <color name="colorBotonOscuro">#f5f5f5</color> <!-- Color azul oscuro -->
 </resources>
