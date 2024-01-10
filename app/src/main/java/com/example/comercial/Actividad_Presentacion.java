@@ -1,16 +1,12 @@
 package com.example.comercial;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,12 +34,15 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
     GoogleMap mMap;
     Button bCitas, bPartner, bPedidos, bDelegacion;
     ImageButton bTelefono, bEmail;
+    AlertDialog.Builder dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_presentacion);
 
+        // Google Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -55,8 +54,6 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         bTelefono = findViewById(R.id.bTelefono);
         bEmail = findViewById(R.id.bEmail);
 
-        actualizarColorBoton();
-        setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +117,8 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
                 // Si no existen ni nuevos pedidos ni nuevos partners no se abrirá le correo y aparecerá el mensaje.
                 // Si solo hay un nuevo pedido/partner, solo se adjuntara ese archivo.
                 if (!existePedido && !existePartner) {
-                    lanzarToast("No existen nuevos partners ni pedidos este día.");
+                    mostrarMensage("No existen nuevos partners ni pedidos este día.");
+                    // lanzarToast("No existen nuevos partners ni pedidos este día.");
                     return;
                 } else {
                     if (existePartner) {
@@ -140,7 +138,6 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
 
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Envío de partners y pedidos"));
-                    finish();
                 } catch (android.content.ActivityNotFoundException ex) {
                     lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
                 }
@@ -175,7 +172,19 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         });
     }
 
-
+    private void mostrarMensage(String mensaje) {
+        dialog = new AlertDialog.Builder(Actividad_Presentacion.this);
+        dialog.setTitle("Advertencia");
+        dialog.setMessage(mensaje);
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogo, int id) {
+                dialogo.cancel();
+            }
+        });
+        dialog.show();
+    }
     private void lanzarToast(String mensaje) {
         Toast.makeText(Actividad_Presentacion.this, mensaje, Toast.LENGTH_SHORT).show();
     }
@@ -186,26 +195,7 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         fechaActual = sdf.format(new Date());
         return fechaActual;
     }
-    private void actualizarColorBoton() {
-        // Obtén el tema actual de la aplicación
-        int currentTheme = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
-        // Determina si el tema actual es oscuro
-        boolean isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES;
-
-        // Configura el color de fondo del botón según el tema
-        if (isDarkTheme) {
-            bCitas.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-            bDelegacion.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-            bPedidos.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-            bPartner.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
-        } else {
-            bCitas.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-            bDelegacion.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-            bPedidos.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-            bPartner.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
-        }
-    }
 
     private String getNombreArchivoPartners() {
         String nombrearchivo;
