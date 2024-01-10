@@ -2,8 +2,11 @@ package com.example.comercial;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -53,6 +56,9 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         eDescuento = findViewById(R.id.eDescuento);
         bRealizarPedido = findViewById(R.id.bRealizarPedido);
         bLimpiar = findViewById(R.id.bLimpiar);
+
+        actualizarColorBoton();
+        setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
         bLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +136,22 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         Element element = doc.createElement(tagName);
         element.appendChild(doc.createTextNode(text));
         return element;
+    }
+    private void actualizarColorBoton() {
+        // Obtén el tema actual de la aplicación
+        int currentTheme = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        // Determina si el tema actual es oscuro
+        boolean isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES;
+
+        // Configura el color de fondo del botón según el tema
+        if (isDarkTheme) {
+            bRealizarPedido.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+            bLimpiar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+        } else {
+            bRealizarPedido.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
+            bLimpiar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
+        }
     }
 
     private void copiarXMLaAlmacenamientoInterno() {

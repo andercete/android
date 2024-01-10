@@ -2,8 +2,11 @@ package com.example.comercial;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -57,6 +60,9 @@ public class Actividad_Altasocio extends AppCompatActivity {
         eEmail = findViewById(R.id.eAltaEmail);
         bAlta = findViewById(R.id.bAlta);
         bLimpiar = findViewById(R.id.bAltaLimpiar);
+
+        actualizarColorBoton();
+        setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
         bLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +118,22 @@ public class Actividad_Altasocio extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    private void actualizarColorBoton() {
+        // Obtén el tema actual de la aplicación
+        int currentTheme = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        // Determina si el tema actual es oscuro
+        boolean isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES;
+
+        // Configura el color de fondo del botón según el tema
+        if (isDarkTheme) {
+            bAlta.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+            bLimpiar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonOscuro));
+        } else {
+            bAlta.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
+            bLimpiar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBotonClaro));
         }
     }
 
