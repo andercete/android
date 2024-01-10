@@ -68,6 +68,12 @@ public class CrearEventoActivity extends AppCompatActivity {
                 String ubicacion = ubicacionEditText.getText().toString();
                 String descripcion = descripcionEditText.getText().toString();
 
+                if (!isValidCampo(tituloEditText, "Titulo", FieldType.STRING)) {
+                    return;
+                }
+                if (!isValidCampo(ubicacionEditText, "Ubicacion", FieldType.STRING)) {
+                    return;
+                }
 
                 if (tituloEditText.getText().toString().isEmpty()) {
 
@@ -107,6 +113,74 @@ public class CrearEventoActivity extends AppCompatActivity {
 
 
         });
+    }
+    private enum FieldType {
+        STRING,
+        INTEGER,
+        FLOAT,
+        PERCENTAGE
+    }
+    private boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    private boolean isValidCampo(EditText editText, String campoName, CrearEventoActivity.FieldType fieldType) {
+        String input = editText.getText().toString().trim();
+
+        if (input.length() == 0) {
+            mostrarError("Por favor, ingrese un " + campoName, editText);
+            return false;
+        }
+
+        switch (fieldType) {
+            case STRING:
+                if (input.length() <= 1) {
+                    mostrarError(campoName + " debe tener más de un carácter", editText);
+                    return false;
+                }if (isNumeric(input)) {
+                mostrarError("El campo " + campoName + " no puede contener solo números", editText);
+                return false;
+            }
+                break;
+            case INTEGER:
+                try {
+                    int value = Integer.parseInt(input);
+                    if (value <= 0) {
+                        mostrarError(campoName + " debe ser mayor que cero", editText);
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
+                    return false;
+                }
+                break;
+            case FLOAT:
+                try {
+                    float value = Float.parseFloat(input);
+                    if (value <= 0) {
+                        mostrarError(campoName + " debe ser mayor que cero", editText);
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
+                    return false;
+                }
+                break;
+            case PERCENTAGE:
+                try {
+                    float value = Float.parseFloat(input);
+                    if (value < 0 || value > 100) {
+                        mostrarError(campoName + " debe estar entre 0 y 100", editText);
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
+                    return false;
+                }
+                break;
+        }
+
+        return true;
     }
 
     private void mostrarError(String mensaje, final EditText editText) {
