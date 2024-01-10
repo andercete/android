@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -219,6 +220,7 @@ public class Actividad_Altasocio extends AppCompatActivity {
 
     private boolean isValidCampo(EditText editText, String campoName, FieldType fieldType) {
         String input = editText.getText().toString().trim();
+        Pattern phonePattern = Pattern.compile("^[0-9]{9}$");
 
         if (input.length() == 0) {
             mostrarError("Por favor, ingrese un " + campoName, editText);
@@ -257,8 +259,8 @@ public class Actividad_Altasocio extends AppCompatActivity {
                 }
                 break;
             case TELEPHONE:
-                if (!Patterns.PHONE.matcher(input).matches()) {
-                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
+                if (!phonePattern.matcher(input).matches()) {
+                    mostrarError("Por favor, ingrese un teléfono válido", editText);
                     return false;
                 }
                 break;

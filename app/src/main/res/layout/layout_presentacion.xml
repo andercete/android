@@ -61,6 +61,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
         android:text="Gestion de Partners"
+        app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +75,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="100dp"
         android:text="Envios a delegacion"
+        app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,9 +89,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
         android:text="Calendario de Citas"
+        app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.545"
 
+        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -101,6 +104,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
         android:text="Gestion de pedidos"
+        app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
