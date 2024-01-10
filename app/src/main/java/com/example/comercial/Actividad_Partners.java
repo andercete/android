@@ -8,6 +8,7 @@
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.os.Bundle;
+    import android.util.Log;
     import android.util.Xml;
     import android.view.View;
     import android.widget.Button;
@@ -87,8 +88,7 @@
                 if (files != null) {
                     for (File file : files) {
                         if (file.isFile() && file.getName().endsWith(".xml")) {
-                            if (file.getName() == getNombreArchivoFecha())
-                            {
+                            if (file.getName().equalsIgnoreCase(getNombreArchivoFecha())) {
                                 partners.addAll(parseXMLFile(file));
                             }
                         }
@@ -97,6 +97,7 @@
             }
             return partners;
         }
+
         // Método para parsear tu XML de partners
         private List<Partner> parseXMLFile(File file) {
             List<Partner> partnersInFile = new ArrayList<>();

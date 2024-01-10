@@ -44,7 +44,12 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
 
         // Google Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        try {
+            mapFragment.getMapAsync(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
+        }
 
         bCitas = findViewById(R.id.bPresentacionCitas);
         bPartner = findViewById(R.id.bPresentacionPartners);
