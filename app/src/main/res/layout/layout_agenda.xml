@@ -27,11 +27,12 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="121dp"
-        android:layout_height="62dp"
+        android:layout_width="63dp"
+        android:layout_height="65dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="44dp"
-        android:text="Agregar evento"
+        android:text="+"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
