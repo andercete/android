@@ -81,7 +81,10 @@ public class Actividad_Pedidos extends AppCompatActivity {
             if (files != null) {
                 for (File file : files) {
                     if (file.isFile() && file.getName().endsWith("_pedidos.xml")) {
-                        pedidos.addAll(parseXMLFile(file));
+                        if (file.getName() == getNombreArchivoFecha())
+                        {
+                            pedidos.addAll(parseXMLFile(file));
+                        }
                     }
                 }
             }

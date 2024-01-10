@@ -1,9 +1,11 @@
     package com.example.comercial;
 
+    import androidx.appcompat.app.AlertDialog;
     import androidx.appcompat.app.AppCompatActivity;
     import androidx.recyclerview.widget.LinearLayoutManager;
     import androidx.recyclerview.widget.RecyclerView;
 
+    import android.content.DialogInterface;
     import android.content.Intent;
     import android.os.Bundle;
     import android.util.Xml;
@@ -30,6 +32,7 @@
         RecyclerView recyclerView;
         Button bAgregar;
         Button bBorrar;
+        AlertDialog.Builder dialog;
 
 
         @Override
@@ -76,6 +79,7 @@
             List<Partner> partners = new ArrayList<>();
             File directory = new File(getFilesDir(), "partners");
 
+
             // Verificar si el directorio existe y contiene archivos
             if (directory.exists() && directory.isDirectory()) {
                 File[] files = directory.listFiles();
@@ -83,7 +87,10 @@
                 if (files != null) {
                     for (File file : files) {
                         if (file.isFile() && file.getName().endsWith(".xml")) {
-                            partners.addAll(parseXMLFile(file));
+                            if (file.getName() == getNombreArchivoFecha())
+                            {
+                                partners.addAll(parseXMLFile(file));
+                            }
                         }
                     }
                 }
@@ -183,6 +190,23 @@
                 }
             }
             recreate();
+        }
+
+
+
+
+        private void mostrarMensage(String mensaje) {
+            dialog = new AlertDialog.Builder(Actividad_Partners.this);
+            dialog.setTitle("Advertencia");
+            dialog.setMessage(mensaje);
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogo, int id) {
+                    dialogo.cancel();
+                }
+            });
+            dialog.show();
         }
     }
 
