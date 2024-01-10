@@ -2,42 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:outlineAmbientShadowColor="#000000"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/tituloTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/fechaTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/ubicacionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/descripcionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="102dp"
         android:layout_height="wrap_content"
-        android:text="Borrar" />
+        android:background="#292929"
+        android:backgroundTint="#680B0B0B"
+        android:text="Borrar"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>
