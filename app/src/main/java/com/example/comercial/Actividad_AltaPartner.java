@@ -7,23 +7,15 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -34,7 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class Actividad_Altasocio extends AppCompatActivity {
+public class Actividad_AltaPartner extends AppCompatActivity {
 
     EditText eNombre;
     EditText eDireccion;
@@ -49,7 +41,7 @@ public class Actividad_Altasocio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_altasocio);
+        setContentView(R.layout.layout_altapartner);
 
         eNombre = findViewById(R.id.eAltaNombre);
         eDireccion = findViewById(R.id.eAltaDireccion);
@@ -234,7 +226,7 @@ public class Actividad_Altasocio extends AppCompatActivity {
     }
 
     private void mostrarError(String mensaje, final EditText editText) {
-        dialog = new AlertDialog.Builder(Actividad_Altasocio.this);
+        dialog = new AlertDialog.Builder(Actividad_AltaPartner.this);
         dialog.setTitle("Error");
         dialog.setMessage(mensaje);
         dialog.setCancelable(false);

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.ViewHolder> {
 
     // Aquí iría la lista de datos que el adaptador manejará, por ejemplo, una lista de objetos Partner
     private List<Partner> partnerList;
@@ -19,7 +19,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private Context context;
 
     // Constructor para inicializar la lista de datos
-    public ListAdapter(List<Partner> partnerList, Context context) {
+    public PartnerListAdapter(List<Partner> partnerList, Context context) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.partnerList = partnerList;
@@ -32,16 +32,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     @Override
-    public ListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PartnerListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Aquí inflas la vista de cada elemento de la lista
         // Por ejemplo, usando LayoutInflater para inflar un layout XML personalizado
-        View view = mInflater.inflate(R.layout.list_element,parent, false);
-        return new ListAdapter.ViewHolder(view);
+        View view = mInflater.inflate(R.layout.list_element_partners,parent, false);
+        return new PartnerListAdapter.ViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(final ListAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final PartnerListAdapter.ViewHolder holder, final int position) {
         // Aquí vinculas los datos de partnerList con los elementos de la vista
         // Por ejemplo, estableciendo el texto de un TextView
         holder.bindData(partnerList.get(position));

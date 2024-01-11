@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,14 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
 
-public class CrearEventoActivity extends AppCompatActivity {
+public class Actividad_AltaEvento extends AppCompatActivity {
 
     AlertDialog.Builder dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_evento);
+        setContentView(R.layout.layout_altaevento);
 
         EditText tituloEditText = findViewById(R.id.tituloEditText);
         EditText fechaEditText = findViewById(R.id.editTextDate2);
@@ -45,7 +44,7 @@ public class CrearEventoActivity extends AppCompatActivity {
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
                 // Crear un DatePickerDialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(CrearEventoActivity.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Actividad_AltaEvento.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -124,7 +123,7 @@ public class CrearEventoActivity extends AppCompatActivity {
         return str.matches("-?\\d+(\\.\\d+)?");
     }
 
-    private boolean isValidCampo(EditText editText, String campoName, CrearEventoActivity.FieldType fieldType) {
+    private boolean isValidCampo(EditText editText, String campoName, Actividad_AltaEvento.FieldType fieldType) {
         String input = editText.getText().toString().trim();
 
         if (input.length() == 0) {
@@ -184,7 +183,7 @@ public class CrearEventoActivity extends AppCompatActivity {
     }
 
     private void mostrarError(String mensaje, final EditText editText) {
-        dialog = new AlertDialog.Builder(CrearEventoActivity.this);
+        dialog = new AlertDialog.Builder(Actividad_AltaEvento.this);
         dialog.setTitle("Error");
         dialog.setMessage(mensaje);
         dialog.setCancelable(false);

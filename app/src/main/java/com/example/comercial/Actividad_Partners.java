@@ -8,11 +8,9 @@
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.os.Bundle;
-    import android.util.Log;
     import android.util.Xml;
     import android.view.View;
     import android.widget.Button;
-    import android.widget.EditText;
     import android.widget.Toast;
 
     import org.xmlpull.v1.XmlPullParser;
@@ -33,7 +31,7 @@
 
         //PUEDES ACCEDER A LA ACTIVIDAD PARA TESTEARLA YENDO A APP>EDIT CONFIGURATIONS>Launch(Specified Activity)>actividad_partners.
 
-        ListAdapter mAdapter;
+        PartnerListAdapter mAdapter;
         RecyclerView recyclerView;
         Button bAgregar;
         Button bBorrar;
@@ -49,7 +47,7 @@
             bAgregar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Actividad_Partners.this, Actividad_Altasocio.class);
+                    Intent intent = new Intent(Actividad_Partners.this, Actividad_AltaPartner.class);
                     startActivity(intent);
                 }
             });
@@ -110,11 +108,11 @@
 
 
         private void initRecyclerView(List<Partner> partners) {
-            ListAdapter listAdapter = new ListAdapter(partners, this);
+            PartnerListAdapter partnerListAdapter = new PartnerListAdapter(partners, this);
             recyclerView = findViewById(R.id.listRecyclerView);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(listAdapter);
+            recyclerView.setAdapter(partnerListAdapter);
         }
 
         private String getNombreArchivoFecha() {

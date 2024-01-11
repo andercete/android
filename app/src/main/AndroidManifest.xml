@@ -23,7 +23,7 @@
             android:value="AIzaSyDetsWSiLa2NUcYDskClpbdhiqZdnXQMN0" />
 
         <activity
-            android:name=".Actividad_Altasocio"
+            android:name=".Actividad_AltaPartner"
             android:exported="false" />
         <activity
             android:name=".Actividad_AltaPedido"
@@ -35,13 +35,13 @@
             android:name=".Actividad_Partners"
             android:exported="false" />
         <activity
-            android:name=".CrearEventoActivity"
+            android:name=".Actividad_AltaEvento"
             android:exported="true" />
         <activity
-            android:name=".Actividad_Agenda"
+            android:name=".Actividad_Eventos"
             android:exported="false" />
         <activity
-            android:name=".Actividad_Presentacion"
+            android:name=".Actividad_Inicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,17 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
-public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoViewHolder> {
+public class EventoListAdapter extends RecyclerView.Adapter<EventoListAdapter.EventoViewHolder> {
     private List<Evento> listaEventos;
 
-    public EventoAdapter(List<Evento> listaEventos) {
+    public EventoListAdapter(List<Evento> listaEventos) {
         this.listaEventos = listaEventos;
     }
 
     @NonNull
     @Override
     public EventoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vistaEvento = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_evento, parent, false);
+        View vistaEvento = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_element_eventos, parent, false);
         return new EventoViewHolder(vistaEvento);
     }
 
@@ -39,7 +39,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
                 notifyItemRemoved(adapterPosition);
 
                 // Llamada al método guardarEventosEnSharedPreferences en MainActivity
-                ((Actividad_Agenda)holder.itemView.getContext()).guardarEventosEnSharedPreferences();
+                ((Actividad_Eventos)holder.itemView.getContext()).guardarEventosEnSharedPreferences();
             }
         });
     }

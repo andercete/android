@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 // implements OnMapReadyCallback
-public class Actividad_Presentacion extends AppCompatActivity implements OnMapReadyCallback {
+public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCallback {
     GoogleMap mMap;
     Button bCitas, bPartner, bPedidos, bDelegacion;
     ImageButton bTelefono, bEmail;
@@ -40,7 +40,7 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_presentacion);
+        setContentView(R.layout.layout_inicio);
 
         // Google Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -62,21 +62,21 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCitas = new Intent(Actividad_Presentacion.this, Actividad_Agenda.class);
+                Intent intentCitas = new Intent(Actividad_Inicio.this, Actividad_Eventos.class);
                 startActivity(intentCitas);
             }
         });
         bPartner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPartner = new Intent(Actividad_Presentacion.this, Actividad_Partners.class);
+                Intent intentPartner = new Intent(Actividad_Inicio.this, Actividad_Partners.class);
                 startActivity(intentPartner);
             }
         });
         bPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPedidos = new Intent(Actividad_Presentacion.this, Actividad_Pedidos.class);
+                Intent intentPedidos = new Intent(Actividad_Inicio.this, Actividad_Pedidos.class);
                 startActivity(intentPedidos);
             }
         });
@@ -113,8 +113,8 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
                 }
 
                 // Convertir las rutas de los archivos a  Uri usando FileProvider
-                Uri uriArchivoPartner = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPartners);
-                Uri uriArchivoPedidos = FileProvider.getUriForFile(Actividad_Presentacion.this, "com.example.comercial.fileprovider", archivoPedidos);
+                Uri uriArchivoPartner = FileProvider.getUriForFile(Actividad_Inicio.this, "com.example.comercial.fileprovider", archivoPartners);
+                Uri uriArchivoPedidos = FileProvider.getUriForFile(Actividad_Inicio.this, "com.example.comercial.fileprovider", archivoPedidos);
 
                 // Crear un ArrayList para guardar las URIs de los archivos adjuntados
                 ArrayList<Uri> archivosAdjuntos = new ArrayList<>();
@@ -178,7 +178,7 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
     }
 
     private void mostrarMensage(String mensaje) {
-        dialog = new AlertDialog.Builder(Actividad_Presentacion.this);
+        dialog = new AlertDialog.Builder(Actividad_Inicio.this);
         dialog.setTitle("Advertencia");
         dialog.setMessage(mensaje);
         dialog.setCancelable(false);
@@ -191,7 +191,7 @@ public class Actividad_Presentacion extends AppCompatActivity implements OnMapRe
         dialog.show();
     }
     private void lanzarToast(String mensaje) {
-        Toast.makeText(Actividad_Presentacion.this, mensaje, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Actividad_Inicio.this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
     private String obtenerFechaActual() {

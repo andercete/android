@@ -7,7 +7,6 @@ package com.example.comercial;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.Button;
-        import android.widget.EditText;
         import android.widget.TextView;
         import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
@@ -20,7 +19,7 @@ package com.example.comercial;
         import java.util.ArrayList;
         import java.util.List;
 
-public class Actividad_Agenda extends AppCompatActivity {
+public class Actividad_Eventos extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EventoAdapter adaptador;
     private List<Evento> listaEventos;
@@ -30,7 +29,7 @@ public class Actividad_Agenda extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_agenda);
+        setContentView(R.layout.layout_eventos);
 
         recyclerView = findViewById(R.id.recyclerView);
         listaEventos = new ArrayList<>();
@@ -43,7 +42,7 @@ public class Actividad_Agenda extends AppCompatActivity {
         cargarEventosDesdeSharedPreferences();
 
         findViewById(R.id.button).setOnClickListener(v -> {
-            Intent intent = new Intent(Actividad_Agenda.this, CrearEventoActivity.class);
+            Intent intent = new Intent(Actividad_Eventos.this, Actividad_AltaEvento.class);
             startActivityForResult(intent, CODIGO_CREAR_EVENTO);
         });
     }
@@ -96,7 +95,7 @@ public class Actividad_Agenda extends AppCompatActivity {
         @NonNull
         @Override
         public EventoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View vistaEvento = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_evento, parent, false);
+            View vistaEvento = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_element_eventos, parent, false);
             return new EventoViewHolder(vistaEvento);
         }
 
@@ -114,7 +113,7 @@ public class Actividad_Agenda extends AppCompatActivity {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     listaEventos.remove(adapterPosition);
                     notifyItemRemoved(adapterPosition);
-                    ((Actividad_Agenda)holder.itemView.getContext()).guardarEventosEnSharedPreferences();
+                    ((Actividad_Eventos)holder.itemView.getContext()).guardarEventosEnSharedPreferences();
                 }
             });
         }
