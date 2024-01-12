@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -93,11 +94,11 @@ public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCal
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("message/rfc822");
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{para});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Partners y pedidos de " + obtenerFechaActual());
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Partners y pedidos de " + Metodos.obtenerFechaActual());
 
                 // Obtener las rutas de los archivos
-                String rutaArchivoPartner = new File(getFilesDir(), "partners/" + getNombreArchivoPartners()).getAbsolutePath();
-                String rutaArchivoPedidos = new File(getFilesDir(), "pedidos/" + getNombreArchivoPedidos()).getAbsolutePath();
+                String rutaArchivoPartner = new File(getFilesDir(), "partners/" + Metodos.getNombreArchivoPartners()).getAbsolutePath();
+                String rutaArchivoPedidos = new File(getFilesDir(), "pedidos/" + Metodos.getNombreArchivoPedidos()).getAbsolutePath();
 
                 // Validar si existen los archivos
                 File archivoPartners = new File(rutaArchivoPartner);
@@ -122,7 +123,7 @@ public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCal
                 // Si no existen ni nuevos pedidos ni nuevos partners no se abrirá le correo y aparecerá el mensaje.
                 // Si solo hay un nuevo pedido/partner, solo se adjuntara ese archivo.
                 if (!existePedido && !existePartner) {
-                    mostrarMensage("No existen nuevos partners ni pedidos este día.");
+                    Metodos.mostrarAlerta("Advertencia","No existen nuevos partners ni pedidos este día.", Actividad_Inicio.this);
                     // lanzarToast("No existen nuevos partners ni pedidos este día.");
                     return;
                 } else {
@@ -144,7 +145,7 @@ public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCal
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Envío de partners y pedidos"));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
+                    Metodos.lanzarToast("Ha habido un error al intentar abrir el correo electrónico.",Actividad_Inicio.this);
                 }
             }
 
@@ -170,50 +171,11 @@ public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCal
                 try {
                     startActivity(emailIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    lanzarToast("Ha habido un error al intentar abrir el correo electrónico.");
+                    Metodos.lanzarToast("Ha habido un error al intentar abrir el correo electrónico.",Actividad_Inicio.this);
                 }
             }
 
         });
-    }
-
-    private void mostrarMensage(String mensaje) {
-        dialog = new AlertDialog.Builder(Actividad_Inicio.this);
-        dialog.setTitle("Advertencia");
-        dialog.setMessage(mensaje);
-        dialog.setCancelable(false);
-        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogo, int id) {
-                dialogo.cancel();
-            }
-        });
-        dialog.show();
-    }
-    private void lanzarToast(String mensaje) {
-        Toast.makeText(Actividad_Inicio.this, mensaje, Toast.LENGTH_SHORT).show();
-    }
-
-    private String obtenerFechaActual() {
-        String fechaActual;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        fechaActual = sdf.format(new Date());
-        return fechaActual;
-    }
-
-
-    private String getNombreArchivoPartners() {
-        String nombrearchivo;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        nombrearchivo = sdf.format(new Date()) + ".xml";
-        return nombrearchivo;
-    }
-
-    private String getNombreArchivoPedidos() {
-        String nombrearchivo;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        nombrearchivo = sdf.format(new Date()) + "_pedidos.xml";
-        return nombrearchivo;
     }
 
     @Override

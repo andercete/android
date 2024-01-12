@@ -71,26 +71,24 @@ public class Actividad_AltaPartner extends AppCompatActivity {
     }
 
     private boolean validarCampos() {
-        if (!isValidCampo(eNombre, "Nombre", FieldType.STRING)) {
+        if (!Metodos.isValidCampo(eNombre, "Nombre", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
             return false;
         }
-        if (!isValidCampo(eDireccion, "Dirección", FieldType.STRING)) {
+        if (!Metodos.isValidCampo(eDireccion, "Dirección", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
             return false;
         }
-        if (!isValidCampo(ePoblacion, "Población", FieldType.STRING)) {
+        if (!Metodos.isValidCampo(ePoblacion, "Población", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
             return false;
         }
-        if (!isValidCampo(eCif, "CIF", FieldType.STRING)) {
+        if (!Metodos.isValidCampo(eCif, "CIF", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
             return false;
         }
-        if (!isValidCampo(eTelefono, "Teléfono", FieldType.TELEPHONE)) {
+        if (!Metodos.isValidCampo(eTelefono, "Teléfono", Metodos.FieldType.TELEPHONE,Actividad_AltaPartner.this)) {
             return false;
         }
-        if (!isValidCampo(eEmail, "Email", FieldType.EMAIL)) {
+        if (!Metodos.isValidCampo(eEmail, "Email", Metodos.FieldType.EMAIL,Actividad_AltaPartner.this)) {
             return false;
         }
-
-        // Puedes agregar más validaciones según sea necesario
         return true;
     }
 
@@ -105,7 +103,7 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         );
 
         try {
-            File file = new File(new File(getFilesDir(), "partners"), getNombreArchivoFecha());
+            File file = new File(new File(getFilesDir(), "partners"), Metodos.getNombreArchivoPartners());
             Document doc;
             Element root;
 
@@ -123,12 +121,12 @@ public class Actividad_AltaPartner extends AppCompatActivity {
             }
 
             Element partnerElement = doc.createElement("partner");
-            partnerElement.appendChild(createElementWithText(doc, "nombre", nuevoSocio.getNombre()));
-            partnerElement.appendChild(createElementWithText(doc, "direccion", nuevoSocio.getDireccion()));
-            partnerElement.appendChild(createElementWithText(doc, "poblacion", nuevoSocio.getPoblacion()));
-            partnerElement.appendChild(createElementWithText(doc, "cif", nuevoSocio.getCif()));
-            partnerElement.appendChild(createElementWithText(doc, "telefono", String.valueOf(nuevoSocio.getTelefono())));
-            partnerElement.appendChild(createElementWithText(doc, "email", nuevoSocio.getEmail()));
+            partnerElement.appendChild(Metodos.createElementWithText(doc, "nombre", nuevoSocio.getNombre()));
+            partnerElement.appendChild(Metodos.createElementWithText(doc, "direccion", nuevoSocio.getDireccion()));
+            partnerElement.appendChild(Metodos.createElementWithText(doc, "poblacion", nuevoSocio.getPoblacion()));
+            partnerElement.appendChild(Metodos.createElementWithText(doc, "cif", nuevoSocio.getCif()));
+            partnerElement.appendChild(Metodos.createElementWithText(doc, "telefono", String.valueOf(nuevoSocio.getTelefono())));
+            partnerElement.appendChild(Metodos.createElementWithText(doc, "email", nuevoSocio.getEmail()));
             root.appendChild(partnerElement);
 
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -144,17 +142,6 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         }
     }
 
-    private Element createElementWithText(Document doc, String tagName, String text) {
-        Element element = doc.createElement(tagName);
-        element.appendChild(doc.createTextNode(text));
-        return element;
-    }
-
-    private String getNombreArchivoFecha() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        return sdf.format(new Date()) + ".xml";
-    }
-
     public void limpiar_vistas() {
         eNombre.setText("");
         eDireccion.setText("");
@@ -162,81 +149,5 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         eCif.setText("");
         eTelefono.setText("");
         eEmail.setText("");
-    }
-
-    private enum FieldType {
-        STRING,
-        INTEGER,
-        EMAIL,
-        TELEPHONE
-    }
-
-    private boolean isValidCampo(EditText editText, String campoName, FieldType fieldType) {
-        String input = editText.getText().toString().trim();
-        Pattern phonePattern = Pattern.compile("^[0-9]{9}$");
-
-        if (input.length() == 0) {
-            mostrarError("Por favor, ingrese un " + campoName, editText);
-            return false;
-        }
-
-        switch (fieldType) {
-            case STRING:
-                if (input.length() <= 1) {
-                    mostrarError(campoName + " debe tener más de un carácter", editText);
-                    return false;
-                }
-                // Verificar que no haya solo números en el campo de texto
-                if (isNumeric(input)) {
-                    mostrarError("El campo " + campoName + " no puede contener solo números", editText);
-                    return false;
-                }
-                // Puedes agregar más lógica específica para cadenas si es necesario
-                break;
-            case INTEGER:
-                try {
-                    int value = Integer.parseInt(input);
-                    if (value <= 0) {
-                        mostrarError(campoName + " debe ser mayor que cero", editText);
-                        return false;
-                    }
-                } catch (NumberFormatException e) {
-                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
-                    return false;
-                }
-                break;
-            case EMAIL:
-                if (!Patterns.EMAIL_ADDRESS.matcher(input).matches()) {
-                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
-                    return false;
-                }
-                break;
-            case TELEPHONE:
-                if (!phonePattern.matcher(input).matches()) {
-                    mostrarError("Por favor, ingrese un teléfono válido", editText);
-                    return false;
-                }
-                break;
-        }
-
-        return true;
-    }
-    private boolean isNumeric(String str) {
-        return str.matches("-?\\d+(\\.\\d+)?");
-    }
-
-    private void mostrarError(String mensaje, final EditText editText) {
-        dialog = new AlertDialog.Builder(Actividad_AltaPartner.this);
-        dialog.setTitle("Error");
-        dialog.setMessage(mensaje);
-        dialog.setCancelable(false);
-        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogo, int id) {
-                dialogo.cancel();
-                editText.requestFocus();
-            }
-        });
-        dialog.show();
     }
 }

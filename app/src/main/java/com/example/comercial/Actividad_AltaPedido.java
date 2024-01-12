@@ -68,10 +68,29 @@ public class Actividad_AltaPedido extends AppCompatActivity {
                     copiarXMLaAlmacenamientoInterno();
                     realizarPedido();
                     limpiar_vistas();
-                    // Puedes agregar aquí cualquier otra lógica después de realizar el pedido
                 }
             }
         });
+    }
+    private boolean validarCampos() {
+        if (!Metodos.isValidCampo(eIdPartner, "ID de Partner", Metodos.FieldType.STRING, Actividad_AltaPedido.this)) {
+            return false;
+        }
+        if (!Metodos.isValidCampo(eIdArticulo, "ID de Artículo", Metodos.FieldType.STRING,Actividad_AltaPedido.this)) {
+            return false;
+        }
+        if (!Metodos.isValidCampo(eCantidad, "Cantidad", Metodos.FieldType.INTEGER,Actividad_AltaPedido.this)) {
+            return false;
+        }
+        if (!Metodos.isValidCampo(ePoblacion, "Poblacion", Metodos.FieldType.STRING,Actividad_AltaPedido.this)) {
+            return false;
+        }
+        if (!Metodos.isValidCampo(eDescuento, "Descuento", Metodos.FieldType.PERCENTAGE,Actividad_AltaPedido.this)) {
+            return false;
+        }
+
+        // Puedes agregar más validaciones según sea necesario
+        return true;
     }
 
     private void realizarPedido() {
@@ -84,7 +103,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         );
 
         try {
-            File file = new File(new File(getFilesDir(), "pedidos"), getNombreArchivoFecha());
+            File file = new File(new File(getFilesDir(), "pedidos"), Metodos.getNombreArchivoPedidos());
             Document doc;
             Element root;
 
@@ -105,11 +124,11 @@ public class Actividad_AltaPedido extends AppCompatActivity {
 
             // Crear un nuevo elemento pedido y añadirlo al documento
             Element pedidoElement = doc.createElement("pedido");
-            pedidoElement.appendChild(createElementWithText(doc, "idPartner", nuevoPedido.getIdPartner()));
-            pedidoElement.appendChild(createElementWithText(doc, "idArticulo", nuevoPedido.getIdArticulo()));
-            pedidoElement.appendChild(createElementWithText(doc, "cantidad", String.valueOf(nuevoPedido.getCantidad())));
-            pedidoElement.appendChild(createElementWithText(doc, "poblacion", nuevoPedido.getPoblacion()));
-            pedidoElement.appendChild(createElementWithText(doc, "descuento", String.valueOf(nuevoPedido.getDescuento())));
+            pedidoElement.appendChild(Metodos.createElementWithText(doc, "idPartner", nuevoPedido.getIdPartner()));
+            pedidoElement.appendChild(Metodos.createElementWithText(doc, "idArticulo", nuevoPedido.getIdArticulo()));
+            pedidoElement.appendChild(Metodos.createElementWithText(doc, "cantidad", String.valueOf(nuevoPedido.getCantidad())));
+            pedidoElement.appendChild(Metodos.createElementWithText(doc, "poblacion", nuevoPedido.getPoblacion()));
+            pedidoElement.appendChild(Metodos.createElementWithText(doc, "descuento", String.valueOf(nuevoPedido.getDescuento())));
             root.appendChild(pedidoElement);
 
             // Guardar el documento modificado de nuevo en el archivo
@@ -125,13 +144,6 @@ public class Actividad_AltaPedido extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    private Element createElementWithText(Document doc, String tagName, String text) {
-        Element element = doc.createElement(tagName);
-        element.appendChild(doc.createTextNode(text));
-        return element;
-    }
-
     private void copiarXMLaAlmacenamientoInterno() {
         // Crear la carpeta 'pedidos' dentro de 'files'
         File directorioPedidos = new File(getFilesDir(), "pedidos");
@@ -140,7 +152,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         }
 
         // Crear el archivo en la carpeta 'pedidos'
-        File file = new File(directorioPedidos, getNombreArchivoFecha());
+        File file = new File(directorioPedidos, Metodos.getNombreArchivoPedidos());
         if (!file.exists()) {
             try {
                 InputStream in = getAssets().open("pedidos.xml");
@@ -158,119 +170,6 @@ public class Actividad_AltaPedido extends AppCompatActivity {
             }
         }
     }
-
-    private String getNombreArchivoFecha() {
-        String nombrearchivo;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        nombrearchivo = sdf.format(new Date()) + "_pedidos.xml";
-        return nombrearchivo;
-    }
-
-    private boolean validarCampos() {
-        if (!isValidCampo(eIdPartner, "ID de Partner", FieldType.STRING)) {
-            return false;
-        }
-        if (!isValidCampo(eIdArticulo, "ID de Artículo", FieldType.STRING)) {
-            return false;
-        }
-        if (!isValidCampo(eCantidad, "Cantidad", FieldType.INTEGER)) {
-            return false;
-        }
-        if (!isValidCampo(ePoblacion, "Poblacion", FieldType.STRING)) {
-            return false;
-        }
-        if (!isValidCampo(eDescuento, "Descuento", FieldType.PERCENTAGE)) {
-            return false;
-        }
-
-        // Puedes agregar más validaciones según sea necesario
-        return true;
-    }
-
-    private enum FieldType {
-        STRING,
-        INTEGER,
-        FLOAT,
-        PERCENTAGE
-    }
-    private boolean isNumeric(String str) {
-        return str.matches("-?\\d+(\\.\\d+)?");
-    }
-
-    private boolean isValidCampo(EditText editText, String campoName, FieldType fieldType) {
-        String input = editText.getText().toString().trim();
-
-        if (input.length() == 0) {
-            mostrarError("Por favor, ingrese un " + campoName, editText);
-            return false;
-        }
-
-        switch (fieldType) {
-            case STRING:
-                if (input.length() <= 1) {
-                    mostrarError(campoName + " debe tener más de un carácter", editText);
-                    return false;
-                }if (isNumeric(input)) {
-                    mostrarError("El campo " + campoName + " no puede contener solo números", editText);
-                    return false;
-                }
-                break;
-            case INTEGER:
-                try {
-                    int value = Integer.parseInt(input);
-                    if (value <= 0) {
-                        mostrarError(campoName + " debe ser mayor que cero", editText);
-                        return false;
-                    }
-                } catch (NumberFormatException e) {
-                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
-                    return false;
-                }
-                break;
-            case FLOAT:
-                try {
-                    float value = Float.parseFloat(input);
-                    if (value <= 0) {
-                        mostrarError(campoName + " debe ser mayor que cero", editText);
-                        return false;
-                    }
-                } catch (NumberFormatException e) {
-                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
-                    return false;
-                }
-                break;
-            case PERCENTAGE:
-                try {
-                    float value = Float.parseFloat(input);
-                    if (value < 0 || value > 100) {
-                        mostrarError(campoName + " debe estar entre 0 y 100", editText);
-                        return false;
-                    }
-                } catch (NumberFormatException e) {
-                    mostrarError("Por favor, ingrese un " + campoName + " válido", editText);
-                    return false;
-                }
-                break;
-        }
-
-        return true;
-    }
-
-    private void mostrarError(String mensaje, final EditText editText) {
-        dialog = new AlertDialog.Builder(Actividad_AltaPedido.this);
-        dialog.setTitle("Error");
-        dialog.setMessage(mensaje);
-        dialog.setCancelable(false);
-        dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogo, int id) {
-                dialogo.cancel();
-                editText.requestFocus();
-            }
-        });
-        dialog.show();
-    }
-
     public void limpiar_vistas() {
         eIdPartner.setText("");
         eIdArticulo.setText("");

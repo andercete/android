@@ -115,12 +115,6 @@
             recyclerView.setAdapter(partnerListAdapter);
         }
 
-        private String getNombreArchivoFecha() {
-            String nombrearchivo;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            nombrearchivo = sdf.format(new Date()) + ".xml";
-            return nombrearchivo;
-        }
         private List<Partner> parsePartnersXML() {
             List<Partner> partners = new ArrayList<>();
             File directory = new File(getFilesDir(), "partners");
@@ -131,7 +125,7 @@
                     partners.addAll(parseXMLFile(partnersDelegacion));
             } else
             {
-                mostrarError("Ha habido un error al intentar importar los partners enviados desde delegación");
+                Metodos.mostrarAlerta("Error","Ha habido un error al intentar importar los partners enviados desde delegación",Actividad_Partners.this);
             }
 
             // Verificar si el directorio existe y contiene archivos
@@ -141,7 +135,7 @@
                 if (files != null) {
                     for (File file : files) {
                         if (file.isFile() && file.getName().endsWith(".xml")) {
-                            if (file.getName().equalsIgnoreCase(getNombreArchivoFecha())) {
+                            if (file.getName().equalsIgnoreCase(Metodos.getNombreArchivoPartners())) {
                                 partners.addAll(parseXMLFile(file));
                             }
                         }
@@ -150,21 +144,6 @@
             }
             return partners;
         }
-
-        private void mostrarError(String mensaje) {
-            dialog = new AlertDialog.Builder(Actividad_Partners.this);
-            dialog.setTitle("Error");
-            dialog.setMessage(mensaje);
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogo, int id) {
-                    dialogo.cancel();
-                }
-            });
-            dialog.show();
-        }
-
         // Método para parsear tu XML de partners
         private List<Partner> parseXMLFile(File file) {
             List<Partner> partnersInFile = new ArrayList<>();
@@ -248,7 +227,7 @@
      //  Metodo para borrar registros, se puede asignar a un boton
         // En la linea de File file se pone el nombre del archivo xml a borrar (actualmente esta puesto para borrar archivos de el dia de hoy)
       private void borrarRegistros() {
-            File file = new File(new File(getFilesDir(), "partners"), getNombreArchivoFecha());
+            File file = new File(new File(getFilesDir(), "partners"), Metodos.getNombreArchivoPartners());
             if (file.exists()) {
                 boolean deleted = file.delete();
                 if (deleted) {
@@ -258,23 +237,6 @@
                 }
             }
             recreate();
-        }
-
-
-
-
-        private void mostrarMensage(String mensaje) {
-            dialog = new AlertDialog.Builder(Actividad_Partners.this);
-            dialog.setTitle("Advertencia");
-            dialog.setMessage(mensaje);
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogo, int id) {
-                    dialogo.cancel();
-                }
-            });
-            dialog.show();
         }
     }
 

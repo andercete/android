@@ -63,14 +63,6 @@ public class Actividad_Pedidos extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(PedidoListAdapter);
     }
-
-    private String getNombreArchivoFecha() {
-        String nombrearchivo;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        nombrearchivo = sdf.format(new Date()) + "_pedidos.xml";
-        return nombrearchivo;
-    }
-
     private List<Pedido> parsePedidosXML() {
         List<Pedido> pedidos = new ArrayList<>();
         File directory = new File(getFilesDir(), "pedidos");
@@ -81,7 +73,7 @@ public class Actividad_Pedidos extends AppCompatActivity {
             if (files != null) {
                 for (File file : files) {
                     if (file.isFile() && file.getName().endsWith("_pedidos.xml")) {
-                        if (file.getName().equalsIgnoreCase(getNombreArchivoFecha()))
+                        if (file.getName().equalsIgnoreCase(Metodos.getNombreArchivoPedidos()))
                         {
                             pedidos.addAll(parseXMLFile(file));
                         }
@@ -166,7 +158,7 @@ public class Actividad_Pedidos extends AppCompatActivity {
     }
 
     private void borrarRegistros() {
-        File file = new File(new File(getFilesDir(), "pedidos"), getNombreArchivoFecha());
+        File file = new File(new File(getFilesDir(), "pedidos"), Metodos.getNombreArchivoPedidos());
         if (file.exists()) {
             boolean deleted = file.delete();
             if (deleted) {
