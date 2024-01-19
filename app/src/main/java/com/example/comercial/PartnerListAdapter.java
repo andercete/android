@@ -1,6 +1,7 @@
 package com.example.comercial;
 //Clase MyAdapter, necesaria para el uso de RecyclerView (programado en Actividad_Partners)
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +43,32 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
 
     @Override
     public void onBindViewHolder(final PartnerListAdapter.ViewHolder holder, final int position) {
-        // Aquí vinculas los datos de partnerList con los elementos de la vista
-        // Por ejemplo, estableciendo el texto de un TextView
+        // Vincula los datos del ítem con la vista
         holder.bindData(partnerList.get(position));
+
+        // Establece el listener para el clic
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtén la posición actual del ítem
+                int currentPosition = holder.getBindingAdapterPosition();
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    // Ahora usa esta posición actualizada para obtener los datos
+                    Partner currentPartner = partnerList.get(currentPosition);
+
+                    // Aquí manejas el clic en el ítem
+                    Intent intent = new Intent(context, Actividad_PartnerPedidos.class);
+                    // Suponiendo que Partner tiene un método getId() para obtener un identificador único
+                    intent.putExtra("partnerNombre", currentPartner.getNombre());
+                    intent.putExtra("partnerDireccion", currentPartner.getDireccion());
+                    intent.putExtra("partnerPoblacion", currentPartner.getPoblacion());
+                    intent.putExtra("partnerCif", currentPartner.getCif());
+                    intent.putExtra("partnerTelefono", currentPartner.getTelefono());
+                    intent.putExtra("partnerEmail", currentPartner.getEmail());
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     public void setItems(List<Partner> items) {
