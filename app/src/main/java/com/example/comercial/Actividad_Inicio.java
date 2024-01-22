@@ -31,8 +31,8 @@ import java.util.Date;
 import java.util.Locale;
 
 // implements OnMapReadyCallback
-public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCallback {
-    GoogleMap mMap;
+public class Actividad_Inicio extends AppCompatActivity {
+    //GoogleMap mMap;
     Button bCitas, bPartner, bPedidos, bDelegacion;
     ImageButton bTelefono, bEmail;
     AlertDialog.Builder dialog;
@@ -43,14 +43,14 @@ public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_inicio);
 
-        // Google Maps
+        /* Google Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         try {
             mapFragment.getMapAsync(this);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         bCitas = findViewById(R.id.bPresentacionCitas);
         bPartner = findViewById(R.id.bPresentacionPartners);
@@ -178,7 +178,7 @@ public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
-    @Override
+  /*  @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         // this.mMap.setOnMapClickListener(this);
@@ -188,5 +188,5 @@ public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCal
         mMap.addMarker(new MarkerOptions().position(donosti).title("Gurmet Euskadi Market"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(donosti));
 
-    }
+    }*/
 }
