@@ -1,12 +1,10 @@
-    package com.example.comercial;
+    package com.example.comercial.partners;
 
-    import androidx.appcompat.app.AlertDialog;
     import androidx.appcompat.app.AppCompatActivity;
     import androidx.recyclerview.widget.LinearLayoutManager;
     import androidx.recyclerview.widget.RecyclerView;
 
     import android.app.Activity;
-    import android.content.DialogInterface;
     import android.content.Intent;
     import android.database.Cursor;
     import android.net.Uri;
@@ -17,6 +15,10 @@
     import android.widget.Button;
     import android.widget.Toast;
 
+    import com.example.comercial.DBHelper;
+    import com.example.comercial.Metodos;
+    import com.example.comercial.R;
+
     import org.xmlpull.v1.XmlPullParser;
     import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -26,11 +28,8 @@
     import java.io.IOException;
     import java.io.InputStream;
     import java.io.OutputStream;
-    import java.text.SimpleDateFormat;
     import java.util.ArrayList;
-    import java.util.Date;
     import java.util.List;
-    import java.util.Locale;
 
     public class Actividad_Partners extends AppCompatActivity {
 
@@ -111,7 +110,7 @@
 
                 // Llama a un método para insertar los datos en la base de datos
                 for (Partner partner : partners) {
-                    DatabaseHelper.insertarPartner(partner);
+                    DBHelper.insertarPartner(partner);
                 }
 
                 inputStream.close();

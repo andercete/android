@@ -1,10 +1,12 @@
-package com.example.comercial;
+package com.example.comercial.pedidos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.comercial.R;
 
 public class Actividad_PartnerPedidos extends AppCompatActivity {
 

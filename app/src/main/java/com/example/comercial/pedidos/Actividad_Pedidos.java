@@ -1,4 +1,4 @@
-package com.example.comercial;
+package com.example.comercial.pedidos;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comercial.Metodos;
+import com.example.comercial.R;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class Actividad_Pedidos extends AppCompatActivity {
 

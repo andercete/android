@@ -1,5 +1,5 @@
-package com.example.comercial;
-// CrearEventoActivity.java
+package com.example.comercial.calendario;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comercial.Metodos;
+import com.example.comercial.R;
 
 import java.util.Calendar;
 

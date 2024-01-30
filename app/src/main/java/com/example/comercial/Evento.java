@@ -2,31 +2,65 @@ package com.example.comercial;
 
 // Evento.java
 public class Evento {
-    private String titulo;
-    private String fecha;
-    private String ubicacion;
-    private String descripcion;
+    private int id; // Added id property
+    private String title;
+    private String date;
+    private String time;
+    private String description;
 
-    public Evento(String titulo, String fecha, String ubicacion, String descripcion) {
-        this.titulo = titulo;
-        this.fecha = fecha;
-        this.ubicacion = ubicacion;
-        this.descripcion = descripcion;
+    // Default constructor
+    public Evento() {
     }
 
-    public String getTitulo() {
-        return titulo;
+    // Constructor with parameters
+    public Evento(int id, String title, String date, String time, String description) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.time = time;
+        this.description = description;
     }
 
-    public String getFecha() {
-        return fecha;
+    // Getter methods
+    public int getId() {
+        return id;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public String getTitle() {
+        return title;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    // Setter methods (if needed)
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

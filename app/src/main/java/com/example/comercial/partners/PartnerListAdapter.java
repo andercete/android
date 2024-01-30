@@ -1,4 +1,4 @@
-package com.example.comercial;
+package com.example.comercial.partners;
 //Clase MyAdapter, necesaria para el uso de RecyclerView (programado en Actividad_Partners)
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comercial.pedidos.Actividad_PartnerPedidos;
+import com.example.comercial.R;
 
 import java.util.List;
 
