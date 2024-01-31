@@ -54,34 +54,6 @@
         map:cameraZoom="13"
         map:uiZoomControls="true" /> !-->
 
-    <ImageButton
-        android:id="@+id/bTelefono"
-        android:layout_width="@android:dimen/app_icon_size"
-        android:layout_height="@android:dimen/app_icon_size"
-        android:background="@android:color/transparent"
-        android:contentDescription="Icono email"
-        android:scaleType="centerInside"
-        android:src="@drawable/iconotlf"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bEmail"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
-
-    <ImageButton
-        android:id="@+id/bEmail"
-        android:layout_width="@android:dimen/app_icon_size"
-        android:layout_height="@android:dimen/app_icon_size"
-        android:background="@android:color/transparent"
-        android:contentDescription="Icono telefono"
-        android:scaleType="centerInside"
-        android:src="@drawable/iconemail"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/bTelefono"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -93,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/eUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -113,17 +85,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/eContra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
+        app:layout_constraintStart_toStartOf="@+id/eUsuario"
         app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bLogin"
         android:layout_width="125dp"
         android:layout_height="47dp"
         android:layout_marginTop="70dp"
@@ -131,6 +103,6 @@
         app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/eContra" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

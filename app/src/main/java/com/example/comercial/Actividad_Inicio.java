@@ -42,9 +42,9 @@ public class Actividad_Inicio extends AppCompatActivity {
             Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
         }*/
 
-        bCitas = findViewById(R.id.bPresentacionCitas);
+        bCitas = findViewById(R.id.bAgenda);
         bPartner = findViewById(R.id.bPresentacionPartners);
-        bPedidos = findViewById(R.id.bPresentacionPedidos);
+        bPedidos = findViewById(R.id.bCatalogo);
         bDelegacion = findViewById(R.id.bPresentacionDelegacion);
 
         bTelefono = findViewById(R.id.bTelefono);

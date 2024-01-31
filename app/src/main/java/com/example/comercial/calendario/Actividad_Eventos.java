@@ -32,7 +32,7 @@ public class Actividad_Eventos extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         eventList = dbHelper.getAllEventos();
 
-        botonAbrirActividad = findViewById(R.id.button);
+        botonAbrirActividad = findViewById(R.id.bLogin);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
