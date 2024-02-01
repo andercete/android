@@ -1,4 +1,4 @@
-package com.example.comercial;
+package com.example.comercial.partners;
 
 public class Partner {
 

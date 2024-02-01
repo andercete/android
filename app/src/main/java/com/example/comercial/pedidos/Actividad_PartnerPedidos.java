@@ -1,4 +1,4 @@
-package com.example.comercial;
+package com.example.comercial.pedidos;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +17,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.comercial.R;
 
 public class Actividad_PartnerPedidos extends AppCompatActivity {
     PedidoListAdapter mAdapter;

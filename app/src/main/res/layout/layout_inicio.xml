@@ -61,12 +61,12 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
-        android:text="Gestion de Partners"
+        android:text="Partners"
         app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bPresentacionCitas" />
+        app:layout_constraintTop_toBottomOf="@+id/bAgenda" />
 
     <Button
         android:id="@+id/bPresentacionDelegacion"
@@ -80,16 +80,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bPresentacionPedidos" />
+        app:layout_constraintTop_toBottomOf="@+id/bCatalogo" />
 
     <Button
-        android:id="@+id/bPresentacionCitas"
+        android:id="@+id/bAgenda"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
-        android:text="Calendario de Citas"
+        android:text="Agenda"
         app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
 
@@ -98,13 +98,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/bPresentacionPedidos"
+        android:id="@+id/bCatalogo"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
-        android:text="Gestion de pedidos"
+        android:text="Catalogo"
         app:cornerRadius="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.545"

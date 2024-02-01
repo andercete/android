@@ -1,4 +1,4 @@
-package com.example.comercial;
+package com.example.comercial.pedidos;
 
 public class Pedido {
 
