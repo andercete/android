@@ -22,10 +22,10 @@ public class Actividad_Login extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        usernameEditText = findViewById(R.id.editTextText);
-        passwordEditText = findViewById(R.id.editTextTextPassword);
+        usernameEditText = findViewById(R.id.eUsuario);
+        passwordEditText = findViewById(R.id.eContra);
 
-        Button loginButton = findViewById(R.id.button);
+        Button loginButton = findViewById(R.id.bLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

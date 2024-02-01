@@ -102,7 +102,6 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
             cif.setText(item.getCif());
             telefono.setText(String.valueOf(item.getTelefono()));
             email.setText(item.getEmail());
-
         }
     }
 }

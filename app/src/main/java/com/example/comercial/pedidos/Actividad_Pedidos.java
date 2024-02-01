@@ -43,7 +43,7 @@ public class Actividad_Pedidos extends AppCompatActivity {
             }
         });
 
-        bBorrarPedido = findViewById(R.id.bBorrar2);
+     //   bBorrarPedido = findViewById(R.id.bBorrar2);
         bBorrarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

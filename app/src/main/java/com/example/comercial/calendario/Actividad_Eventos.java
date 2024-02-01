@@ -59,4 +59,7 @@ public class Actividad_Eventos extends AppCompatActivity {
             eventAdapter.notifyDataSetChanged();
         }
     }
+
+    public void guardarEventosEnSharedPreferences() {
+    }
 }

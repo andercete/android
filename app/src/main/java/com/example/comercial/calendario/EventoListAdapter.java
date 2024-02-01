@@ -29,10 +29,10 @@ public class EventoListAdapter extends RecyclerView.Adapter<EventoListAdapter.Ev
     @Override
     public void onBindViewHolder(@NonNull EventoViewHolder holder, int position) {
         Evento evento = listaEventos.get(position);
-        holder.tituloTextView.setText(evento.getTitulo());
-        holder.fechaTextView.setText("Fecha: " + evento.getFecha());
-        holder.ubicacionTextView.setText("Ubicación: " + evento.getUbicacion());
-        holder.descripcionTextView.setText("Descripción: " + evento.getDescripcion());
+        holder.tituloTextView.setText(evento.getTitle());
+        holder.fechaTextView.setText("Fecha: " + evento.getDate());
+      //  holder.ubicacionTextView.setText("Ubicación: " + evento.getUbicacion());
+        holder.descripcionTextView.setText("Descripción: " + evento.getDescription());
 
         // Manejar el clic del botón de borrar
         holder.borrarButton.setOnClickListener(v -> {
@@ -51,6 +51,9 @@ public class EventoListAdapter extends RecyclerView.Adapter<EventoListAdapter.Ev
     @Override
     public int getItemCount() {
         return listaEventos.size();
+    }
+
+    public void setEventList(List<Evento> eventList) {
     }
 
     public static class EventoViewHolder extends RecyclerView.ViewHolder {

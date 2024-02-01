@@ -109,9 +109,9 @@
                 List<Partner> partners = parseXMLFile(uriToFile(uri));
 
                 // Llama a un método para insertar los datos en la base de datos
-                for (Partner partner : partners) {
-                    DBHelper.insertarPartner(partner);
-                }
+             //   for (Partner partner : partners) {
+            //        DBHelper.insertarPartner(partner);
+            //    }
 
                 inputStream.close();
 

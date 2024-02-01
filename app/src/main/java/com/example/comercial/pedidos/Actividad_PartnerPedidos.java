@@ -14,10 +14,14 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.comercial.Metodos;
 import com.example.comercial.R;
 
 public class Actividad_PartnerPedidos extends AppCompatActivity {
@@ -53,10 +57,47 @@ public class Actividad_PartnerPedidos extends AppCompatActivity {
         tTelefono.setText(String.valueOf(telefono));
         tEmail.setText(email);
 
+        copiarXMLaAlmacenamientoInterno();
+
         List<Pedido> pedidosList = parsePedidosXML();
 
         initRecyclerView(pedidosList);
 
+    }
+    private void copiarXMLaAlmacenamientoInterno() {
+        // Crear la carpeta 'partners' dentro de 'files'
+        File directorioPedidos = new File(getFilesDir(), "pedidos");
+        if (!directorioPedidos.exists()) {
+            directorioPedidos.mkdirs();
+        }
+
+        // Crear el archivo en la carpeta 'partners'
+        File file = new File(directorioPedidos, "PEDIDOS.xml");
+
+        try {
+            // Obtener el nombre del archivo desde los recursos
+            String nombreArchivo = "pedidos.xml";  // Reemplazar con el nombre correcto si es diferente
+
+            // Abrir el archivo desde los recursos de la aplicación
+            InputStream in = getAssets().open(nombreArchivo);
+
+            // Crear un nuevo archivo en la carpeta 'partners'
+            OutputStream out = new FileOutputStream(file);
+
+            // Copiar el contenido del archivo desde los recursos al almacenamiento interno
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            // Cerrar los flujos de entrada y salida
+            in.close();
+            out.flush();
+            out.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void initRecyclerView(List<Pedido> pedidos) {
         PedidoListAdapter PedidoListAdapter = new PedidoListAdapter(pedidos, this);
