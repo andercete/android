@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 
 import com.example.comercial.calendario.Actividad_Eventos;
 import com.example.comercial.partners.Actividad_Partners;
-import com.example.comercial.pedidos.Actividad_Pedidos;
+import com.example.comercial.Catalogo.Actividad_Catalogo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 // implements OnMapReadyCallback
 public class Actividad_Inicio extends AppCompatActivity {
     //GoogleMap mMap;
-    Button bCitas, bPartner, bPedidos, bDelegacion;
+    Button bCitas, bPartner, bCatalogo, bDelegacion;
     ImageButton bTelefono, bEmail;
     AlertDialog.Builder dialog;
 
@@ -44,7 +44,7 @@ public class Actividad_Inicio extends AppCompatActivity {
 
         bCitas = findViewById(R.id.bAgenda);
         bPartner = findViewById(R.id.bPresentacionPartners);
-        bPedidos = findViewById(R.id.bCatalogo);
+        bCatalogo = findViewById(R.id.bCatalogo);
         bDelegacion = findViewById(R.id.bPresentacionDelegacion);
 
         bTelefono = findViewById(R.id.bTelefono);
@@ -64,10 +64,10 @@ public class Actividad_Inicio extends AppCompatActivity {
                 startActivity(intentPartner);
             }
         });
-        bPedidos.setOnClickListener(new View.OnClickListener() {
+        bCatalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPedidos = new Intent(Actividad_Inicio.this, Actividad_Pedidos.class);
+                Intent intentPedidos = new Intent(Actividad_Inicio.this, Actividad_Catalogo.class);
                 startActivity(intentPedidos);
             }
         });

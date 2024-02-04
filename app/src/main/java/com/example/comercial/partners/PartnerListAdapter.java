@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comercial.pedidos.Actividad_PartnerPedidos;
 import com.example.comercial.R;
 
 import java.util.List;
@@ -86,7 +85,7 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
         public ViewHolder(View itemView) {
             super(itemView);
             // Aquí inicializas los componentes de la vista
-            iconImage = itemView.findViewById(R.id.iconImageView);
+            iconImage = itemView.findViewById(R.id.iconImageCatalogoView);
             nombre = itemView.findViewById(R.id.nombreTextView);
             direccion = itemView.findViewById(R.id.direccionTextView);
             poblacion = itemView.findViewById(R.id.poblacionTextView);

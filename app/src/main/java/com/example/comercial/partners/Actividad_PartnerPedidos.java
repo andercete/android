@@ -1,4 +1,4 @@
-package com.example.comercial.pedidos;
+package com.example.comercial.partners;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Xml;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +25,16 @@ import java.util.List;
 
 import com.example.comercial.Metodos;
 import com.example.comercial.R;
+import com.example.comercial.Catalogo.Actividad_Catalogo;
+import com.example.comercial.pedidos.Pedido;
+import com.example.comercial.pedidos.PedidoListAdapter;
 
 public class Actividad_PartnerPedidos extends AppCompatActivity {
     PedidoListAdapter mAdapter;
     RecyclerView recyclerView;
 
     TextView tNombre,tDireccion,tPoblacion,tCif,tTelefono,tEmail;
+    Button bAgregar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,7 @@ public class Actividad_PartnerPedidos extends AppCompatActivity {
         tCif = findViewById(R.id.tCif);
         tTelefono = findViewById(R.id.tTelefono);
         tEmail = findViewById(R.id.tEmail);
+        bAgregar = findViewById(R.id.bAgregarPedido);
 
         Intent intent = getIntent();
         String nombre = intent.getStringExtra("partnerNombre");
@@ -56,6 +63,14 @@ public class Actividad_PartnerPedidos extends AppCompatActivity {
         tCif.setText(cif);
         tTelefono.setText(String.valueOf(telefono));
         tEmail.setText(email);
+
+        bAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedidos = new Intent (Actividad_PartnerPedidos.this, Actividad_Catalogo.class);
+                startActivity(pedidos);
+            }
+        });
 
         copiarXMLaAlmacenamientoInterno();
 
@@ -107,85 +122,87 @@ public class Actividad_PartnerPedidos extends AppCompatActivity {
     }
     private List<Pedido> parsePedidosXML() {
         List<Pedido> pedidos = new ArrayList<>();
-        File directory = new File(getFilesDir(), "pedidos");
+        try {
+            InputStream inputStream = getAssets().open("pedidos.xml");
+            pedidos = parseXMLFile(inputStream); // Directamente usar el inputStream
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return pedidos;
+    }
+    private List<Pedido> parseXMLFile(InputStream inputStream) {
+        List<Pedido> pedidos = new ArrayList<>();
+        try {
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(inputStream, null);
 
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile() && file.getName().endsWith("_pedidos.xml")) {
-                        if (file.getName().equalsIgnoreCase(Metodos.getNombreArchivoPedidos()))
-                        {
-                            pedidos.addAll(parseXMLFile(file));
+            Pedido currentPedido = null;
+            String currentTag = null; // Variable para mantener la etiqueta actual
+            int eventType = parser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                String tagName = parser.getName();
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        if ("pedido".equals(tagName)) {
+                            currentPedido = new Pedido();
+                            currentTag = ""; // Reiniciar currentTag al comenzar una nueva etiqueta
+                        } else {
+                            currentTag = tagName; // Asignar el nombre de la etiqueta actual a currentTag
                         }
-                    }
+                        break;
+                    case XmlPullParser.TEXT:
+                        if (currentPedido != null && currentTag != null) {
+                            String text = parser.getText();
+                            switch (currentTag) {
+                                case "idPartner":
+                                    currentPedido.setIdPartner(text);
+                                    break;
+                                case "idArticulo":
+                                    currentPedido.setIdArticulo(text);
+                                    break;
+                                case "cantidad":
+                                    try {
+                                        currentPedido.setCantidad(Integer.parseInt(text));
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace(); // En caso de que el texto no sea un entero válido
+                                    }
+                                    break;
+                                case "descuento":
+                                    try {
+                                        currentPedido.setDescuento(Float.parseFloat(text));
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace(); // En caso de que el texto no sea un flotante válido
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if ("pedido".equals(tagName) && currentPedido != null) {
+                            pedidos.add(currentPedido);
+                            currentPedido = null;
+                            currentTag = null; // Limpiar currentTag al finalizar una etiqueta
+                        }
+                        break;
                 }
+                eventType = parser.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close(); // Asegurarse de cerrar el inputStream
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return pedidos;
     }
 
-    private List<Pedido> parseXMLFile(File file) {
-        List<Pedido> pedidosInFile = new ArrayList<>();
-        Pedido currentPedido = null;
-        String currentTag = null;
 
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(inputStream, null);
-
-            int eventType = parser.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                String tagName = parser.getName();
-
-                switch (eventType) {
-                    case XmlPullParser.START_TAG:
-                        if ("pedido".equals(tagName)) {
-                            currentPedido = new Pedido();
-                        }
-                        currentTag = tagName;
-                        break;
-
-                    case XmlPullParser.TEXT:
-                        if (currentPedido != null && currentTag != null) {
-                            switch (currentTag) {
-                                case "idPartner":
-                                    currentPedido.setIdPartner(parser.getText());
-                                    break;
-                                case "idArticulo":
-                                    currentPedido.setIdArticulo(parser.getText());
-                                    break;
-                                case "cantidad":
-                                    currentPedido.setCantidad(Integer.parseInt(parser.getText()));
-                                    break;
-                                case "descuento":
-                                    currentPedido.setDescuento(Float.parseFloat(parser.getText()));
-                                    break;
-                            }
-                        }
-                        break;
-
-                    case XmlPullParser.END_TAG:
-                        if ("pedido".equals(tagName) && currentPedido != null) {
-                            pedidosInFile.add(currentPedido);
-                            currentPedido = null;
-                        }
-                        currentTag = null;
-                        break;
-                }
-                eventType = parser.next();
-            }
-
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return pedidosInFile;
-    }
 
     @Override
     protected void onResume() {
