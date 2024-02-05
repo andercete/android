@@ -1,4 +1,4 @@
-package com.example.comercial;
+package com.example.comercial.BBDD;
 
 // Evento.java
 public class Evento {

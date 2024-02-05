@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.comercial.DBHelper;
-import com.example.comercial.Evento;
+import com.example.comercial.BBDD.DBHelper;
+import com.example.comercial.BBDD.Evento;
 import com.example.comercial.R;
 
 import java.util.List;

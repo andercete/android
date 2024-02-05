@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comercial.BBDD.Pedido;
 import com.example.comercial.Metodos;
 import com.example.comercial.R;
 

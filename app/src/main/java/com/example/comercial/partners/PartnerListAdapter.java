@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comercial.BBDD.Partner;
 import com.example.comercial.pedidos.Actividad_PartnerPedidos;
 import com.example.comercial.R;
 

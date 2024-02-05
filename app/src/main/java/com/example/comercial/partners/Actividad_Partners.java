@@ -15,7 +15,7 @@
     import android.widget.Button;
     import android.widget.Toast;
 
-    import com.example.comercial.DBHelper;
+    import com.example.comercial.BBDD.Partner;
     import com.example.comercial.Metodos;
     import com.example.comercial.R;
 
