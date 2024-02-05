@@ -2,20 +2,19 @@ package com.example.comercial;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.comercial.BBDD.AnderBD;
-import android.database.sqlite.SQLiteDatabase;
-
-
+import com.example.comercial.BBDD.Comerciales;
 
 public class Actividad_Login extends AppCompatActivity {
 
     private AnderBD helper;
-    private EditText eUsuario, eContra;
+    private EditText eDNI, eContra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +22,11 @@ public class Actividad_Login extends AppCompatActivity {
         setContentView(R.layout.layout_login); // Asegúrate de que este es el nombre correcto de tu layout de login.
 
         helper = new AnderBD(this);
-        eUsuario = findViewById(R.id.eUsuario);
+        eDNI = findViewById(R.id.eUsuario);
         eContra = findViewById(R.id.eContra);
+
+        // Añadir un comercial por defecto al iniciar la aplicación
+        añadirComercialPorDefecto();
 
         findViewById(R.id.bLogin).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,25 +36,29 @@ public class Actividad_Login extends AppCompatActivity {
         });
     }
 
+    private void añadirComercialPorDefecto() {
+        if (!helper.existeComercial("72538203k")) {
+            helper.addComercial(new Comerciales(0, 1, "Nombre Por Defecto", "Apellido Por Defecto", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203k", "000000000"));
+        }
+    }
+
     private void login() {
-        String usuario = eUsuario.getText().toString();
+        String dni = eDNI.getText().toString();
         String contraseña = eContra.getText().toString();
-        if (validateLogin(usuario, contraseña)) {
-            // Si el login es correcto, puedes iniciar una nueva actividad o lo que necesites hacer después del login
+        if (validateLogin(dni, contraseña)) {
             Intent i = new Intent(Actividad_Login.this, Actividad_Inicio.class);
             startActivity(i);
             finish();
         } else {
-            // Si el login es incorrecto, muestra un mensaje
             Toast.makeText(Actividad_Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private boolean validateLogin(String usuario, String contraseña) {
+    private boolean validateLogin(String dni, String contraseña) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        String[] columns = {"IdComercial", "Contraseña"};
-        String selection = "Nombre=? AND Contraseña=?";
-        String[] selectionArgs = {usuario, contraseña};
+        String[] columns = {"DNI", "Contraseña"};
+        String selection = "DNI=? AND Contraseña=?";
+        String[] selectionArgs = {dni, contraseña};
 
         Cursor cursor = db.query("COMERCIALES", columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();

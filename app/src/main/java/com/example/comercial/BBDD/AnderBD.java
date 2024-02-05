@@ -722,6 +722,18 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
         return id;
     }
+    public void deleteAllPartners() {
+        // Obtiene la base de datos en modo escritura
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Ejecuta la sentencia SQL para borrar todos los registros
+        db.execSQL("DELETE FROM PARTNERS");
+
+        // Opcional: Si también deseas reiniciar el contador del ID autoincremental, puedes descomentar la siguiente línea
+        // db.execSQL("DELETE FROM sqlite_sequence WHERE name='PARTNERS'"); // Cuidado al usar, ya que reiniciará los IDs
+
+        db.close(); // Cierra la base de datos para liberar recursos
+    }
 
     // Método para obtener un registro en CAB_PEDIDOS por su ID
     public CabPedidos getCabPedido(long id) {
@@ -957,5 +969,32 @@ public class AnderBD extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return lineaPedidoList;
+    }
+    public boolean existeComercial(String dni) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define las columnas que quieres obtener en tu consulta.
+        // En este caso, solo necesitas una columna para verificar la existencia, pero debes especificar al menos una.
+        String[] columns = {"DNI"};
+
+        // Define la cláusula WHERE de tu consulta.
+        String selection = "DNI = ?";
+
+        // Define los argumentos para reemplazar los placeholders (?) en la cláusula WHERE.
+        String[] selectionArgs = {dni};
+
+        // Realiza la consulta a la tabla COMERCIALES.
+        Cursor cursor = db.query("COMERCIALES", columns, selection, selectionArgs, null, null, null);
+
+        // Verifica si el cursor tiene al menos un resultado.
+        boolean exists = cursor.moveToFirst();
+
+        // Cierra el cursor para liberar recursos.
+        cursor.close();
+
+        // Cierra la conexión a la base de datos.
+        db.close();
+
+        return exists;
     }
 }
