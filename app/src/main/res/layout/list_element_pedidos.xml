@@ -24,7 +24,7 @@
             android:padding="6dp">
 
             <ImageView
-                android:id="@+id/iconImageCatalogoView"
+                android:id="@+id/iconImagePedidoView"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentStart="true"
@@ -42,8 +42,8 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="2dp"
-                android:layout_toEndOf="@+id/iconImageCatalogoView"
-                android:layout_toRightOf="@+id/iconImageCatalogoView"
+                android:layout_toEndOf="@+id/iconImagePedidoView"
+                android:layout_toRightOf="@+id/iconImagePedidoView"
                 android:orientation="vertical">
 
                 <TextView
@@ -55,10 +55,8 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <!-- Define other TextViews for idPartner, idLinea, idArticulo, cantidad, descuento, precio, etc. -->
-                <!-- Example for idPartner -->
                 <TextView
-                    android:id="@+id/idArticuloCatalogoTextView"
+                    android:id="@+id/idArticuloPedidoTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
@@ -68,7 +66,7 @@
 
                 <!-- Example for idLinea -->
                 <TextView
-                    android:id="@+id/nombreCatalogoTextView"
+                    android:id="@+id/nombrePedidoTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
@@ -77,7 +75,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/descripcionCatalogoTextView"
+                    android:id="@+id/descripcionPedidoTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
@@ -96,7 +94,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/categoriaCatalogoTextView"
+                            android:id="@+id/categoriaPedidoTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="2dp"
@@ -105,7 +103,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/proveedorCatalogoTextView"
+                            android:id="@+id/proveedorPedidoTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="2dp"
@@ -114,7 +112,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/precioCatalogoTextView"
+                            android:id="@+id/precioPedidoTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="2dp"

@@ -1,8 +1,6 @@
-<!-- list_element_pedidos.xml -->
-
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,134 +9,117 @@
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="6dp">
+        <ImageView
+            android:id="@+id/iconImageCatalogoView"
+            android:layout_width="111dp"
+            android:layout_height="114dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/pedidoimage" />
 
-            <ImageView
-                android:id="@+id/iconImageCatalogoView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp"
-                app:srcCompat="@drawable/pedidoimage"/>
+        <TextView
+            android:id="@+id/idArticuloCatalogoTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:text="Id"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/nombreCatalogoTextView"
+            app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="2dp"
-                android:layout_toEndOf="@+id/iconImageCatalogoView"
-                android:layout_toRightOf="@+id/iconImageCatalogoView"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/nombreCatalogoTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:text="Nombre"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/iconImageCatalogoView"
+            app:layout_constraintTop_toBottomOf="@+id/idArticuloCatalogoTextView" />
 
-                <!-- Define other TextViews for idPartner, idLinea, idArticulo, cantidad, descuento, precio, etc. -->
-                <!-- Example for idPartner -->
-                <TextView
-                    android:id="@+id/idArticuloCatalogoTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:paddingLeft="12dp"
-                    android:text="id Articulo"
-                    android:textSize="15sp" />
+        <TextView
+            android:id="@+id/descripcionCatalogoTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:text="Descripcion"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
+            app:layout_constraintStart_toStartOf="@id/nombreCatalogoTextView"
+            app:layout_constraintTop_toBottomOf="@id/nombreCatalogoTextView" />
 
-                <!-- Example for idLinea -->
-                <TextView
-                    android:id="@+id/nombreCatalogoTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:paddingLeft="12dp"
-                    android:text="Nombre"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+        <TextView
+            android:id="@+id/categoriaCatalogoTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:text="Categoria"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
+            app:layout_constraintStart_toStartOf="@id/descripcionCatalogoTextView"
+            app:layout_constraintTop_toBottomOf="@id/descripcionCatalogoTextView" />
 
-                <TextView
-                    android:id="@+id/descripcionCatalogoTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:paddingLeft="12dp"
-                    android:text="Descripcion"
-                    android:textSize="13sp" />
+        <TextView
+            android:id="@+id/proveedorCatalogoTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:text="Proveedor"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
+            app:layout_constraintStart_toStartOf="@id/categoriaCatalogoTextView"
+            app:layout_constraintTop_toBottomOf="@id/categoriaCatalogoTextView" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/precioCatalogoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="12dp"
+            android:text="prVenta"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+        <TextView
+            android:id="@+id/precioCostoCatalogoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="12dp"
+            android:text="prCoste"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/precioCatalogoTextView" />
 
-                        <TextView
-                            android:id="@+id/categoriaCatalogoTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:paddingLeft="12dp"
-                            android:text="Categoria"
-                            android:textSize="13sp" />
+        <TextView
+            android:id="@+id/ExistenciasCatalogoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="3dp"
+            android:paddingLeft="12dp"
+            android:text="Existencias"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/proveedorCatalogoTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/precioCostoCatalogoTextView" />
 
-                        <TextView
-                            android:id="@+id/proveedorCatalogoTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:paddingLeft="12dp"
-                            android:text="Proveedor"
-                            android:textSize="13sp" />
+        <!-- ... additional TextViews for other fields ... -->
 
-                        <TextView
-                            android:id="@+id/precioCatalogoTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:paddingLeft="12dp"
-                            android:text="prVenta"
-                            android:textSize="13sp" />
-                        <TextView
-                            android:id="@+id/precioCostoCatalogoTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:paddingLeft="12dp"
-                            android:text="prCoste"
-                            android:textSize="13sp" />
-                        <TextView
-                            android:id="@+id/ExistenciasCatalogoTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:paddingLeft="12dp"
-                            android:text="Existencias"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Repeat the pattern for other TextViews -->
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <!-- Add additional TextViews for cantidad, descuento, precio, etc. -->
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

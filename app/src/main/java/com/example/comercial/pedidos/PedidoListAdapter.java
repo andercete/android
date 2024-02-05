@@ -49,13 +49,14 @@ public class PedidoListAdapter extends RecyclerView.Adapter<PedidoListAdapter.Vi
         ImageView iconImage;
         TextView idPartner, idArticulo, cantidad, descuento;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
-            iconImage = itemView.findViewById(R.id.iconImageCatalogoView); // Puedes personalizar la vista según tus necesidades
-            idPartner = itemView.findViewById(R.id.idArticuloCatalogoTextView);
-            idArticulo = itemView.findViewById(R.id.descripcionCatalogoTextView);
-            cantidad = itemView.findViewById(R.id.categoriaCatalogoTextView);
-            descuento = itemView.findViewById(R.id.proveedorCatalogoTextView);
+            iconImage = itemView.findViewById(R.id.iconImagePedidoView); // Puedes personalizar la vista según tus necesidades
+            idPartner = itemView.findViewById(R.id.idArticuloPedidoTextView);
+            idArticulo = itemView.findViewById(R.id.descripcionPedidoTextView);
+            cantidad = itemView.findViewById(R.id.categoriaPedidoTextView);
+            descuento = itemView.findViewById(R.id.proveedorPedidoTextView);
         }
 
         void bindData(final Pedido item) {
