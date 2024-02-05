@@ -7,6 +7,9 @@ public class Pedido {
     private String poblacion;
     private float descuento;
 
+
+    private String imageUrl;
+
     // Constructor vacío
     public Pedido() {
     }

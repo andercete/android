@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pedidos.Actividad_PartnerPedidos">
+    tools:context=".partners.Actividad_PartnerPedidos">
 
     <TextView
         android:id="@+id/tPartnerNombre"
@@ -41,7 +41,7 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/iconImageView"
+        app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
         app:layout_constraintTop_toBottomOf="@+id/tDireccion" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/iconImageView"
+        app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
         app:layout_constraintTop_toBottomOf="@+id/tPartnerNombre" />
 
     <TextView
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tTelefono" />
 
     <ImageView
-        android:id="@+id/iconImageView"
+        android:id="@+id/iconImageCatalogoView"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentStart="true"
@@ -114,15 +114,23 @@
         android:text="PEDIDOS"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/iconImageCatalogoView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listPedidos"
-        android:layout_width="413dp"
-        android:layout_height="457dp"
+        android:layout_width="410dp"
+        android:layout_height="412dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="26dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/bAgregarPedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listPedidos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
