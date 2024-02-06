@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.comercial.calendario.Evento;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +80,15 @@ public class AnderBD extends SQLiteOpenHelper {
             "FOREIGN KEY(IdPedido) REFERENCES CAB_PEDIDOS(IdPedido)" +
             ")";
 
+    private static final String CREATE_TABLE_EVENTS = "CREATE TABLE EVENTOS (" +
+            "IdEvento INTEGER PRIMARY KEY," +
+            "Title TEXT," +
+            "Location TEXT," +
+            "Date DATE," +
+            "Time TEXT," +
+            "Description TEXT" +
+            ")";
+
     public AnderBD(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -90,6 +101,7 @@ public class AnderBD extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_ARTICULOS);
         db.execSQL(CREATE_TABLE_CAB_PEDIDOS);
         db.execSQL(CREATE_TABLE_LINEAS_PEDIDO);
+        db.execSQL(CREATE_TABLE_EVENTS);
     }
 
     @Override
@@ -101,9 +113,74 @@ public class AnderBD extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS PARTNERS");
         db.execSQL("DROP TABLE IF EXISTS COMERCIALES");
         db.execSQL("DROP TABLE IF EXISTS ZONAS");
+        db.execSQL("DROP TABLE IF EXISTS EVENTS");
         // Crear nuevas tablas
         onCreate(db);
     }
+
+    public List<Evento> getAllEventos() {
+        List<Evento> eventosList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM EVENTOS", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex("IdEvento"));
+                String title = cursor.getString(cursor.getColumnIndex("Title"));
+                String location = cursor.getString(cursor.getColumnIndex("Location"));
+                String date = cursor.getString(cursor.getColumnIndex("Date"));
+                String time = cursor.getString(cursor.getColumnIndex("Time"));
+                String description = cursor.getString(cursor.getColumnIndex("Description"));
+
+                Evento evento = new Evento(id, title, location, date, time, description);
+                eventosList.add(evento);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return eventosList;
+    }
+
+    // Método para agregar un nuevo evento
+    public long addEvento(Evento evento) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Title", evento.getTitle());
+        values.put("Location", evento.getLocation());
+        values.put("Date", evento.getDate());
+        values.put("Time", evento.getTime());
+        values.put("Description", evento.getDescription());
+
+        // Inserta el nuevo evento y obtén el ID
+        long id = db.insert("EVENTOS", null, values);
+
+        // Cierra la conexión a la base de datos
+        db.close();
+
+        return id;
+    }
+
+    // Método para eliminar un evento por su ID
+    public void eliminarEvento(int eventoId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("EVENTOS", "IdEvento = ?", new String[]{String.valueOf(eventoId)});
+        db.close();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Métodos CRUD para la tabla PARTNERS
 // Método para agregar un nuevo partner
