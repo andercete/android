@@ -37,14 +37,27 @@ public class Actividad_Login extends AppCompatActivity {
     }
 
     private void añadirComercialPorDefecto() {
-        if (!helper.existeComercial("72538203k")) {
-            helper.addComercial(new Comerciales(0, 1, "Nombre Por Defecto", "Apellido Por Defecto", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203k", "000000000"));
+        if (!helper.existeComercial("72538203K")) {
+            helper.addComercial(new Comerciales(0, 1, "Nombre Por Defecto", "Apellido Por Defecto", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203K", "000000000"));
         }
+
+        if (!helper.existeComercial("72538684L")) {
+            helper.addComercial(new Comerciales(0, 1, "Iñigo", "Valdivia", "12345", "correo1@ejemplo.com", "Direccion1 Por Defecto", "72538684L", "000000001"));
+        }
+
+        if (!helper.existeComercial("73034420J")) {
+            helper.addComercial(new Comerciales(0, 1, "Julen", "Izeta", "12345", "correo2@ejemplo.com", "Direccion2 Por Defecto", "73034420J", "000000002"));
+        }
+
+        if (!helper.existeComercial("44570590V")) {
+            helper.addComercial(new Comerciales(0, 1, "Alberto", "", "12345", "correo3@ejemplo.com", "Direccion3 Por Defecto", "44570590V", "000000003"));
+        }
+
     }
 
     private void login() {
         String dni = eDNI.getText().toString();
-        String contraseña = eContra.getText().toString();
+        String contraseña = eContra.getText().toString().toUpperCase();
         if (validateLogin(dni, contraseña)) {
             Intent i = new Intent(Actividad_Login.this, Actividad_Inicio.class);
             startActivity(i);
