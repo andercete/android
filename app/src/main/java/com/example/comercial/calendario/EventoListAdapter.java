@@ -1,4 +1,5 @@
 package com.example.comercial.calendario;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,70 +7,78 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.comercial.Evento;
+import com.example.comercial.DBHelper;
 import com.example.comercial.R;
-
 import java.util.List;
 
 public class EventoListAdapter extends RecyclerView.Adapter<EventoListAdapter.EventoViewHolder> {
-    private List<Evento> listaEventos;
 
-    public EventoListAdapter(List<Evento> listaEventos) {
-        this.listaEventos = listaEventos;
+    private List<Evento> eventList;
+    private DBHelper dbHelper;
+
+    public EventoListAdapter(List<Evento> eventList, DBHelper dbHelper) {
+        this.eventList = eventList;
+        this.dbHelper = dbHelper;
     }
 
     @NonNull
     @Override
     public EventoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vistaEvento = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_element_eventos, parent, false);
-        return new EventoViewHolder(vistaEvento);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_element_eventos, parent, false);
+        return new EventoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EventoViewHolder holder, int position) {
-        Evento evento = listaEventos.get(position);
-        holder.tituloTextView.setText(evento.getTitle());
-        holder.fechaTextView.setText("Fecha: " + evento.getDate());
-      //  holder.ubicacionTextView.setText("Ubicación: " + evento.getUbicacion());
-        holder.descripcionTextView.setText("Descripción: " + evento.getDescription());
-
-        // Manejar el clic del botón de borrar
-        holder.borrarButton.setOnClickListener(v -> {
-            // Obtener la posición del evento que se va a borrar
-            int adapterPosition = holder.getAdapterPosition();
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                listaEventos.remove(adapterPosition);
-                notifyItemRemoved(adapterPosition);
-
-                // Llamada al método guardarEventosEnSharedPreferences en MainActivity
-                ((Actividad_Eventos)holder.itemView.getContext()).guardarEventosEnSharedPreferences();
-            }
-        });
+        holder.bind(eventList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return listaEventos.size();
+        return eventList.size();
     }
 
     public void setEventList(List<Evento> eventList) {
+        this.eventList = eventList;
+        notifyDataSetChanged();
     }
 
-    public static class EventoViewHolder extends RecyclerView.ViewHolder {
-        TextView tituloTextView;
-        TextView fechaTextView;
-        TextView ubicacionTextView;
-        TextView descripcionTextView;
-        Button borrarButton;
+    public class EventoViewHolder extends RecyclerView.ViewHolder {
+        private TextView titleTextView, dateTextView, timeTextView, locationTextView, descriptionTextView;
+        private Button deleteButton;
 
-        public EventoViewHolder(View itemView) {
+        public EventoViewHolder(@NonNull View itemView) {
             super(itemView);
-            tituloTextView = itemView.findViewById(R.id.tituloTextView);
-            fechaTextView = itemView.findViewById(R.id.fechaTextView);
-            ubicacionTextView = itemView.findViewById(R.id.ubicacionTextView);
-            descripcionTextView = itemView.findViewById(R.id.descripcionTextView);
-            borrarButton = itemView.findViewById(R.id.button2); // Asignar el botón de borrar
+            titleTextView = itemView.findViewById(R.id.tituloTextView);
+            dateTextView = itemView.findViewById(R.id.fechaTextView);
+            timeTextView = itemView.findViewById(R.id.horaTexView);
+            locationTextView = itemView.findViewById(R.id.ubicacionTextView);
+            descriptionTextView = itemView.findViewById(R.id.descripcionTextView);
+            deleteButton = itemView.findViewById(R.id.button2);
         }
+
+        public void bind(Evento event) {
+            titleTextView.setText(event.getTitle());
+            dateTextView.setText(event.getDate());
+            timeTextView.setText(event.getTime());
+            locationTextView.setText(event.getLocation());
+            descriptionTextView.setText(event.getDescription());
+
+            // Configura el clic del botón de eliminación
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Lógica para eliminar el evento
+                    eliminarEvento(getAdapterPosition());
+                }
+            });
+        }
+    }
+
+    private void eliminarEvento(int position) {
+        Evento eventoAEliminar = eventList.get(position);
+        dbHelper.eliminarEvento(eventoAEliminar.getId());
+        eventList.remove(position);
+        notifyItemRemoved(position);
     }
 }

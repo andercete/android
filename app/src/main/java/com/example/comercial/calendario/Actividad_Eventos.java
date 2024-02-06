@@ -9,9 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercial.DBHelper;
-import com.example.comercial.Evento;
 import com.example.comercial.R;
-
 import java.util.List;
 
 public class Actividad_Eventos extends AppCompatActivity {
@@ -36,7 +34,7 @@ public class Actividad_Eventos extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        eventAdapter = new EventoListAdapter(eventList);
+        eventAdapter = new EventoListAdapter(eventList, dbHelper);
         recyclerView.setAdapter(eventAdapter);
 
         botonAbrirActividad.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +56,5 @@ public class Actividad_Eventos extends AppCompatActivity {
             eventAdapter.setEventList(eventList);
             eventAdapter.notifyDataSetChanged();
         }
-    }
-
-    public void guardarEventosEnSharedPreferences() {
     }
 }

@@ -1,9 +1,10 @@
-package com.example.comercial;
+package com.example.comercial.calendario;
 
 // Evento.java
 public class Evento {
     private int id; // Added id property
     private String title;
+    private String location; // Added location property
     private String date;
     private String time;
     private String description;
@@ -13,9 +14,10 @@ public class Evento {
     }
 
     // Constructor with parameters
-    public Evento(int id, String title, String date, String time, String description) {
+    public Evento(int id, String title, String location, String date, String time, String description) {
         this.id = id;
         this.title = title;
+        this.location = location;
         this.date = date;
         this.time = time;
         this.description = description;
@@ -30,6 +32,10 @@ public class Evento {
         return title;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
     public String getDate() {
         return date;
     }
@@ -42,25 +48,4 @@ public class Evento {
         return description;
     }
 
-    // Setter methods (if needed)
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

@@ -35,6 +35,13 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/horaTexView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/ubicacionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

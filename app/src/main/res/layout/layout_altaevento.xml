@@ -30,6 +30,18 @@
         app:layout_constraintTop_toBottomOf="@+id/tituloEditText" />
 
     <EditText
+        android:id="@+id/horaEditText2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="Hora"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/tituloEditText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tituloEditText"
+        app:layout_constraintTop_toBottomOf="@+id/ubicacionEditText" />
+
+    <EditText
         android:id="@+id/descripcionEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -57,13 +69,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Fecha del evento (YYYY-MM-DD)"
         android:focusable="false"
+        android:hint="Fecha del evento (YYYY-MM-DD)"
         android:inputType="date"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="@+id/ubicacionEditText"
-        app:layout_constraintStart_toStartOf="@+id/ubicacionEditText"
-        app:layout_constraintTop_toBottomOf="@+id/ubicacionEditText" />
+        app:layout_constraintEnd_toEndOf="@+id/horaEditText2"
+        app:layout_constraintStart_toStartOf="@+id/horaEditText2"
+        app:layout_constraintTop_toBottomOf="@+id/horaEditText2" />
 
     <TextView
         android:id="@+id/textView2"
