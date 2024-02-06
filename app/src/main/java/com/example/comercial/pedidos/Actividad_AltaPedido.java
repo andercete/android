@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.comercial.BBDD.Pedido;
 import com.example.comercial.Metodos;
 import com.example.comercial.R;
 

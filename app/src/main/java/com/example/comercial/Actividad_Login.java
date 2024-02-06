@@ -1,62 +1,76 @@
 package com.example.comercial;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.Comerciales;
 
 public class Actividad_Login extends AppCompatActivity {
 
-    private EditText usernameEditText, passwordEditText;
-    private DatabaseHelper dbHelper;
+    private AnderBD helper;
+    private EditText eDNI, eContra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_login);
+        setContentView(R.layout.layout_login); // Asegúrate de que este es el nombre correcto de tu layout de login.
 
-        dbHelper = new DatabaseHelper(this);
+        helper = new AnderBD(this);
+        eDNI = findViewById(R.id.eUsuario);
+        eContra = findViewById(R.id.eContra);
 
-        usernameEditText = findViewById(R.id.eUsuario);
-        passwordEditText = findViewById(R.id.eContra);
+        // Añadir un comercial por defecto al iniciar la aplicación
+        añadirComercialPorDefecto();
 
-        Button loginButton = findViewById(R.id.bLogin);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bLogin).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 login();
             }
         });
     }
 
-    private void login() {
-        String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-
-        // Consultar la base de datos para verificar el login
-        if (checkLogin(username, password)) {
-            // Acceso concedido
-            Toast.makeText(this, "Login exitoso", Toast.LENGTH_SHORT).show();
-            // Aquí puedes redirigir a la siguiente actividad o realizar otras acciones
-        } else {
-            // Acceso denegado
-            Toast.makeText(this, "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+    private void añadirComercialPorDefecto() {
+        if (!helper.existeComercial("72538203k")) {
+            helper.addComercial(new Comerciales(0, 1, "Nombre Por Defecto", "Apellido Por Defecto", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203k", "000000000"));
         }
     }
 
-    private boolean checkLogin(String username, String password) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query("comerciales", null, "username=? AND password=?", new String[]{username, password}, null, null, null);
+    private void login() {
+        String dni = eDNI.getText().toString();
+        String contraseña = eContra.getText().toString();
+        if (validateLogin(dni, contraseña)) {
+            Intent i = new Intent(Actividad_Login.this, Actividad_Inicio.class);
+            startActivity(i);
+            finish();
+        } else {
+            Toast.makeText(Actividad_Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        boolean result = cursor.moveToFirst();
+    private boolean validateLogin(String dni, String contraseña) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = {"DNI", "Contraseña"};
+        String selection = "DNI=? AND Contraseña=?";
+        String[] selectionArgs = {dni, contraseña};
+
+        Cursor cursor = db.query("COMERCIALES", columns, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
         cursor.close();
         db.close();
 
-        return result;
+        return count > 0;
+    }
+
+    @Override
+    protected void onDestroy() {
+        helper.close();
+        super.onDestroy();
     }
 }

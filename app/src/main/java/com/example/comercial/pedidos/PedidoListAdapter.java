@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comercial.BBDD.Pedido;
 import com.example.comercial.R;
 
 import java.util.List;

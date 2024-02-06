@@ -1,4 +1,4 @@
-package com.example.comercial;
+package com.example.comercial.BBDD;
 
 import android.content.ContentValues;
 import android.content.Context;

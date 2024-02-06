@@ -1,44 +1,28 @@
 package com.example.comercial.partners;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.comercial.Metodos;
+import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.Partner;
 import com.example.comercial.R;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import java.io.File;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 public class Actividad_AltaPartner extends AppCompatActivity {
 
-    EditText eNombre;
-    EditText eDireccion;
-    EditText ePoblacion;
-    EditText eCif;
-    EditText eTelefono;
-    EditText eEmail;
-    Button bAlta;
-    Button bLimpiar;
-    AlertDialog.Builder dialog;
+    EditText eNombre, eDireccion, ePoblacion, eCif, eTelefono, eEmail;
+    Button bAlta, bLimpiar;
+    AnderBD db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_altapartner);
+
+        db = new AnderBD(this);
 
         eNombre = findViewById(R.id.eAltaNombre);
         eDireccion = findViewById(R.id.eAltaDireccion);
@@ -49,97 +33,49 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         bAlta = findViewById(R.id.bAlta);
         bLimpiar = findViewById(R.id.bAltaLimpiar);
 
-        bLimpiar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                limpiar_vistas();
-            }
-        });
+        bLimpiar.setOnClickListener(v -> limpiarCampos());
 
-        bAlta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validarCampos()) {
-                    altaSocio();
-                    finish();
-                }
+        bAlta.setOnClickListener(v -> {
+            if (validarCampos()) {
+                altaPartner();
             }
         });
+    }
+
+    private void altaPartner() {
+        String nombre = eNombre.getText().toString();
+        String direccion = eDireccion.getText().toString();
+        String poblacion = ePoblacion.getText().toString(); // Este campo podría requerir manejo adicional si influye en otras tablas o lógica.
+        String cif = eCif.getText().toString();
+        String telefono = eTelefono.getText().toString();
+        String email = eEmail.getText().toString();
+
+        // Aquí deberías determinar el idZona basado en la población o cualquier otra lógica.
+        // Como ejemplo, simplemente ponemos 1, pero deberías reemplazar esto con la lógica correcta.
+        int idZona = 1;
+
+        Partner nuevoPartner = new Partner(0, idZona, nombre, cif, direccion, telefono, email, ""); // Asume fechaRegistro vacío o establece una fecha actual.
+
+        long id = db.addPartner(nuevoPartner);
+        if (id > 0) {
+            Toast.makeText(this, "Partner agregado con éxito.", Toast.LENGTH_SHORT).show();
+            limpiarCampos();
+        } else {
+            Toast.makeText(this, "Error al agregar partner.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean validarCampos() {
-        if (!Metodos.isValidCampo(eNombre, "Nombre", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
-            return false;
-        }
-        if (!Metodos.isValidCampo(eDireccion, "Dirección", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
-            return false;
-        }
-        if (!Metodos.isValidCampo(ePoblacion, "Población", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
-            return false;
-        }
-        if (!Metodos.isValidCampo(eCif, "CIF", Metodos.FieldType.STRING,Actividad_AltaPartner.this)) {
-            return false;
-        }
-        if (!Metodos.isValidCampo(eTelefono, "Teléfono", Metodos.FieldType.TELEPHONE,Actividad_AltaPartner.this)) {
-            return false;
-        }
-        if (!Metodos.isValidCampo(eEmail, "Email", Metodos.FieldType.EMAIL,Actividad_AltaPartner.this)) {
-            return false;
-        }
-        return true;
+        // Aquí implementarías la lógica de validación para cada campo.
+        // Por ejemplo, puedes verificar que el nombre no esté vacío, que el CIF tenga un formato válido, etc.
+        return !eNombre.getText().toString().isEmpty() &&
+                !eDireccion.getText().toString().isEmpty() &&
+                !eCif.getText().toString().isEmpty() &&
+                !eTelefono.getText().toString().isEmpty() &&
+                !eEmail.getText().toString().isEmpty();
     }
 
-    private void altaSocio() {
-        Partner nuevoSocio = new Partner(
-                eNombre.getText().toString(),
-                eDireccion.getText().toString(),
-                ePoblacion.getText().toString(),
-                eCif.getText().toString(),
-                Integer.parseInt(eTelefono.getText().toString()),
-                eEmail.getText().toString()
-        );
-
-        try {
-            File file = new File(new File(getFilesDir(), "partners"), Metodos.getNombreArchivoPartners());
-            Document doc;
-            Element root;
-
-            if (!file.exists()) {
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                doc = dBuilder.newDocument();
-                root = doc.createElement("partners");
-                doc.appendChild(root);
-            } else {
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                doc = dBuilder.parse(file);
-                root = doc.getDocumentElement();
-            }
-
-            Element partnerElement = doc.createElement("partner");
-            partnerElement.appendChild(Metodos.createElementWithText(doc, "nombre", nuevoSocio.getNombre()));
-            partnerElement.appendChild(Metodos.createElementWithText(doc, "direccion", nuevoSocio.getDireccion()));
-            partnerElement.appendChild(Metodos.createElementWithText(doc, "poblacion", nuevoSocio.getPoblacion()));
-            partnerElement.appendChild(Metodos.createElementWithText(doc, "cif", nuevoSocio.getCif()));
-            partnerElement.appendChild(Metodos.createElementWithText(doc, "telefono", String.valueOf(nuevoSocio.getTelefono())));
-            partnerElement.appendChild(Metodos.createElementWithText(doc, "email", nuevoSocio.getEmail()));
-            root.appendChild(partnerElement);
-
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(file);
-            transformer.transform(source, result);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void limpiar_vistas() {
+    private void limpiarCampos() {
         eNombre.setText("");
         eDireccion.setText("");
         ePoblacion.setText("");

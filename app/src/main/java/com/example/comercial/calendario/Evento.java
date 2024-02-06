@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:app/src/main/java/com/example/comercial/calendario/Evento.java
 package com.example.comercial.calendario;
+========
+package com.example.comercial.BBDD;
+>>>>>>>> origin/main:app/src/main/java/com/example/comercial/BBDD/Evento.java
 
 // Evento.java
 public class Evento {

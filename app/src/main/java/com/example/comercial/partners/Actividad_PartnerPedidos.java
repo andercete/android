@@ -23,10 +23,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.comercial.BBDD.Pedido;
 import com.example.comercial.Metodos;
 import com.example.comercial.R;
 import com.example.comercial.Catalogo.Actividad_Catalogo;
-import com.example.comercial.pedidos.Pedido;
+import com.example.comercial.BBDD.Pedido;
 import com.example.comercial.pedidos.PedidoListAdapter;
 
 public class Actividad_PartnerPedidos extends AppCompatActivity {
