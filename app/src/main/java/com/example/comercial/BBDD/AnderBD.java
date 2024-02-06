@@ -171,17 +171,6 @@ public class AnderBD extends SQLiteOpenHelper {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     // Métodos CRUD para la tabla PARTNERS
 // Método para agregar un nuevo partner
     public long addPartner(Partner partner) {
