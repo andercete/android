@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.comercial.BBDD.AnderBD;
-import com.example.comercial.BBDD.Partner;
 import com.example.comercial.R;
 
 import java.io.InputStream;
@@ -34,12 +32,12 @@ public class Actividad_Partners extends AppCompatActivity {
         db = new AnderBD(this); // Inicializa la base de datos
 
         bAgregar = findViewById(R.id.bPartnerAgregar);
-        bBorrar = findViewById(R.id.bBorrar);
+        //bBorrar = findViewById(R.id.bBorrar);
         bImportar = findViewById(R.id.bImportar);
 
         bAgregar.setOnClickListener(v -> startActivity(new Intent(Actividad_Partners.this, Actividad_AltaPartner.class)));
 
-        bBorrar.setOnClickListener(v -> borrarRegistros());
+        //bBorrar.setOnClickListener(v -> borrarRegistros());
 
         bImportar.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -61,6 +59,8 @@ public class Actividad_Partners extends AppCompatActivity {
     }
 
     // Método para borrar todos los registros de partners, adaptar según necesidades
+
+    /*
     private void borrarRegistros() {
         db.deleteAllPartners(); // Asumiendo que tienes un método deleteAllPartners() en AnderBD
         Toast.makeText(this, "Todos los registros han sido borrados", Toast.LENGTH_SHORT).show();
@@ -68,6 +68,8 @@ public class Actividad_Partners extends AppCompatActivity {
         mAdapter.setItems(updatedList);
         mAdapter.notifyDataSetChanged();
     }
+
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {

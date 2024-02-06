@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.comercial.calendario.Evento;
+import com.example.comercial.partners.Partner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -251,6 +252,13 @@ public class AnderBD extends SQLiteOpenHelper {
         return partner;
     }
 
+    // Add this method for deleting a partner by object
+    public void deletePartner(Partner partner) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("PARTNERS", "IdPartner = ?", new String[]{String.valueOf(partner.getIdPartner())});
+        db.close();
+    }
+
     // Método para actualizar un partner
     public int updatePartner(Partner partner) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -335,6 +343,14 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
         return partnerList;
     }
+
+
+
+
+
+
+
+
     public long addZona(Zonas zona) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

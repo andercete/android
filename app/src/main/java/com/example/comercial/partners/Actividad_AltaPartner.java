@@ -2,13 +2,11 @@ package com.example.comercial.partners;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.comercial.BBDD.AnderBD;
-import com.example.comercial.BBDD.Partner;
 import com.example.comercial.R;
 
 public class Actividad_AltaPartner extends AppCompatActivity {
