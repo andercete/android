@@ -150,4 +150,5 @@ public class Actividad_Partners extends AppCompatActivity {
         mAdapter.setItems(updatedPartnersList);
         mAdapter.notifyDataSetChanged();
     }
+
 }

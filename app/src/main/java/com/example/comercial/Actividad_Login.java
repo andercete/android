@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.comercial.BBDD.AnderBD;
 import com.example.comercial.BBDD.Comerciales;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 public class Actividad_Login extends AppCompatActivity {
 
@@ -52,19 +54,37 @@ public class Actividad_Login extends AppCompatActivity {
         if (!helper.existeComercial("44570590V")) {
             helper.addComercial(new Comerciales(0, 1, "Alberto", "", "12345", "correo3@ejemplo.com", "Direccion3 Por Defecto", "44570590V", "000000003"));
         }
+        if (!helper.existeComercial("")) {
+            helper.addComercial(new Comerciales(0, 1, "Alberto", "", "", "correo3@ejemplo.com", "Direccion3 Por Defecto", "", "000000003"));
+        }
 
     }
 
     private void login() {
         String dni = eDNI.getText().toString().toUpperCase();
         String contraseña = eContra.getText().toString();
+
         if (validateLogin(dni, contraseña)) {
+            // Guarda el IdZona del comercial logueado para uso futuro
+            guardarIdZonaComercialLogueado(dni);
+
             Intent i = new Intent(Actividad_Login.this, Actividad_Inicio.class);
             startActivity(i);
             finish();
         } else {
             Toast.makeText(Actividad_Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void guardarIdZonaComercialLogueado(String dni) {
+        AnderBD db = new AnderBD(this);
+        int idZona = db.obtenerIdZonaPorDNI(dni); // Asumiendo que este método obtiene el IdZona basado en el DNI del comercial
+
+        // Guardar IdZona en Preferencias Compartidas
+        SharedPreferences sharedPref = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("IdZona", idZona);
+        editor.apply();
     }
 
     private boolean validateLogin(String dni, String contraseña) {

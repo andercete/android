@@ -8,16 +8,25 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.partners.Partner;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import java.util.List;
+
+import org.xmlpull.v1.XmlSerializer;
 
 
 import com.example.comercial.calendario.Actividad_Eventos;
 import com.example.comercial.partners.Actividad_Partners;
 import com.example.comercial.Catalogo.Actividad_Catalogo;
-
-import java.io.File;
 import java.util.ArrayList;
 
 // implements OnMapReadyCallback
@@ -26,6 +35,7 @@ public class Actividad_Inicio extends AppCompatActivity {
     Button bCitas, bPartner, bCatalogo, bDelegacion;
     ImageButton bTelefono, bEmail;
     AlertDialog.Builder dialog;
+    private AnderBD db;
 
 
     @Override
@@ -46,7 +56,7 @@ public class Actividad_Inicio extends AppCompatActivity {
         bPartner = findViewById(R.id.bPresentacionPartners);
         bCatalogo = findViewById(R.id.bCatalogo);
         bDelegacion = findViewById(R.id.bPresentacionDelegacion);
-
+        db = new AnderBD(this);
         bTelefono = findViewById(R.id.bTelefono);
         bEmail = findViewById(R.id.bEmail);
 
@@ -72,7 +82,7 @@ public class Actividad_Inicio extends AppCompatActivity {
             }
         });
 
-        bDelegacion.setOnClickListener(new View.OnClickListener() {
+        /*bDelegacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean existePedido = true;
@@ -139,7 +149,40 @@ public class Actividad_Inicio extends AppCompatActivity {
                 }
             }
 
+        });*/
+        bDelegacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Partner> partnersDeHoy = db.getPartnersOfToday();
+                if (partnersDeHoy.isEmpty()) {
+                    Toast.makeText(Actividad_Inicio.this, "No hay partners para enviar hoy.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String nombreArchivo = "partners/partners_hoy.xml";
+                generarArchivoXML(partnersDeHoy, nombreArchivo);
+
+                File archivoXml = new File(getFilesDir(), nombreArchivo);
+                Uri uriArchivoXml = FileProvider.getUriForFile(Actividad_Inicio.this, "com.example.comercial.fileprovider", archivoXml);
+                ArrayList<Uri> archivosAdjuntos = new ArrayList<>();
+                archivosAdjuntos.add(uriArchivoXml);
+
+                Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                emailIntent.setType("text/xml");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"DelegacionGuipuzcoa@gem.com"}); // Cambia esto por la dirección real de correo electrónico de la delegación.
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Partners y pedidos de " + Metodos.obtenerFechaActual());
+                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, archivosAdjuntos);
+                emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Envío de partners y pedidos"));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(Actividad_Inicio.this, "No hay cliente de correo electrónico instalado.", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
+
+
 
         bTelefono.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +210,40 @@ public class Actividad_Inicio extends AppCompatActivity {
 
         });
     }
+    private void generarArchivoXML(List<Partner> partners, String nombreArchivo) {
+        try {
+            File archivoXml = new File(getFilesDir(), nombreArchivo);
+            FileOutputStream fos = new FileOutputStream(archivoXml, false);
+            XmlSerializer serializer = Xml.newSerializer();
+            serializer.setOutput(fos, "UTF-8");
+            serializer.startDocument(null, Boolean.TRUE);
+            serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+            serializer.startTag(null, "Partners");
 
+            for (Partner partner : partners) {
+                serializer.startTag(null, "Partner");
+                // Repite este patrón para cada atributo de Partner
+                serializer.startTag(null, "Nombre");
+                serializer.text(partner.getNombre());
+                serializer.endTag(null, "Nombre");
+                // Continúa con los demás campos...
+                serializer.endTag(null, "Partner");
+            }
+
+            serializer.endTag(null, "Partners");
+            serializer.endDocument();
+            serializer.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    protected void onDestroy() {
+        if (db != null) {
+            db.close();
+        }
+        super.onDestroy();
+    }
   /*  @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
