@@ -56,8 +56,8 @@ public class Actividad_Login extends AppCompatActivity {
     }
 
     private void login() {
-        String dni = eDNI.getText().toString();
-        String contraseña = eContra.getText().toString().toUpperCase();
+        String dni = eDNI.getText().toString().toUpperCase();
+        String contraseña = eContra.getText().toString();
         if (validateLogin(dni, contraseña)) {
             Intent i = new Intent(Actividad_Login.this, Actividad_Inicio.class);
             startActivity(i);
