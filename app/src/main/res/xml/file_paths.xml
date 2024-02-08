@@ -3,4 +3,5 @@
     <!-- ⬇️ Para poder adjuntar archivos del sistema en un correo electrónico ️ ⬇️ ️-->
     <files-path name="partners" path="partners/" />
     <files-path name="pedidos" path="pedidos/" />
+    <files-path name="partners_files" path="partners/"/>
 </paths>
