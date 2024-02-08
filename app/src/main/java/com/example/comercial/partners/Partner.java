@@ -1,4 +1,4 @@
-package com.example.comercial.BBDD;
+package com.example.comercial.partners;
 
 public class Partner {
     private int idPartner;
