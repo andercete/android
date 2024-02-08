@@ -23,7 +23,7 @@
             android:padding="6dp">
 
             <Button
-                android:id="@+id/btnDelete"
+                android:id="@+id/bBorrar"
                 android:layout_width="53dp"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
