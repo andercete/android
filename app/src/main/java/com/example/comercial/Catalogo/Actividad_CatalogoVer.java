@@ -26,34 +26,17 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Actividad_Catalogo extends AppCompatActivity {
+public class Actividad_CatalogoVer extends AppCompatActivity {
 
-    CatalogoAdapter mAdapter;
+    CatalogoAdapterVer mAdapter;
     RecyclerView rvCatalogo;
-    Button bAgregarPedido;
-    Button bBorrarPedido;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_catalogo);
 
-        bAgregarPedido = findViewById(R.id.bPedidoAgregar);
-        bAgregarPedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Actividad_Catalogo.this, Actividad_AltaPedido.class);
-                startActivity(intent);
-            }
-        });
-
-        bBorrarPedido = findViewById(R.id.bPedidoBorrar);
-        bBorrarPedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                borrarRegistros();
-            }
-        });
         copiarXMLaAlmacenamientoInterno();
         List<Catalogo> catalogoList = parseCatalogoXML();
         initRecyclerView(catalogoList);
@@ -99,11 +82,11 @@ public class Actividad_Catalogo extends AppCompatActivity {
     }
 
     private void initRecyclerView(List<Catalogo> catalogoList) {
-        CatalogoAdapter catalogoAdapter = new CatalogoAdapter(this, catalogoList);
+        CatalogoAdapterVer catalogoAdapterVer = new CatalogoAdapterVer(this, catalogoList);
         rvCatalogo = findViewById(R.id.rCatalogo); // Asegúrate de que este ID está correcto
         rvCatalogo.setHasFixedSize(true);
         rvCatalogo.setLayoutManager(new LinearLayoutManager(this));
-        rvCatalogo.setAdapter(catalogoAdapter);
+        rvCatalogo.setAdapter(catalogoAdapterVer);
     }
     private List<Catalogo> parseCatalogoXML() {
         List<Catalogo> catalogoList = new ArrayList<>();

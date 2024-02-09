@@ -40,7 +40,7 @@
             android:name=".pedidos.Actividad_AltaPedido"
             android:exported="false" />
         <activity
-            android:name=".Catalogo.Actividad_Catalogo"
+            android:name=".Catalogo.Actividad_CatalogoVer"
             android:exported="false" />
         <activity
             android:name=".partners.Actividad_Partners"

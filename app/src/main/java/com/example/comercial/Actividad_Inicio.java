@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,8 +20,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.xmlpull.v1.XmlSerializer;
@@ -30,9 +27,8 @@ import org.xmlpull.v1.XmlSerializer;
 
 import com.example.comercial.calendario.Actividad_Eventos;
 import com.example.comercial.partners.Actividad_Partners;
-import com.example.comercial.Catalogo.Actividad_Catalogo;
+import com.example.comercial.Catalogo.Actividad_CatalogoVer;
 import java.util.ArrayList;
-import java.util.Locale;
 
 // implements OnMapReadyCallback
 public class Actividad_Inicio extends AppCompatActivity {
@@ -75,7 +71,7 @@ public class Actividad_Inicio extends AppCompatActivity {
         bCatalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPedidos = new Intent(Actividad_Inicio.this, Actividad_Catalogo.class);
+                Intent intentPedidos = new Intent(Actividad_Inicio.this, Actividad_CatalogoVer.class);
                 startActivity(intentPedidos);
             }
         });

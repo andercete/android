@@ -12,6 +12,9 @@ public class Catalogo {
     private String imageName; // Nombre de la imagen en drawable sin la extensión
     private boolean isSelected = false;
 
+    private int quantity = 1; // Valor inicial
+
+
 
     public Catalogo() {
     }
@@ -108,6 +111,19 @@ public class Catalogo {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+    public void incrementQuantity() {
+        this.quantity++;
+    }
+
+    public void decrementQuantity() {
+        if (this.quantity > 1) {
+            this.quantity--;
+        }
+    }
+
+    public int getCantidad() {
+        return this.quantity;
     }
 }
 

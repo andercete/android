@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,8 +66,15 @@ public class Actividad_CabPedidos extends AppCompatActivity {
 
         bAgregar = findViewById(R.id.bAgregarPedido);
       //  bBorrar = findViewById(R.id.bBorrarPedidos);
-
-        bAgregar.setOnClickListener(v -> startActivity(new Intent(Actividad_CabPedidos.this, Actividad_AltaPedido.class)));
+        bAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Actividad_CabPedidos.this, Actividad_AltaPedido.class);
+                // Asegúrate de obtener los ID del objeto Partner y añadirlos al Intent
+                intent.putExtra("partnerId", idPartner);
+                startActivity(intent);
+            }
+        });
        // bBorrar.setOnClickListener(v -> borrarRegistroPorId());
 
         // Inicializa el RecyclerView con la lista de CabPedidos desde la base de datos
