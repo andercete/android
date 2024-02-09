@@ -50,8 +50,8 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="267dp"
-                android:layout_height="145dp"
+                android:layout_width="412dp"
+                android:layout_height="118dp"
                 android:layout_marginStart="15dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -74,14 +74,6 @@
                     android:layout_marginBottom="2dp"
                     android:text="Calle aduana,17"
                     android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/poblacionTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:text="Irun"
-                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/cifTextView"

@@ -4,7 +4,7 @@ public class Pedido {
     private String idPartner;
     private String idArticulo;
     private int cantidad;
-    private String poblacion;
+    private String direccion;
     private float descuento;
 
 
@@ -15,11 +15,11 @@ public class Pedido {
     }
 
     // Constructor con todos los campos
-    public Pedido(String idPartner, String idArticulo, int cantidad, String poblacion, float descuento) {
+    public Pedido(String idPartner, String idArticulo, int cantidad, String direccion, float descuento) {
         this.idPartner = idPartner;
         this.idArticulo = idArticulo;
         this.cantidad = cantidad;
-        this.poblacion = poblacion;
+        this.direccion = direccion;
         this.descuento = descuento;
     }
 
@@ -51,12 +51,12 @@ public class Pedido {
     }
 
     // Getter y Setter para poblacion
-    public String getPoblacion() {
-        return poblacion;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setPoblacion(String poblacion) {
-        this.poblacion = poblacion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     // Getter y Setter para descuento

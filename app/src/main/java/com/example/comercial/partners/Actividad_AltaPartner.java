@@ -11,7 +11,7 @@ import com.example.comercial.R;
 
 public class Actividad_AltaPartner extends AppCompatActivity {
 
-    EditText eNombre, eDireccion, ePoblacion, eCif, eTelefono, eEmail;
+    EditText eNombre, eDireccion,eCif, eTelefono, eEmail;
     Button bAlta, bLimpiar;
     AnderBD db;
 
@@ -24,7 +24,6 @@ public class Actividad_AltaPartner extends AppCompatActivity {
 
         eNombre = findViewById(R.id.eAltaNombre);
         eDireccion = findViewById(R.id.eAltaDireccion);
-        ePoblacion = findViewById(R.id.eAltaPoblacion);
         eCif = findViewById(R.id.eAltaCif);
         eTelefono = findViewById(R.id.eAltaTelefono);
         eEmail = findViewById(R.id.eAltaEmail);
@@ -43,7 +42,6 @@ public class Actividad_AltaPartner extends AppCompatActivity {
     private void altaPartner() {
         String nombre = eNombre.getText().toString();
         String direccion = eDireccion.getText().toString();
-        String poblacion = ePoblacion.getText().toString(); // Este campo podría requerir manejo adicional si influye en otras tablas o lógica.
         String cif = eCif.getText().toString();
         String telefono = eTelefono.getText().toString();
         String email = eEmail.getText().toString();
@@ -76,7 +74,6 @@ public class Actividad_AltaPartner extends AppCompatActivity {
     private void limpiarCampos() {
         eNombre.setText("");
         eDireccion.setText("");
-        ePoblacion.setText("");
         eCif.setText("");
         eTelefono.setText("");
         eEmail.setText("");

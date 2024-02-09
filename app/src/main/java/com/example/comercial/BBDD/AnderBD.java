@@ -880,12 +880,29 @@ public class AnderBD extends SQLiteOpenHelper {
     }
 
     // Método para obtener todos los registros en CAB_PEDIDOS
-    public List<CabPedidos> getAllCabPedidos() {
+   /* public List<CabPedidos> getAllCabPedidos() {
         List<CabPedidos> cabPedidoList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM CAB_PEDIDOS";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return cabPedidoList;
+    }*/
+
+    //Metodo para obtener todos los registros en CAB_PEDIDOS cuyo id partner coincida con el partner seleccionado
+    public List<CabPedidos> getAllCabPedidos(int idPartner) {
+        List<CabPedidos> cabPedidoList = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM CAB_PEDIDOS WHERE IdPartner = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(idPartner)});
 
         if (cursor.moveToFirst()) {
             do {
@@ -918,6 +935,9 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
         return cabPedidoList;
     }
+
+
+
     // Método para agregar una nueva línea de pedido
     public long addLineaPedido(LineasPedido lineaPedido) {
         SQLiteDatabase db = this.getWritableDatabase();

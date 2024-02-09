@@ -123,7 +123,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
             pedidoElement.appendChild(Metodos.createElementWithText(doc, "idPartner", nuevoPedido.getIdPartner()));
             pedidoElement.appendChild(Metodos.createElementWithText(doc, "idArticulo", nuevoPedido.getIdArticulo()));
             pedidoElement.appendChild(Metodos.createElementWithText(doc, "cantidad", String.valueOf(nuevoPedido.getCantidad())));
-            pedidoElement.appendChild(Metodos.createElementWithText(doc, "poblacion", nuevoPedido.getPoblacion()));
+            pedidoElement.appendChild(Metodos.createElementWithText(doc, "poblacion", nuevoPedido.getDireccion()));
             pedidoElement.appendChild(Metodos.createElementWithText(doc, "descuento", String.valueOf(nuevoPedido.getDescuento())));
             root.appendChild(pedidoElement);
 
