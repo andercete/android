@@ -9,8 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.comercial.calendario.Evento;
 import com.example.comercial.partners.Partner;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AnderBD extends SQLiteOpenHelper {
 
@@ -251,6 +254,72 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
         return partner;
     }
+    public List<Partner> getPartnersOfToday() {
+        List<Partner> partners = new ArrayList<>();
+        // Obtén la fecha actual en formato YYYY-MM-DD
+        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        // Abre la base de datos en modo lectura
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Consulta SQL para seleccionar partners basados en la fecha de hoy
+        String selection = "FechaRegistro = ?";
+        String[] selectionArgs = { fechaHoy };
+
+        // Ejecuta la consulta
+        Cursor cursor = db.query("PARTNERS", null, selection, selectionArgs, null, null, null);
+
+        // Itera sobre los resultados y añade cada partner a la lista
+        if (cursor.moveToFirst()) {
+            do {
+                Partner partner = new Partner();
+                partner.setIdPartner(cursor.getInt(cursor.getColumnIndex("IdPartner")));
+                partner.setIdZona(cursor.getInt(cursor.getColumnIndex("IdZona")));
+                partner.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
+                partner.setCif(cursor.getString(cursor.getColumnIndex("CIF")));
+                partner.setDireccion(cursor.getString(cursor.getColumnIndex("Direccion")));
+                partner.setTelefono(cursor.getString(cursor.getColumnIndex("Telefono")));
+                partner.setCorreo(cursor.getString(cursor.getColumnIndex("Correo")));
+                partner.setFechaRegistro(cursor.getString(cursor.getColumnIndex("FechaRegistro")));
+                partners.add(partner);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return partners;
+    }
+    public int obtenerIdZonaPorDNI(String dni) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int idZona = -1; // Valor predeterminado en caso de no encontrar el comercial
+
+        // Define una proyección que especifica las columnas de la base de datos que usarás después de esta consulta
+        String[] projection = {
+                "IdZona" // Asegúrate de que este es el nombre correcto de la columna en tu base de datos
+        };
+
+        // Filtra resultados WHERE "DNI" = 'dni proporcionado'
+        String selection = "DNI = ?";
+        String[] selectionArgs = { dni };
+
+        Cursor cursor = db.query(
+                "COMERCIALES",   // La tabla a consultar
+                projection,             // Las columnas a retornar
+                selection,              // Las columnas para la cláusula WHERE
+                selectionArgs,          // Los valores para la cláusula WHERE
+                null,                   // No agrupar las filas
+                null,                   // No filtrar por grupos de filas
+                null                    // El orden del sorteo
+        );
+
+        if (cursor.moveToFirst()) {
+            idZona = cursor.getInt(cursor.getColumnIndexOrThrow("IdZona"));
+        }
+        cursor.close();
+
+        return idZona;
+    }
+
 
     // Add this method for deleting a partner by object
     public void deletePartner(Partner partner) {
@@ -904,12 +973,29 @@ public class AnderBD extends SQLiteOpenHelper {
     }
 
     // Método para obtener todos los registros en CAB_PEDIDOS
-    public List<CabPedidos> getAllCabPedidos() {
+   /* public List<CabPedidos> getAllCabPedidos() {
         List<CabPedidos> cabPedidoList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM CAB_PEDIDOS";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return cabPedidoList;
+    }*/
+
+    //Metodo para obtener todos los registros en CAB_PEDIDOS cuyo id partner coincida con el partner seleccionado
+    public List<CabPedidos> getAllCabPedidos(int idPartner) {
+        List<CabPedidos> cabPedidoList = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM CAB_PEDIDOS WHERE IdPartner = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(idPartner)});
 
         if (cursor.moveToFirst()) {
             do {
@@ -942,6 +1028,9 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
         return cabPedidoList;
     }
+
+
+
     // Método para agregar una nueva línea de pedido
     public long addLineaPedido(LineasPedido lineaPedido) {
         SQLiteDatabase db = this.getWritableDatabase();

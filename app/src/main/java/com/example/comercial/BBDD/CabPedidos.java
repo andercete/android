@@ -1,55 +1,64 @@
 package com.example.comercial.BBDD;
 
 public class CabPedidos {
-    private int idPedido;
-    private int idPartner;
-    private int idComercial;
-    private String fechaPedido;
+    private int IdPedido;
+    private int IdPartner;
+    private int IdComercial;
+    private String FechaPedido;
 
-    // Constructor
-    public CabPedidos(int idPedido, int idPartner, int idComercial, String fechaPedido) {
-        this.idPedido = idPedido;
-        this.idPartner = idPartner;
-        this.idComercial = idComercial;
-        this.fechaPedido = fechaPedido;
-    }
     public CabPedidos() {
 
     }
+    // Constructor
+    public CabPedidos(int idPedido, int idPartner, int idComercial, String fechaPedido) {
+        IdPedido = idPedido;
+        IdPartner = idPartner;
+        IdComercial = idComercial;
+        FechaPedido = fechaPedido;
+    }
 
-    // Getter y Setter para idPedido
+    // Getters y Setters
     public int getIdPedido() {
-        return idPedido;
+        return IdPedido;
     }
 
     public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
+        IdPedido = idPedido;
     }
 
-    // Getter y Setter para idPartner
     public int getIdPartner() {
-        return idPartner;
+        return IdPartner;
     }
 
     public void setIdPartner(int idPartner) {
-        this.idPartner = idPartner;
+        IdPartner = idPartner;
     }
 
-    // Getter y Setter para idComercial
     public int getIdComercial() {
-        return idComercial;
+        return IdComercial;
     }
 
     public void setIdComercial(int idComercial) {
-        this.idComercial = idComercial;
+        IdComercial = idComercial;
     }
 
-    // Getter y Setter para fechaPedido
     public String getFechaPedido() {
-        return fechaPedido;
+        return FechaPedido;
     }
 
     public void setFechaPedido(String fechaPedido) {
-        this.fechaPedido = fechaPedido;
+        FechaPedido = fechaPedido;
+    }
+
+    // Método toString() para imprimir los detalles del CabPedido
+    @Override
+    public String toString() {
+        return "CabPedido{" +
+                "IdPedido=" + IdPedido +
+                ", IdPartner=" + IdPartner +
+                ", IdComercial=" + IdComercial +
+                ", FechaPedido='" + FechaPedido + '\'' +
+                '}';
     }
 }
+

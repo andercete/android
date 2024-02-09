@@ -4,58 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".partners.Actividad_PartnerPedidos">
+    tools:context=".pedidos.Actividad_CabPedidos">
 
     <TextView
         android:id="@+id/tPartnerNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="154dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="211dp"
         android:text="Partner"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tCif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="154dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="199dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tPoblacion" />
-
-    <TextView
-        android:id="@+id/tPoblacion"
+        android:id="@+id/tPartnerDireccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="59dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="199dp"
+        android:layout_marginTop="13dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
-        app:layout_constraintTop_toBottomOf="@+id/tDireccion" />
-
-    <TextView
-        android:id="@+id/tDireccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="199dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
         app:layout_constraintTop_toBottomOf="@+id/tPartnerNombre" />
+
+    <TextView
+        android:id="@+id/tPartnerCif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
+        app:layout_constraintTop_toBottomOf="@+id/tPartnerDireccion" />
 
     <TextView
         android:id="@+id/tTelefono"
@@ -68,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tCif" />
+        app:layout_constraintTop_toBottomOf="@+id/tPartnerCif" />
 
     <TextView
         android:id="@+id/tEmail"
@@ -103,21 +87,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="210dp" />
+        app:layout_constraintGuide_begin="195dp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="106dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="92dp"
         android:text="PEDIDOS"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iconImageCatalogoView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listPedidos"
+        android:id="@+id/listRecyclerViewCabPedidos"
         android:layout_width="410dp"
         android:layout_height="412dp"
         android:layout_marginStart="1dp"
@@ -129,8 +113,10 @@
         android:id="@+id/bAgregarPedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listPedidos" />
+        app:layout_constraintTop_toBottomOf="@+id/listRecyclerViewCabPedidos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comercial.BBDD.AnderBD;
 import com.example.comercial.R;
+import com.example.comercial.pedidos.Actividad_CabPedidos;
 
 import java.util.List;
 
@@ -86,8 +87,14 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     Partner currentPartner = partnerList.get(currentPosition);
                     // Aquí manejas el clic en el ítem
-                    Intent intent = new Intent(context, Actividad_PartnerPedidos.class);
+                    Intent intent = new Intent(context, Actividad_CabPedidos.class);
+                    // Asegúrate de obtener los ID del objeto Partner y añadirlos al Intent
                     intent.putExtra("partnerId", currentPartner.getIdPartner());
+                    intent.putExtra("partnerNombre", currentPartner.getNombre());
+                    intent.putExtra("partnerDireccion", currentPartner.getDireccion());
+                    intent.putExtra("partnerCif", currentPartner.getCif());
+                    intent.putExtra("partnerTelefono", currentPartner.getTelefono());
+                    intent.putExtra("partnerEmail", currentPartner.getCorreo());
                     context.startActivity(intent);
                 }
             }
@@ -100,7 +107,7 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iconImage;
-        TextView nombre, direccion, poblacion, cif, telefono, email;
+        TextView nombre, direccion,cif, telefono, email;
         Button btnDelete;
 
         public ViewHolder(View itemView) {
@@ -108,7 +115,6 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
             iconImage = itemView.findViewById(R.id.iconImageCatalogoView);
             nombre = itemView.findViewById(R.id.nombreTextView);
             direccion = itemView.findViewById(R.id.direccionTextView);
-            poblacion = itemView.findViewById(R.id.poblacionTextView);
             cif = itemView.findViewById(R.id.cifTextView);
             telefono = itemView.findViewById(R.id.telefonoTextView);
             email = itemView.findViewById(R.id.emailTextView);

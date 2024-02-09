@@ -8,10 +8,15 @@ import android.widget.Toast;
 
 import com.example.comercial.BBDD.AnderBD;
 import com.example.comercial.R;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 public class Actividad_AltaPartner extends AppCompatActivity {
 
-    EditText eNombre, eDireccion, ePoblacion, eCif, eTelefono, eEmail;
+    EditText eNombre, eDireccion, eCif, eTelefono, eEmail;
     Button bAlta, bLimpiar;
     AnderBD db;
 
@@ -24,7 +29,6 @@ public class Actividad_AltaPartner extends AppCompatActivity {
 
         eNombre = findViewById(R.id.eAltaNombre);
         eDireccion = findViewById(R.id.eAltaDireccion);
-        ePoblacion = findViewById(R.id.eAltaPoblacion);
         eCif = findViewById(R.id.eAltaCif);
         eTelefono = findViewById(R.id.eAltaTelefono);
         eEmail = findViewById(R.id.eAltaEmail);
@@ -43,16 +47,16 @@ public class Actividad_AltaPartner extends AppCompatActivity {
     private void altaPartner() {
         String nombre = eNombre.getText().toString();
         String direccion = eDireccion.getText().toString();
-        String poblacion = ePoblacion.getText().toString(); // Este campo podría requerir manejo adicional si influye en otras tablas o lógica.
         String cif = eCif.getText().toString();
         String telefono = eTelefono.getText().toString();
         String email = eEmail.getText().toString();
 
-        // Aquí deberías determinar el idZona basado en la población o cualquier otra lógica.
-        // Como ejemplo, simplemente ponemos 1, pero deberías reemplazar esto con la lógica correcta.
-        int idZona = 1;
+        // Recupera el IdZona del comercial logueado
+        int idZona = obtenerIdZonaDelComercialLogueado();
 
-        Partner nuevoPartner = new Partner(0, idZona, nombre, cif, direccion, telefono, email, ""); // Asume fechaRegistro vacío o establece una fecha actual.
+        String fechaRegistro = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        Partner nuevoPartner = new Partner(idZona, nombre, cif, direccion, telefono, email, fechaRegistro);
 
         long id = db.addPartner(nuevoPartner);
         if (id > 0) {
@@ -63,9 +67,17 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         }
     }
 
+    // Implementa esta función para determinar la IdZona basada en tu lógica de aplicación
+    private int obtenerIdZonaDelComercialLogueado() {
+        // Obtener instancia de SharedPreferences
+        SharedPreferences sharedPref = getSharedPreferences("ComercialLogueado", Context.MODE_PRIVATE);
+        // Recuperar el IdZona guardado, con un valor por defecto de 1 (o cualquier valor que consideres adecuado como valor por defecto)
+        int idZona = sharedPref.getInt("IdZona", 1); // Asegúrate de que la clave que uses aquí coincide con la que usaste para guardar el IdZona
+        return idZona;
+    }
+
     private boolean validarCampos() {
-        // Aquí implementarías la lógica de validación para cada campo.
-        // Por ejemplo, puedes verificar que el nombre no esté vacío, que el CIF tenga un formato válido, etc.
+        // Implementación de validación de campos
         return !eNombre.getText().toString().isEmpty() &&
                 !eDireccion.getText().toString().isEmpty() &&
                 !eCif.getText().toString().isEmpty() &&
@@ -76,7 +88,6 @@ public class Actividad_AltaPartner extends AppCompatActivity {
     private void limpiarCampos() {
         eNombre.setText("");
         eDireccion.setText("");
-        ePoblacion.setText("");
         eCif.setText("");
         eTelefono.setText("");
         eEmail.setText("");

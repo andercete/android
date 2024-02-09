@@ -2,7 +2,6 @@ package com.example.comercial.Catalogo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercial.Metodos;
 import com.example.comercial.R;
 import com.example.comercial.pedidos.Actividad_AltaPedido;
-import com.example.comercial.pedidos.PedidoListAdapter;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
