@@ -118,7 +118,7 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
             cif = itemView.findViewById(R.id.cifTextView);
             telefono = itemView.findViewById(R.id.telefonoTextView);
             email = itemView.findViewById(R.id.emailTextView);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnDelete = itemView.findViewById(R.id.bBorrar);
         }
 
         void bindData(final Partner item) {

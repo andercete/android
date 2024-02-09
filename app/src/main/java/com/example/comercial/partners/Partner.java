@@ -24,6 +24,17 @@ public class Partner {
         this.correo = correo;
         this.fechaRegistro = fechaRegistro;
     }
+    public Partner(int idZona, String nombre, String cif,
+                   String direccion, String telefono, String correo,
+                   String fechaRegistro) {
+        this.idZona = idZona;
+        this.nombre = nombre;
+        this.cif = cif;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+    }
     public Partner() {
     }
     // Getter y Setter para idPartner
