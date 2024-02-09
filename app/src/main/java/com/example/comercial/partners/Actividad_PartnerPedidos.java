@@ -28,6 +28,7 @@ import com.example.comercial.Metodos;
 import com.example.comercial.R;
 import com.example.comercial.Catalogo.Actividad_Catalogo;
 import com.example.comercial.BBDD.Pedido;
+import com.example.comercial.pedidos.Actividad_AltaPedido;
 import com.example.comercial.pedidos.PedidoListAdapter;
 
 public class Actividad_PartnerPedidos extends AppCompatActivity {
@@ -68,8 +69,9 @@ public class Actividad_PartnerPedidos extends AppCompatActivity {
         bAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pedidos = new Intent (Actividad_PartnerPedidos.this, Actividad_Catalogo.class);
-                startActivity(pedidos);
+                Intent AltaPedido = new Intent (Actividad_PartnerPedidos.this, Actividad_AltaPedido.class);
+                startActivity(AltaPedido);
+
             }
         });
 

@@ -791,6 +791,30 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
         return articuloList;
     }
+
+    // Método para buscar el nombre en la TablaPadre basado en el número en la TablaHija
+    public String buscarNombrePorIdPartnerEnCabPedido(int idPartner) {
+        String nombre = null;
+
+        // Obtener una instancia de la base de datos en modo lectura
+        SQLiteDatabase db = getReadableDatabase();
+
+        // Realizar la consulta
+        Cursor cursor = db.rawQuery("SELECT nombre FROM PARTNERS WHERE IdPartner = " + idPartner, null);
+
+        // Verificar si se encontró algún resultado
+        if (cursor.moveToFirst()) {
+            nombre = cursor.getString(0);
+        }
+
+        // Cerrar el cursor y la base de datos
+        cursor.close();
+        db.close();
+
+        return nombre;
+    }
+
+
     // Método para agregar un nuevo registro en CAB_PEDIDOS
     public long addCabPedido(CabPedidos cabPedido) {
         SQLiteDatabase db = this.getWritableDatabase();
