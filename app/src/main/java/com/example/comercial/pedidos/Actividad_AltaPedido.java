@@ -54,7 +54,6 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
         int comercial = sharedPreferences.getInt("IdComercial", 1);
         idComercial = comercial;
-        idComercial = sharedPreferences.getInt("idComercial", 1);
         String nombreRelacionado = db.buscarNombrePorIdPartnerEnCabPedido(idPartner);
 
         // Mostrar la fecha actual en el TextView
