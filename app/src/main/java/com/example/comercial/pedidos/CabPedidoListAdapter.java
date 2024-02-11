@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +19,7 @@ public class CabPedidoListAdapter extends RecyclerView.Adapter<CabPedidoListAdap
     private List<CabPedidos> pedidoList;
     private LayoutInflater mInflater;
     private Context context;
+
 
     public CabPedidoListAdapter(List<CabPedidos> pedidoList, Context context) {
         this.mInflater = LayoutInflater.from(context);
@@ -49,16 +49,23 @@ public class CabPedidoListAdapter extends RecyclerView.Adapter<CabPedidoListAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.bindData(pedidoList.get(position));
         final CabPedidos cabPedido = pedidoList.get(position);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Actividad_CabPedidos) context).abrirSegundaActividad(cabPedido.getIdPedido());
+            }
+        });
+
         holder.btnBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(context instanceof Actividad_CabPedidos) {
+                    // Castear el contexto a Actividad_CabPedidos y llamar al método
                     ((Actividad_CabPedidos) context).borrarRegistroPorId(cabPedido.getIdPedido());
                 }
             }
         });
-
-        // Configurar otros elementos del ViewHolder...
     }
 
     public void setItems(List<CabPedidos> items) {
@@ -67,12 +74,10 @@ public class CabPedidoListAdapter extends RecyclerView.Adapter<CabPedidoListAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         Button btnBorrar;
-        ImageView iconImage;
         TextView idPedidoTextView, idPartnerTextView, idComercialTextView, fechaPedidoTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            iconImage = itemView.findViewById(R.id.iconImagePedidoView);
             idPedidoTextView = itemView.findViewById(R.id.idPedidoTextView);
             idPartnerTextView = itemView.findViewById(R.id.idPartnerTextview);
             idComercialTextView = itemView.findViewById(R.id.idComercialTextView);
