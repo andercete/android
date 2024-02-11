@@ -1,6 +1,9 @@
 package com.example.comercial.Catalogo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.comercial.BBDD.Articulos;
+import android.content.Context;
 import com.example.comercial.BBDD.Catalogo;
 import com.example.comercial.R;
 import java.util.List;
@@ -50,17 +52,21 @@ public class CatalogoAdapterVer extends RecyclerView.Adapter<CatalogoAdapterVer.
     }
 
     public class CatalogoViewHolder extends RecyclerView.ViewHolder {
-        TextView nombreTextView, descripcionTextView,  proveedorTextView, prVentaTextView, prCosteTextView, existenciasTextView;
-ImageView iconImageView;
+        TextView idArticuloTextView, nombreTextView, descripcionTextView, proveedorTextView, prVentaTextView, prCosteTextView, existenciasTextView;
+        ImageView iconImageView;
+
         public CatalogoViewHolder(View itemView) {
             super(itemView);
             iconImageView = itemView.findViewById(R.id.iconImageCatalogoView);
+            idArticuloTextView = itemView.findViewById(R.id.idArticuloCatalogoTextView);
             nombreTextView = itemView.findViewById(R.id.nombreCatalogoTextView);
             descripcionTextView = itemView.findViewById(R.id.descripcionCatalogoTextView);
             proveedorTextView = itemView.findViewById(R.id.proveedorCatalogoTextView);
             prVentaTextView = itemView.findViewById(R.id.precioCatalogoTextView);
             prCosteTextView = itemView.findViewById(R.id.precioCostoCatalogoTextView);
-            existenciasTextView = itemView.findViewById(R.id.ExistenciasCatalogoTextView);        }
+            existenciasTextView = itemView.findViewById(R.id.ExistenciasCatalogoTextView);
+
+        }
 
         public void bind(final Catalogo catalogo) { // Cambiado de Articulos a Catalogo en el parámetro del método bind
             // Actualización de las vistas con información de Catalogo
@@ -72,30 +78,17 @@ ImageView iconImageView;
             existenciasTextView.setText(String.valueOf(catalogo.getExistencias()));
 
             // Estableciendo la imagen del ImageView
-            // Asumiendo que el nombre de la imagen en el objeto Catalogo corresponde a un recurso en drawable
-            String imageName = catalogo.getDireccionImagen();
-            if (imageName != null && !imageName.isEmpty()) {
-                int imageResId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
-                // Check if the resource was found
-                if (imageResId != 0) {
-                    iconImageView.setImageResource(imageResId);
-                } else {
-                    // Resource not found, set a default image
-                    iconImageView.setImageResource(R.drawable.ic_launcher_background); // Use your default image here
-                }
+            String imageName = catalogo.getImagen();
+            if (imageName != null) {
+                byte[] decodedString = Base64.decode(imageName, Base64.DEFAULT);
+                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                iconImageView.setImageBitmap(decodedBitmap);
             } else {
-                // imageName is null or empty, set a default image
-                iconImageView.setImageResource(R.drawable.iconemail); // Use your default image here
+                // Maneja el caso en el que imageName es null, por ejemplo, estableciendo una imagen predeterminada
+                iconImageView.setImageResource(R.drawable.articulo_imagen_pordefecto);
             }
-            itemView.setSelected(catalogo.isSelected()); // Aquí puedes cambiar el fondo o cualquier otro indicador
-            if (catalogo.isSelected()) {
-                // Cambia el fondo para elementos seleccionados
-                itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.selectedItemBackground)); // Define este color en tus recursos
-            } else {
-                // Restablece el fondo para elementos no seleccionados
-                itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.defaultItemBackground)); // Define este color en tus recursos
-            }
-        }
 
+        }
     }
 }
+

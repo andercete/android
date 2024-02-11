@@ -126,7 +126,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
 
             // Estableciendo la imagen del ImageView
             // Asumiendo que el nombre de la imagen en el objeto Catalogo corresponde a un recurso en drawable
-            String imageName = catalogo.getDireccionImagen();
+            String imageName = catalogo.getImagen();
             if (imageName != null && !imageName.isEmpty()) {
                 int imageResId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
                 // Check if the resource was found

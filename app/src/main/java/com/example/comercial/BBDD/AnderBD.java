@@ -346,6 +346,13 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Método para vaciar el catalogo
+    public void vaciarCatalogo() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("ARTICULOS", null, null);
+        db.close();
+    }
+
     // Método para obtener todos los partners
     public List<Partner> getAllPartners() {
         List<Partner> partnerList = new ArrayList<>();
@@ -682,7 +689,7 @@ public class AnderBD extends SQLiteOpenHelper {
         values.put("PvVent", catalogo.getPvVent());
         values.put("PvCost", catalogo.getPvCost());
         values.put("Existencias", catalogo.getExistencias());
-        values.put("Direccion_Imagen", catalogo.getDireccionImagen());
+        values.put("Direccion_Imagen", catalogo.getImagen());
 
         long id = db.insert("ARTICULOS", null, values);
         db.close();
@@ -722,7 +729,7 @@ public class AnderBD extends SQLiteOpenHelper {
             catalogo.setPvVent(cursor.getDouble(cursor.getColumnIndexOrThrow("PvVent")));
             catalogo.setPvCost(cursor.getDouble(cursor.getColumnIndexOrThrow("PvCost")));
             catalogo.setExistencias(cursor.getInt(cursor.getColumnIndexOrThrow("Existencias")));
-            catalogo.setDireccionImagen(cursor.getString(cursor.getColumnIndexOrThrow("Direccion_Imagen")));
+            catalogo.setImagen(cursor.getString(cursor.getColumnIndexOrThrow("Direccion_Imagen")));
 
             cursor.close();
         }
@@ -741,7 +748,7 @@ public class AnderBD extends SQLiteOpenHelper {
         values.put("PvVent", catalogo.getPvVent());
         values.put("PvCost", catalogo.getPvCost());
         values.put("Existencias", catalogo.getExistencias());
-        values.put("Direccion_Imagen", catalogo.getDireccionImagen());
+        values.put("Direccion_Imagen", catalogo.getImagen());
 
         return db.update("ARTICULOS", values, "IdArticulo = ?", new String[]{String.valueOf(catalogo.getIdArticulo())});
     }
@@ -778,7 +785,7 @@ public class AnderBD extends SQLiteOpenHelper {
                 if(pvVentIndex != -1) articulo.setPvVent(cursor.getDouble(pvVentIndex));
                 if(pvCostIndex != -1) articulo.setPvCost(cursor.getDouble(pvCostIndex));
                 if(existenciasIndex != -1) articulo.setExistencias(cursor.getInt(existenciasIndex));
-                if(direccionImagenIndex != -1) articulo.setDireccionImagen(cursor.getString(direccionImagenIndex));
+                if(direccionImagenIndex != -1) articulo.setImagen(cursor.getString(direccionImagenIndex));
 
                 listaArticulos.add(articulo);
             } while (cursor.moveToNext());

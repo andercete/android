@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comercial.BBDD.AnderBD;
-import com.example.comercial.BBDD.Articulos;
 import com.example.comercial.BBDD.Catalogo;
 import com.example.comercial.R;
 
@@ -40,42 +39,14 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
 
         bImportarCatalogo = findViewById(R.id.bImportar2);
         rvCatalogo = findViewById(R.id.rCatalogo);
-        añadirArticulosPorDefecto();
+
         setupRecyclerView();
         setupImportarCatalogoButton();
     }
-    private void añadirArticulosPorDefecto() {
-        if (!db.existeArticulo("Carne pollo")) {
-            db.addArticulo(new Catalogo(0, "Carne pollo", "Muslos", "Euskal Okela", 5.0, 5.0, 5, "carne"));
-        }
-        if (!db.existeArticulo("Carne Ternera Solomillo")) {
-            db.addArticulo(new Catalogo(0, "Carne Ternera Solomillo", "Solomillo de ternera", "Basaxterri", 13.0, 10.0, 10, "solomillo"));
-        }
-        if (!db.existeArticulo("Carne Ternera Chuletón")) {
-            db.addArticulo(new Catalogo(0, "Carne Ternera Chuletón", "Chuletón de ternera",  "Baserriberrí", 15.0, 12.0, 7, "chuleton"));
-        }
-        if (!db.existeArticulo("Carne Cerdo Lomo")) {
-            db.addArticulo(new Catalogo(0, "Carne Cerdo Lomo", "Lomo de cerdo",  "Euskal Txerria", 9.0, 7.0, 15, "lomo"));
-        }
-        if (!db.existeArticulo("Carne Cordero Chuletas")) {
-            db.addArticulo(new Catalogo(0, "Carne Cordero Chuletas", "Chuletas de cordero", "Raza latxa", 12.0, 9.0, 20, "chuletascordero"));
-        }
-        if (!db.existeArticulo("Pescado Anchoas del Cantábrico")) {
-            db.addArticulo(new Catalogo(0, "Pescado Anchoas del Cantábrico", "Anchoas del Cantábrico", "Bizkaiko Ura", 20.0, 16.0, 5, "anchoas"));
-        }
-        if (!db.existeArticulo("Pescado Bonito del Norte")) {
-            db.addArticulo(new Catalogo(0, "Pescado Bonito del Norte", "Bonito del Norte","Bonito del Norte", 18.0, 14.0, 8, "bonito"));
-        }
-        if (!db.existeArticulo("Bebida Sidra Zapian")) {
-            db.addArticulo(new Catalogo(0, "Bebida Sidra Zapian", "Sidra Zapian", "Bilbo Bodegak", 5.0, 3.0, 30, "sidra"));
-        }
-        if (!db.existeArticulo("Bebida Txakoli Ameztoi")) {
-            db.addArticulo(new Catalogo(0, "Bebida Txakoli Ameztoi", "Txakoli Ameztoi", "Txakoli Ameztoi", 7.0, 5.0, 25, "tx"));
-        }
-    }
+
     private void setupRecyclerView() {
-        List<Catalogo> catalogoArticulos = db.getAllArticulos(); // Actualizar nombre del método si necesario
-        mAdapter = new CatalogoAdapterVer(this, catalogoArticulos);
+        List<Catalogo> catalogos = db.getAllArticulos(); // Actualizar nombre del método si necesario
+        mAdapter = new CatalogoAdapterVer(this, catalogos);
         rvCatalogo.setLayoutManager(new LinearLayoutManager(this));
         rvCatalogo.setAdapter(mAdapter);
     }
@@ -94,10 +65,93 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
+            importarCatalogoDesdeXML(uri);
         }
     }
 
+    private void importarCatalogoDesdeXML(Uri uri) {
+        try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+            // Vaciamos el catalogo para que esté acualizado y sin registros duplicados
+            db.vaciarCatalogo();
 
+            List<Catalogo> catalogos = parseXMLFile(inputStream);
+            for (Catalogo catalogo : catalogos) {
+                db.addArticulo(catalogo); // Ajustar a la implementación correcta
+            }
+            mAdapter.setCatalogo(catalogos);
+            mAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "Catálogo importado con éxito", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error al importar catálogo", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    private List<Catalogo> parseXMLFile(InputStream inputStream) {
+        List<Catalogo> catalogoList = new ArrayList<>();
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            XmlPullParser parser = factory.newPullParser();
+            parser.setInput(inputStream, null);
+            int eventType = parser.getEventType();
+            Catalogo currentCatalogo = null;
+            String tagName = null;
+
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        tagName = parser.getName();
+                        if ("Articulo".equals(tagName)) {
+                            currentCatalogo = new Catalogo();
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        String text = parser.getText();
+                        if (currentCatalogo != null && tagName != null) {
+                            switch (tagName) {
+                                case "IdArticulo":
+                                    currentCatalogo.setIdArticulo(Integer.parseInt(text));
+                                    break;
+                                case "Nombre":
+                                    currentCatalogo.setNombre(text);
+                                    break;
+                                case "Descripcion":
+                                    currentCatalogo.setDescripcion(text);
+                                    break;
+                                case "Proveedor":
+                                    currentCatalogo.setProveedor(text);
+                                    break;
+                                case "PrVenta":
+                                    currentCatalogo.setPvVent(Float.parseFloat(text));
+                                    break;
+                                case "PrCoste":
+                                    currentCatalogo.setPvCost(Float.parseFloat(text));
+                                    break;
+                                case "Existencias":
+                                    currentCatalogo.setExistencias(Integer.parseInt(text));
+                                    break;
+                                case "ImagenBase64":
+                                    currentCatalogo.setImagen(text);
+                                    break;
+                            }
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if ("Articulo".equals(parser.getName()) && currentCatalogo != null) {
+                            catalogoList.add(currentCatalogo);
+                            currentCatalogo = null; // Reset para el próximo artículo
+                        }
+                        tagName = null; // Reset del nombre de tag para el próximo evento
+                        break;
+                }
+                eventType = parser.next();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error al parsear el archivo XML", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+        return catalogoList;
+    }
 
 
     @Override

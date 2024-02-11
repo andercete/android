@@ -63,7 +63,8 @@ public class Actividad_AltaPedido extends AppCompatActivity {
     // Cargar los datos del catálogo (esto dependerá de cómo almacenes tus datos)
         catalogoList = db.getAllArticulos(); // Actualizar el método para obtener todos los artículos de la base de datos
         initRecyclerView(catalogoList);
-        añadirArticulosPorDefecto();
+añadirArticulosPorDefecto();
+
         // Inicializa el botón de Crear Pedido
         Button btnCrearPedido = findViewById(R.id.bRealizarPedido); // Asegúrate de que el ID del botón es correcto.
         btnCrearPedido.setOnClickListener(new View.OnClickListener() {

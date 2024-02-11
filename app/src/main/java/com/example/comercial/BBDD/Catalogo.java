@@ -94,11 +94,11 @@ public class Catalogo {
     }
 
     // Getter y Setter para direccionImagen
-    public String getDireccionImagen() {
+    public String getImagen() {
         return direccionImagen;
     }
 
-    public void setDireccionImagen(String direccionImagen) {
+    public void setImagen(String direccionImagen) {
         this.direccionImagen = direccionImagen;
     }
 
