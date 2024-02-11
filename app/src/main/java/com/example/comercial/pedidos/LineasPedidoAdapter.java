@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercial.BBDD.LineasPedido;
 import com.example.comercial.R;
-
 import java.util.List;
 
 public class LineasPedidoAdapter extends RecyclerView.Adapter<LineasPedidoAdapter.LineaPedidoViewHolder> {
@@ -35,7 +34,6 @@ public class LineasPedidoAdapter extends RecyclerView.Adapter<LineasPedidoAdapte
         holder.textViewIdLinea.setText(String.valueOf(lineaPedido.getIdLinea()));
         holder.textViewIdArticulo.setText(String.valueOf(lineaPedido.getIdArticulo()));
         holder.textViewCantidad.setText(String.valueOf(lineaPedido.getCantidad()));
-        holder.textViewDescuento.setText(String.valueOf(lineaPedido.getDescuento()));
         holder.textViewPrecio.setText(String.valueOf(lineaPedido.getPrecio()));
     }
 
@@ -45,7 +43,7 @@ public class LineasPedidoAdapter extends RecyclerView.Adapter<LineasPedidoAdapte
     }
 
     public class LineaPedidoViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewIdLinea, textViewIdArticulo, textViewCantidad, textViewDescuento, textViewPrecio;
+        public TextView textViewIdLinea, textViewIdArticulo, textViewCantidad, textViewPrecio;
 
         public LineaPedidoViewHolder(View view) {
             super(view);

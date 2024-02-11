@@ -61,6 +61,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         idPartner = intent.getIntExtra("partnerId", -1); // El ID del partner seleccionado
         // Inicializar la instancia de la base de datos
         db = new AnderBD(this);
+
         SharedPreferences sharedPreferences = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
         int comercial = sharedPreferences.getInt("IdComercial", 1);
         idComercial = comercial;
@@ -85,7 +86,6 @@ public class Actividad_AltaPedido extends AppCompatActivity {
                 finish();
             }
         });
-
 
     }
 

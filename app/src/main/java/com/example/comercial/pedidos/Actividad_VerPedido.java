@@ -25,10 +25,11 @@ public class Actividad_VerPedido extends AppCompatActivity {
     private TextView textViewIdPedido, textViewIdPartner, textViewIdComercial, textViewFechaPedido;
     private RecyclerView recyclerViewLineasPedido;
     private Button btnEditar;
+    int idPedido;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ver_pedido);
+        setContentView(R.layout.layout_ver_pedido);
 
 
         // Obtener referencias a los elementos de la interfaz
@@ -37,13 +38,13 @@ public class Actividad_VerPedido extends AppCompatActivity {
         textViewIdComercial = findViewById(R.id.textViewIdComercial);
         textViewFechaPedido = findViewById(R.id.textViewFechaPedido);
         recyclerViewLineasPedido = findViewById(R.id.recyclerViewLineasPedido);
-        btnEditar = findViewById(R.id.btnEditar);
+
 
 
 
         // Obtener información del pedido según el ID
-        int idPedido = getIntent().getIntExtra("idPedido", -1);
-
+        int codPedido = getIntent().getIntExtra("idPedido", -1);
+        idPedido=codPedido;
         // Inicializar la base de datos
         AnderBD anderBD = new AnderBD(this);
 

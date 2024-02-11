@@ -116,14 +116,14 @@ public class Actividad_CabPedidos extends AppCompatActivity  {
 
     private void abrirSegundaActividad(int position) {
         // Obtén el objeto CabPedidos correspondiente al índice seleccionado
-        //CabPedidos cabPedidoSeleccionado = mAdapter.getItem(position);
+        CabPedidos cabPedidoSeleccionado = mAdapter.getItem(position);
 
         // Obtén el ID del pedido
-        //int idPedido = cabPedidoSeleccionado.getIdPedido();
+        int idPedido = cabPedidoSeleccionado.getIdPedido();
 
         // Abre la segunda actividad aquí y pasa los datos necesarios
         Intent intent = new Intent(Actividad_CabPedidos.this, Actividad_VerPedido.class);
-       // intent.putExtra("idPedido", idPedido);
+        intent.putExtra("idPedido", idPedido);
         startActivity(intent);
     }
 

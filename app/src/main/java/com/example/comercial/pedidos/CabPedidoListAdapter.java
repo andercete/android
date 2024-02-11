@@ -32,6 +32,13 @@ public class CabPedidoListAdapter extends RecyclerView.Adapter<CabPedidoListAdap
         return pedidoList.size();
     }
 
+    // Añade este método para obtener un elemento en una posición específica
+    public CabPedidos getItem(int position) {
+        if (position >= 0 && position < pedidoList.size()) {
+            return pedidoList.get(position);
+        }
+        return null;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_element_cabpedidos, parent, false);
