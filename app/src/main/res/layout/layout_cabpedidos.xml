@@ -10,15 +10,11 @@
         android:id="@+id/tPartnerNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="154dp"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="211dp"
         android:text="Partner"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tPartnerDireccion"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -102,8 +98,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listRecyclerViewCabPedidos"
-        android:layout_width="410dp"
-        android:layout_height="412dp"
+        android:layout_width="413dp"
+        android:layout_height="472dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="26dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,10 +109,11 @@
         android:id="@+id/bAgregarPedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listRecyclerViewCabPedidos" />
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
+        android:text="Nuevo pedido"
+        app:cornerRadius="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

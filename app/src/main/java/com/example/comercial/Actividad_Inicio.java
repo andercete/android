@@ -4,7 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.comercial.BBDD.AnderBD;
@@ -34,6 +37,8 @@ import java.util.ArrayList;
 public class Actividad_Inicio extends AppCompatActivity {
     //GoogleMap mMap;
     Button bCitas, bPartner, bCatalogo, bDelegacion;
+
+    TextView textViewUsuario;
     ImageButton bTelefono, bEmail;
     AlertDialog.Builder dialog;
     private AnderBD db;
@@ -53,6 +58,12 @@ public class Actividad_Inicio extends AppCompatActivity {
         db = new AnderBD(this);
         bTelefono = findViewById(R.id.bTelefono);
         bEmail = findViewById(R.id.bEmail);
+        textViewUsuario = findViewById(R.id.textView12);
+        SharedPreferences sharedPref = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
+        String nombreComercial = sharedPref.getString("NombreComercial", "");
+
+        // Establecer el nombre del comercial en el TextView
+        textViewUsuario.setText("Bienvenido, " + nombreComercial);
 
         bCitas.setOnClickListener(new View.OnClickListener() {
             @Override

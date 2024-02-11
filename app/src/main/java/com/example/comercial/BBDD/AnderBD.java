@@ -289,35 +289,28 @@ public class AnderBD extends SQLiteOpenHelper {
 
         return partners;
     }
-    public int obtenerIdZonaPorDNI(String dni) {
+    public Comerciales obtenerComercialPorDNI(String dni) {
         SQLiteDatabase db = this.getReadableDatabase();
-        int idZona = -1; // Valor predeterminado en caso de no encontrar el comercial
+        Comerciales comercial = null;
 
-        // Define una proyección que especifica las columnas de la base de datos que usarás después de esta consulta
-        String[] projection = {
-                "IdZona" // Asegúrate de que este es el nombre correcto de la columna en tu base de datos
-        };
+        String[] columns = {"IdComercial", "IdZona", "Nombre", "Apellidos", "Contraseña", "Correo", "Direccion", "DNI", "Telefono"};
+        String selection = "DNI=?";
+        String[] selectionArgs = {dni};
 
-        // Filtra resultados WHERE "DNI" = 'dni proporcionado'
-        String selection = "DNI = ?";
-        String[] selectionArgs = { dni };
-
-        Cursor cursor = db.query(
-                "COMERCIALES",   // La tabla a consultar
-                projection,             // Las columnas a retornar
-                selection,              // Las columnas para la cláusula WHERE
-                selectionArgs,          // Los valores para la cláusula WHERE
-                null,                   // No agrupar las filas
-                null,                   // No filtrar por grupos de filas
-                null                    // El orden del sorteo
-        );
+        Cursor cursor = db.query("COMERCIALES", columns, selection, selectionArgs, null, null, null);
 
         if (cursor.moveToFirst()) {
-            idZona = cursor.getInt(cursor.getColumnIndexOrThrow("IdZona"));
-        }
-        cursor.close();
+            int idComercial = cursor.getInt(cursor.getColumnIndex("IdComercial"));
+            int idZona = cursor.getInt(cursor.getColumnIndex("IdZona"));
+            String nombre = cursor.getString(cursor.getColumnIndex("Nombre"));
 
-        return idZona;
+            comercial = new Comerciales(idComercial, idZona, nombre, "", "", "", "", dni, "");
+        }
+
+        cursor.close();
+        db.close();
+
+        return comercial;
     }
 
 

@@ -9,11 +9,21 @@
     android:foregroundTintMode="add"
     tools:context=".Actividad_Inicio">
 
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="182dp"
         android:layout_height="185dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -115,6 +125,7 @@
         android:id="@+id/bTelefono"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
+        android:layout_marginBottom="20dp"
         android:background="@android:color/transparent"
         android:contentDescription="Icono email"
         android:scaleType="centerInside"
@@ -129,6 +140,7 @@
         android:id="@+id/bEmail"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
+        android:layout_marginBottom="20dp"
         android:background="@android:color/transparent"
         android:contentDescription="Icono telefono"
         android:scaleType="centerInside"

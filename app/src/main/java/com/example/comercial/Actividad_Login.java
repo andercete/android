@@ -1,17 +1,19 @@
 package com.example.comercial;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.comercial.BBDD.AnderBD;
 import com.example.comercial.BBDD.Comerciales;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 public class Actividad_Login extends AppCompatActivity {
 
@@ -21,13 +23,12 @@ public class Actividad_Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_login); // Asegúrate de que este es el nombre correcto de tu layout de login.
+        setContentView(R.layout.layout_login);
 
         helper = new AnderBD(this);
         eDNI = findViewById(R.id.eUsuario);
         eContra = findViewById(R.id.eContra);
 
-        // Añadir un comercial por defecto al iniciar la aplicación
         añadirComercialPorDefecto();
 
         findViewById(R.id.bLogin).setOnClickListener(new View.OnClickListener() {
@@ -65,27 +66,28 @@ public class Actividad_Login extends AppCompatActivity {
         String contraseña = eContra.getText().toString();
 
         if (validateLogin(dni, contraseña)) {
-            // Guarda el IdZona del comercial logueado para uso futuro
-            guardarIdZonaComercialLogueado(dni);
-
-            Intent i = new Intent(Actividad_Login.this, Actividad_Inicio.class);
-            startActivity(i);
-            finish();
+            guardarDatosComercialLogueado(dni);
+            iniciarActividadInicio();
         } else {
             Toast.makeText(Actividad_Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void guardarIdZonaComercialLogueado(String dni) {
-        AnderBD db = new AnderBD(this);
-        int idZona = db.obtenerIdZonaPorDNI(dni); // Asumiendo que este método obtiene el IdZona basado en el DNI del comercial
+    private void guardarDatosComercialLogueado(String dni) {
+        Comerciales comercial = helper.obtenerComercialPorDNI(dni);
 
-        // Guardar IdZona en Preferencias Compartidas
-        SharedPreferences sharedPref = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("IdZona", idZona);
-        editor.apply();
+        if (comercial != null) {
+            // Guardar datos del comercial en Preferencias Compartidas
+            SharedPreferences sharedPref = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("IdZona", comercial.getIdZona());
+            editor.putString("NombreComercial", comercial.getNombre());
+            editor.putInt("IdComercial", comercial.getIdComercial());
+            editor.apply();
+        }
     }
+
+
 
     private boolean validateLogin(String dni, String contraseña) {
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -99,6 +101,12 @@ public class Actividad_Login extends AppCompatActivity {
         db.close();
 
         return count > 0;
+    }
+
+    private void iniciarActividadInicio() {
+        Intent i = new Intent(Actividad_Login.this, Actividad_Inicio.class);
+        startActivity(i);
+        finish();
     }
 
     @Override

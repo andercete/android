@@ -23,6 +23,22 @@
             android:orientation="horizontal"
             android:padding="6dp">
 
+            <Button
+                android:id="@+id/bCabPedidoBorrar"
+                android:layout_width="53dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginRight="28dp"
+                android:text="X"
+                android:textSize="12sp"
+                app:cornerRadius="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/iconImagePedidoView"
                 android:layout_width="70dp"
@@ -101,20 +117,6 @@
             </LinearLayout>
 
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/bCabPedidoBorrar"
-            android:layout_width="53dp"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="7dp"
-            android:text="X"
-            android:textSize="12sp"
-            app:cornerRadius="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Add additional TextViews for cantidad, descuento, precio, etc. -->
 

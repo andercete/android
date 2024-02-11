@@ -1,7 +1,9 @@
 package com.example.comercial.pedidos;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +45,9 @@ public class Actividad_AltaPedido extends AppCompatActivity {
     private List<Catalogo> catalogoList; // Lista de ítems del catálogo
 
     private CatalogoAdapter catalogoAdapter;
-    int idPartner;
+    int idPartner,idComercial;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +61,9 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         idPartner = intent.getIntExtra("partnerId", -1); // El ID del partner seleccionado
         // Inicializar la instancia de la base de datos
         db = new AnderBD(this);
-
-        Integer idPartner = 1;
+        SharedPreferences sharedPreferences = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
+        int comercial = sharedPreferences.getInt("idComercial", 1);
+        idComercial = comercial;
         String nombreRelacionado = db.buscarNombrePorIdPartnerEnCabPedido(idPartner);
 
         // Mostrar la fecha actual en el TextView
@@ -193,7 +198,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         }
         CabPedidos nuevoPedido = new CabPedidos();
         nuevoPedido.setIdPartner(idPartner); // Asegúrate de que idPartner sea el ID correcto del partner
-        nuevoPedido.setIdComercial(/* IdComercial */ 1); // Asumiendo que tienes el ID del comercial
+        nuevoPedido.setIdComercial(idComercial);
         nuevoPedido.setFechaPedido(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
 
         long idPedido = db.addCabPedido(nuevoPedido);
