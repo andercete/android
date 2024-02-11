@@ -1,11 +1,13 @@
 package com.example.comercial.pedidos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ import com.example.comercial.BBDD.AnderBD;
 import com.example.comercial.BBDD.CabPedidos;
 import com.example.comercial.R;
 
-public class Actividad_CabPedidos extends AppCompatActivity {
+public class Actividad_CabPedidos extends AppCompatActivity  {
     TextView tNombre,tDireccion,tCif,tTelefono,tEmail;
     private CabPedidoListAdapter mAdapter;
     private RecyclerView recyclerView;
@@ -81,6 +83,48 @@ public class Actividad_CabPedidos extends AppCompatActivity {
 
         List<CabPedidos> cabPedidosList = db.getAllCabPedidos(idPartner);
         initRecyclerView(cabPedidosList);
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerView.OnItemTouchListener() {
+                    @Override
+                    public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                        View child = rv.findChildViewUnder(e.getX(), e.getY());
+                        int position = rv.getChildAdapterPosition(child);
+
+                        if (child != null && position != RecyclerView.NO_POSITION) {
+                            // Maneja el clic en el elemento del RecyclerView
+                            abrirSegundaActividad(position);
+                        }
+
+                        return false;
+                    }
+
+                    @Override
+                    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+                    }
+
+                    @Override
+                    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                    }
+
+                }
+        );
+
+    }
+
+    private void abrirSegundaActividad(int position) {
+        // Obtén el objeto CabPedidos correspondiente al índice seleccionado
+        CabPedidos cabPedidoSeleccionado = mAdapter.getItem(position);
+
+        // Obtén el ID del pedido
+        int idPedido = cabPedidoSeleccionado.getIdPedido();
+
+        // Abre la segunda actividad aquí y pasa los datos necesarios
+        Intent intent = new Intent(Actividad_CabPedidos.this, Actividad_VerPedido.class);
+        intent.putExtra("idPedido", idPedido);
+        startActivity(intent);
     }
 
     private void initRecyclerView(List<CabPedidos> cabPedidos) {

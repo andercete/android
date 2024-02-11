@@ -48,18 +48,21 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         catalogoPedido = findViewById(R.id.rCatalogoPedido);
         Intent intent = getIntent();
         idPartner = intent.getIntExtra("partnerId", -1); // El ID del partner seleccionado
+        // Inicializar la instancia de la base de datos
+        db = new AnderBD(this);
+
         SharedPreferences sharedPreferences = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
+        int comercial = sharedPreferences.getInt("IdComercial", 1);
+        idComercial = comercial;
         idComercial = sharedPreferences.getInt("idComercial", 1);
         String nombreRelacionado = db.buscarNombrePorIdPartnerEnCabPedido(idPartner);
 
         // Mostrar la fecha actual en el TextView
         mostrarFechaActual(FechaPedido);
         NombrePartner.setText(nombreRelacionado != null ? nombreRelacionado : "No encontrado");
-        // Inicializar la instancia de la base de datos
-        añadirArticulosPorDefecto(); // Asegúrate de que los artículos estén en la base de datos
 
+    // Cargar los datos del catálogo (esto dependerá de cómo almacenes tus datos)
         catalogoList = db.getAllArticulos(); // Actualizar el método para obtener todos los artículos de la base de datos
-
         initRecyclerView(catalogoList);
 
         // Inicializa el botón de Crear Pedido
@@ -118,7 +121,6 @@ public class Actividad_AltaPedido extends AppCompatActivity {
             Toast.makeText(this, "No se han seleccionado artículos", Toast.LENGTH_SHORT).show();
             return;
         }
-
         CabPedidos nuevoPedido = new CabPedidos();
         nuevoPedido.setIdPartner(idPartner);
         nuevoPedido.setIdComercial(idComercial);
