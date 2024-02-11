@@ -10,13 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.comercial.BBDD.Catalogo;
 import com.example.comercial.R;
 import java.util.List;
 
 public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.CatalogoViewHolder> {
-    private List<Catalogo> catalogoList;
     private LayoutInflater inflater;
     private Context context;
+    private List<Catalogo> catalogoList;
+
 
     public CatalogoAdapter(Context context, List<Catalogo> catalogoList) {
         this.inflater = LayoutInflater.from(context);
@@ -42,14 +44,14 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
         return catalogoList.size();
     }
 
-    // Método para actualizar la lista de catálogo en el adaptador
+     //Método para actualizar la lista de catálogo en el adaptador
     public void setCatalogo(List<Catalogo> catalogoList) {
         this.catalogoList = catalogoList;
-        notifyDataSetChanged(); // Notifica que los datos han cambiado
+       notifyDataSetChanged(); // Notifica que los datos han cambiado
     }
 
     public class CatalogoViewHolder extends RecyclerView.ViewHolder {
-        TextView idArticuloTextView, nombreTextView, descripcionTextView, categoriaTextView, proveedorTextView, prVentaTextView, prCosteTextView, existenciasTextView;
+        TextView idArticuloTextView, nombreTextView, descripcionTextView,  proveedorTextView, prVentaTextView, prCosteTextView, existenciasTextView;
         ImageView iconImageView;
         ImageButton btnDecrease, btnIncrease;
         TextView quantityText;
@@ -92,7 +94,6 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
             idArticuloTextView = itemView.findViewById(R.id.idArticuloCatalogoTextView);
             nombreTextView = itemView.findViewById(R.id.nombreCatalogoTextView);
             descripcionTextView = itemView.findViewById(R.id.descripcionCatalogoTextView);
-            categoriaTextView = itemView.findViewById(R.id.categoriaCatalogoTextView);
             proveedorTextView = itemView.findViewById(R.id.proveedorCatalogoTextView);
             prVentaTextView = itemView.findViewById(R.id.precioCatalogoTextView);
             prCosteTextView = itemView.findViewById(R.id.precioCostoCatalogoTextView);
@@ -115,19 +116,17 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
         }
 
         public void bind(final Catalogo catalogo) {
-            // Estableciendo los textos de los TextViews
-            idArticuloTextView.setText(catalogo.getIdArticulo());
             nombreTextView.setText(catalogo.getNombre());
             descripcionTextView.setText(catalogo.getDescripcion());
             proveedorTextView.setText(catalogo.getProveedor());
-            prVentaTextView.setText(String.valueOf(catalogo.getPrVent()));
-            prCosteTextView.setText(String.valueOf(catalogo.getPrCost()));
+            prVentaTextView.setText(String.valueOf(catalogo.getPvVent()));
+            prCosteTextView.setText(String.valueOf(catalogo.getPvCost()));
             existenciasTextView.setText(String.valueOf(catalogo.getExistencias()));
             quantityText.setText(String.valueOf(catalogo.getQuantity()));
 
             // Estableciendo la imagen del ImageView
             // Asumiendo que el nombre de la imagen en el objeto Catalogo corresponde a un recurso en drawable
-            String imageName = catalogo.getImageName();
+            String imageName = catalogo.getDireccionImagen();
             if (imageName != null && !imageName.isEmpty()) {
                 int imageResId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
                 // Check if the resource was found
@@ -149,7 +148,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
                 // Restablece el fondo para elementos no seleccionados
                 itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.defaultItemBackground)); // Define este color en tus recursos
             }
-
         }
+
     }
 }

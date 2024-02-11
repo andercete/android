@@ -60,26 +60,15 @@
             app:layout_constraintTop_toBottomOf="@id/nombreCatalogoTextView" />
 
         <TextView
-            android:id="@+id/categoriaCatalogoTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:text="Categoria"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
-            app:layout_constraintStart_toStartOf="@id/descripcionCatalogoTextView"
-            app:layout_constraintTop_toBottomOf="@id/descripcionCatalogoTextView" />
-
-        <TextView
             android:id="@+id/proveedorCatalogoTextView"
-            android:layout_width="0dp"
+            android:layout_width="211dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:paddingLeft="12dp"
             android:text="Proveedor"
             android:textSize="13sp"
-            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
-            app:layout_constraintStart_toStartOf="@id/categoriaCatalogoTextView"
-            app:layout_constraintTop_toBottomOf="@id/categoriaCatalogoTextView" />
+            app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
+            app:layout_constraintTop_toBottomOf="@+id/descripcionCatalogoTextView" />
 
         <TextView
             android:id="@+id/precioCatalogoTextView"

@@ -29,10 +29,6 @@
             android:name=".pedidos.Actividad_CabPedidos"
             android:exported="false" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDetsWSiLa2NUcYDskClpbdhiqZdnXQMN0" />
-
         <activity
             android:name=".partners.Actividad_AltaPartner"
             android:exported="false" />
@@ -47,7 +43,7 @@
             android:exported="false" />
         <activity
             android:name=".calendario.Actividad_AltaEvento"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".calendario.Actividad_Eventos"
             android:exported="false" />

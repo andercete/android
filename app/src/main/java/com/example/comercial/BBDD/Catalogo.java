@@ -1,43 +1,45 @@
-package com.example.comercial.Catalogo;
+package com.example.comercial.BBDD;
 
 public class Catalogo {
-    private int idArticulo; // Cambiado a int para alinearse con la base de datos
+    private int idArticulo;
     private String nombre;
     private String descripcion;
     private String proveedor;
-    private double prVent; // Cambiado a double para consistencia con Articulos
-    private double prCost; // Cambiado a double para consistencia con Articulos
+    private double pvVent;
+    private double pvCost;
     private int existencias;
-    private String imageName; // Nombre de la imagen en drawable sin la extensión
+    private String direccionImagen;
     private boolean isSelected = false;
     private int quantity = 1; // Valor inicial
 
-    // Constructor por defecto
-    public Catalogo() {
-    }
 
-    // Constructor con parámetros
-    public Catalogo(int idArticulo, String nombre, String descripcion, String categoria,
-                    String proveedor, float prVent, float prCost, int existencias, String imageName) {
+    // Constructor
+    public Catalogo(int idArticulo, String nombre, String descripcion,
+                      String proveedor, double pvVent,
+                     double pvCost, int existencias, String direccionImagen) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.proveedor = proveedor;
-        this.prVent = prVent;
-        this.prCost = prCost;
+        this.pvVent = pvVent;
+        this.pvCost = pvCost;
         this.existencias = existencias;
-        this.imageName = imageName;
+        this.direccionImagen = direccionImagen;
+    }
+    public Catalogo() {
+
     }
 
-    // Getters y setters
+    // Getter y Setter para idArticulo
     public int getIdArticulo() {
         return idArticulo;
     }
 
-    public void setIdArticulo(String idArticulo) {
-        this.idArticulo = Integer.parseInt(idArticulo);
+    public void setIdArticulo(int idArticulo) {
+        this.idArticulo = idArticulo;
     }
 
+    // Getter y Setter para nombre
     public String getNombre() {
         return nombre;
     }
@@ -46,6 +48,7 @@ public class Catalogo {
         this.nombre = nombre;
     }
 
+    // Getter y Setter para descripcion
     public String getDescripcion() {
         return descripcion;
     }
@@ -54,6 +57,7 @@ public class Catalogo {
         this.descripcion = descripcion;
     }
 
+    // Getter y Setter para proveedor
     public String getProveedor() {
         return proveedor;
     }
@@ -62,22 +66,25 @@ public class Catalogo {
         this.proveedor = proveedor;
     }
 
-    public float getPrVent() {
-        return (float) prVent;
+    // Getter y Setter para pvVent
+    public double getPvVent() {
+        return pvVent;
     }
 
-    public void setPrVent(float prVent) {
-        this.prVent = prVent;
+    public void setPvVent(double pvVent) {
+        this.pvVent = pvVent;
     }
 
-    public float getPrCost() {
-        return (float) prCost;
+    // Getter y Setter para pvCost
+    public double getPvCost() {
+        return pvCost;
     }
 
-    public void setPrCost(double prCost) {
-        this.prCost = prCost;
+    public void setPvCost(double pvCost) {
+        this.pvCost = pvCost;
     }
 
+    // Getter y Setter para existencias
     public int getExistencias() {
         return existencias;
     }
@@ -86,12 +93,13 @@ public class Catalogo {
         this.existencias = existencias;
     }
 
-    public String getImageName() {
-        return imageName;
+    // Getter y Setter para direccionImagen
+    public String getDireccionImagen() {
+        return direccionImagen;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setDireccionImagen(String direccionImagen) {
+        this.direccionImagen = direccionImagen;
     }
 
     public boolean isSelected() {
@@ -109,8 +117,6 @@ public class Catalogo {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-    // Métodos adicionales para manejar la cantidad de un artículo
     public void incrementQuantity() {
         this.quantity++;
     }
@@ -120,5 +126,4 @@ public class Catalogo {
             this.quantity--;
         }
     }
-
 }
