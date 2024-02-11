@@ -63,7 +63,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
     // Cargar los datos del catálogo (esto dependerá de cómo almacenes tus datos)
         catalogoList = db.getAllArticulos(); // Actualizar el método para obtener todos los artículos de la base de datos
         initRecyclerView(catalogoList);
-
+        añadirArticulosPorDefecto();
         // Inicializa el botón de Crear Pedido
         Button btnCrearPedido = findViewById(R.id.bRealizarPedido); // Asegúrate de que el ID del botón es correcto.
         btnCrearPedido.setOnClickListener(new View.OnClickListener() {
@@ -80,31 +80,31 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         // y otro para añadir un nuevo artículo si no existe.
         // Ejemplo de cómo añadir un artículo si no existe
         if (!db.existeArticulo("Carne pollo")) {
-            db.addArticulo(new Catalogo(1, "Carne pollo", "Muslos", "Euskal Okela", 5.0, 5.0, 5, "carne"));
+            db.addArticulo(new Catalogo(0, "Carne pollo", "Muslos", "Euskal Okela", 5.0, 5.0, 5, "carne"));
         }
         if (!db.existeArticulo("Carne Ternera Solomillo")) {
-            db.addArticulo(new Catalogo(2, "Carne Ternera Solomillo", "Solomillo de ternera", "Basaxterri", 13.0, 10.0, 10, "solomillo"));
+            db.addArticulo(new Catalogo(0, "Carne Ternera Solomillo", "Solomillo de ternera", "Basaxterri", 13.0, 10.0, 10, "solomillo"));
         }
         if (!db.existeArticulo("Carne Ternera Chuletón")) {
-            db.addArticulo(new Catalogo(3, "Carne Ternera Chuletón", "Chuletón de ternera",  "Baserriberrí", 15.0, 12.0, 7, "chuleton"));
+            db.addArticulo(new Catalogo(0, "Carne Ternera Chuletón", "Chuletón de ternera",  "Baserriberrí", 15.0, 12.0, 7, "chuleton"));
         }
         if (!db.existeArticulo("Carne Cerdo Lomo")) {
-            db.addArticulo(new Catalogo(4, "Carne Cerdo Lomo", "Lomo de cerdo",  "Euskal Txerria", 9.0, 7.0, 15, "lomo"));
+            db.addArticulo(new Catalogo(0, "Carne Cerdo Lomo", "Lomo de cerdo",  "Euskal Txerria", 9.0, 7.0, 15, "lomo"));
         }
         if (!db.existeArticulo("Carne Cordero Chuletas")) {
-            db.addArticulo(new Catalogo(5, "Carne Cordero Chuletas", "Chuletas de cordero", "Raza latxa", 12.0, 9.0, 20, "chuletascordero"));
+            db.addArticulo(new Catalogo(0, "Carne Cordero Chuletas", "Chuletas de cordero", "Raza latxa", 12.0, 9.0, 20, "chuletascordero"));
         }
         if (!db.existeArticulo("Pescado Anchoas del Cantábrico")) {
-            db.addArticulo(new Catalogo(6, "Pescado Anchoas del Cantábrico", "Anchoas del Cantábrico", "Bizkaiko Ura", 20.0, 16.0, 5, "anchoas"));
+            db.addArticulo(new Catalogo(0, "Pescado Anchoas del Cantábrico", "Anchoas del Cantábrico", "Bizkaiko Ura", 20.0, 16.0, 5, "anchoas"));
         }
         if (!db.existeArticulo("Pescado Bonito del Norte")) {
-            db.addArticulo(new Catalogo(7, "Pescado Bonito del Norte", "Bonito del Norte","Bonito del Norte", 18.0, 14.0, 8, "bonito"));
+            db.addArticulo(new Catalogo(0, "Pescado Bonito del Norte", "Bonito del Norte","Bonito del Norte", 18.0, 14.0, 8, "bonito"));
         }
         if (!db.existeArticulo("Bebida Sidra Zapian")) {
-            db.addArticulo(new Catalogo(8, "Bebida Sidra Zapian", "Sidra Zapian", "Bilbo Bodegak", 5.0, 3.0, 30, "sidra"));
+            db.addArticulo(new Catalogo(0, "Bebida Sidra Zapian", "Sidra Zapian", "Bilbo Bodegak", 5.0, 3.0, 30, "sidra"));
         }
         if (!db.existeArticulo("Bebida Txakoli Ameztoi")) {
-            db.addArticulo(new Catalogo(9, "Bebida Txakoli Ameztoi", "Txakoli Ameztoi", "Txakoli Ameztoi", 7.0, 5.0, 25, "tx"));
+            db.addArticulo(new Catalogo(0, "Bebida Txakoli Ameztoi", "Txakoli Ameztoi", "Txakoli Ameztoi", 7.0, 5.0, 25, "tx"));
         }
     }
     private void initRecyclerView(List<Catalogo> catalogoList) {
