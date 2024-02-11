@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.comercial.Catalogo.Catalogo;
 import com.example.comercial.calendario.Evento;
 import com.example.comercial.partners.Partner;
 
@@ -52,11 +53,11 @@ public class AnderBD extends SQLiteOpenHelper {
             "FOREIGN KEY(IdZona) REFERENCES ZONAS(IdZona)" +
             ")";
 
+
     private static final String CREATE_TABLE_ARTICULOS = "CREATE TABLE ARTICULOS (" +
             "IdArticulo INTEGER PRIMARY KEY," +
             "Nombre TEXT," +
             "Descripcion TEXT," +
-            "Categoria TEXT," +
             "Proveedor TEXT," +
             "PvVent REAL," +
             "PvCost REAL," +
@@ -679,83 +680,42 @@ public class AnderBD extends SQLiteOpenHelper {
         return comercialList;
     }
     // Método para agregar un nuevo artículo
-    public long addArticulo(Articulos articulo) {
+    public long addArticulo(Catalogo articulo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Nombre", articulo.getNombre());
         values.put("Descripcion", articulo.getDescripcion());
-        values.put("Categoria", articulo.getCategoria());
         values.put("Proveedor", articulo.getProveedor());
-        values.put("PvVent", articulo.getPvVent());
-        values.put("PvCost", articulo.getPvCost());
+        values.put("PvVent", articulo.getPrVent());
+        values.put("PvCost", articulo.getPrCost());
         values.put("Existencias", articulo.getExistencias());
-        values.put("Direccion_Imagen", articulo.getDireccionImagen());
+        values.put("Direccion_Imagen", articulo.getImageName());
 
-        // Insertar fila
         long id = db.insert("ARTICULOS", null, values);
         db.close();
         return id;
     }
 
     // Método para obtener un artículo por su ID
-    public Articulos getArticulo(long id) {
+    public Catalogo getArticulo(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         String[] columns = {
-                "IdArticulo", "Nombre", "Descripcion", "Categoria", "Proveedor", "PvVent", "PvCost", "Existencias", "Direccion_Imagen"
+                "IdArticulo", "Nombre", "Descripcion", "Proveedor", "PvVent", "PvCost", "Existencias", "Direccion_Imagen"
         };
 
-        Cursor cursor = db.query("ARTICULOS", columns, "IdArticulo = ?",
-                new String[]{String.valueOf(id)}, null, null, null);
+        Cursor cursor = db.query("ARTICULOS", columns, "IdArticulo = ?", new String[]{String.valueOf(id)}, null, null, null);
 
-        Articulos articulo = null;
+        Catalogo articulo = null;
         if (cursor != null && cursor.moveToFirst()) {
-            articulo = new Articulos();
-
-            int idArticuloIndex = cursor.getColumnIndex("IdArticulo");
-            if (idArticuloIndex != -1) {
-                articulo.setIdArticulo(cursor.getInt(idArticuloIndex));
-            }
-
-            int nombreIndex = cursor.getColumnIndex("Nombre");
-            if (nombreIndex != -1) {
-                articulo.setNombre(cursor.getString(nombreIndex));
-            }
-
-            int descripcionIndex = cursor.getColumnIndex("Descripcion");
-            if (descripcionIndex != -1) {
-                articulo.setDescripcion(cursor.getString(descripcionIndex));
-            }
-
-            int categoriaIndex = cursor.getColumnIndex("Categoria");
-            if (categoriaIndex != -1) {
-                articulo.setCategoria(cursor.getString(categoriaIndex));
-            }
-
-            int proveedorIndex = cursor.getColumnIndex("Proveedor");
-            if (proveedorIndex != -1) {
-                articulo.setProveedor(cursor.getString(proveedorIndex));
-            }
-
-            int pvVentIndex = cursor.getColumnIndex("PvVent");
-            if (pvVentIndex != -1) {
-                articulo.setPvVent(cursor.getDouble(pvVentIndex));
-            }
-
-            int pvCostIndex = cursor.getColumnIndex("PvCost");
-            if (pvCostIndex != -1) {
-                articulo.setPvCost(cursor.getDouble(pvCostIndex));
-            }
-
-            int existenciasIndex = cursor.getColumnIndex("Existencias");
-            if (existenciasIndex != -1) {
-                articulo.setExistencias(cursor.getInt(existenciasIndex));
-            }
-
-            int direccionImagenIndex = cursor.getColumnIndex("Direccion_Imagen");
-            if (direccionImagenIndex != -1) {
-                articulo.setDireccionImagen(cursor.getString(direccionImagenIndex));
-            }
+            articulo = new Catalogo();
+            articulo.setIdArticulo(cursor.getString(cursor.getColumnIndex("IdArticulo")));
+            articulo.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
+            articulo.setDescripcion(cursor.getString(cursor.getColumnIndex("Descripcion")));
+            articulo.setProveedor(cursor.getString(cursor.getColumnIndex("Proveedor")));
+            articulo.setPrVent(cursor.getFloat(cursor.getColumnIndex("PvVent")));
+            articulo.setPrCost(cursor.getFloat(cursor.getColumnIndex("PvCost")));
+            articulo.setExistencias(cursor.getInt(cursor.getColumnIndex("Existencias")));
+            articulo.setImageName(cursor.getString(cursor.getColumnIndex("Direccion_Imagen")));
 
             cursor.close();
         }
@@ -764,87 +724,44 @@ public class AnderBD extends SQLiteOpenHelper {
     }
 
     // Método para actualizar un artículo
-    public int updateArticulo(Articulos articulo) {
+    public int updateArticulo(Catalogo articulo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Nombre", articulo.getNombre());
         values.put("Descripcion", articulo.getDescripcion());
-        values.put("Categoria", articulo.getCategoria());
         values.put("Proveedor", articulo.getProveedor());
-        values.put("PvVent", articulo.getPvVent());
-        values.put("PvCost", articulo.getPvCost());
+        values.put("PvVent", articulo.getPrVent());
+        values.put("PvCost", articulo.getPrCost());
         values.put("Existencias", articulo.getExistencias());
-        values.put("Direccion_Imagen", articulo.getDireccionImagen());
+        values.put("Direccion_Imagen", articulo.getImageName());
 
-        // Actualizar fila
-        return db.update("ARTICULOS", values, "IdArticulo = ?",
-                new String[]{String.valueOf(articulo.getIdArticulo())});
+        return db.update("ARTICULOS", values, "IdArticulo = ?", new String[]{String.valueOf(articulo.getIdArticulo())});
     }
 
     // Método para borrar un artículo por su ID
     public void deleteArticulo(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("ARTICULOS", "IdArticulo = ?",
-                new String[]{String.valueOf(id)});
+        db.delete("ARTICULOS", "IdArticulo = ?", new String[]{String.valueOf(id)});
         db.close();
     }
 
     // Método para obtener todos los artículos
-    public List<Articulos> getAllArticulos() {
-        List<Articulos> articuloList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM ARTICULOS";
-
+    public List<Catalogo> getAllArticulos() {
+        List<Catalogo> articuloList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM ARTICULOS", null);
 
         if (cursor.moveToFirst()) {
             do {
-                Articulos articulo = new Articulos();
-
-                int idArticuloIndex = cursor.getColumnIndex("IdArticulo");
-                if (idArticuloIndex != -1) {
-                    articulo.setIdArticulo(cursor.getInt(idArticuloIndex));
-                }
-
-                int nombreIndex = cursor.getColumnIndex("Nombre");
-                if (nombreIndex != -1) {
-                    articulo.setNombre(cursor.getString(nombreIndex));
-                }
-
-                int descripcionIndex = cursor.getColumnIndex("Descripcion");
-                if (descripcionIndex != -1) {
-                    articulo.setDescripcion(cursor.getString(descripcionIndex));
-                }
-
-                int categoriaIndex = cursor.getColumnIndex("Categoria");
-                if (categoriaIndex != -1) {
-                    articulo.setCategoria(cursor.getString(categoriaIndex));
-                }
-
-                int proveedorIndex = cursor.getColumnIndex("Proveedor");
-                if (proveedorIndex != -1) {
-                    articulo.setProveedor(cursor.getString(proveedorIndex));
-                }
-
-                int pvVentIndex = cursor.getColumnIndex("PvVent");
-                if (pvVentIndex != -1) {
-                    articulo.setPvVent(cursor.getDouble(pvVentIndex));
-                }
-
-                int pvCostIndex = cursor.getColumnIndex("PvCost");
-                if (pvCostIndex != -1) {
-                    articulo.setPvCost(cursor.getDouble(pvCostIndex));
-                }
-
-                int existenciasIndex = cursor.getColumnIndex("Existencias");
-                if (existenciasIndex != -1) {
-                    articulo.setExistencias(cursor.getInt(existenciasIndex));
-                }
-
-                int direccionImagenIndex = cursor.getColumnIndex("Direccion_Imagen");
-                if (direccionImagenIndex != -1) {
-                    articulo.setDireccionImagen(cursor.getString(direccionImagenIndex));
-                }
+                Catalogo articulo = new Catalogo();
+                articulo.setIdArticulo(cursor.getString(cursor.getColumnIndex("IdArticulo")));
+                articulo.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
+                articulo.setDescripcion(cursor.getString(cursor.getColumnIndex("Descripcion")));
+                articulo.setProveedor(cursor.getString(cursor.getColumnIndex("Proveedor")));
+                articulo.setPrVent(cursor.getFloat(cursor.getColumnIndex("PvVent")));
+                articulo.setPrCost(cursor.getFloat(cursor.getColumnIndex("PvCost")));
+                articulo.setExistencias(cursor.getInt(cursor.getColumnIndex("Existencias")));
+                articulo.setImageName(cursor.getString(cursor.getColumnIndex("Direccion_Imagen")));
 
                 articuloList.add(articulo);
             } while (cursor.moveToNext());

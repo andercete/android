@@ -1,110 +1,99 @@
 package com.example.comercial.Catalogo;
 
 public class Catalogo {
-    private String idArticulo;
+    private int idArticulo; // Cambiado a int para alinearse con la base de datos
     private String nombre;
     private String descripcion;
-    private String categoria;
     private String proveedor;
-    private float prVenta;
-    private float prCoste;
+    private double prVent; // Cambiado a double para consistencia con Articulos
+    private double prCost; // Cambiado a double para consistencia con Articulos
     private int existencias;
     private String imageName; // Nombre de la imagen en drawable sin la extensión
     private boolean isSelected = false;
-
     private int quantity = 1; // Valor inicial
 
-
-
+    // Constructor por defecto
     public Catalogo() {
     }
-    // Constructor
-    public Catalogo(String idArticulo, String nombre, String descripcion, String categoria,
-                    String proveedor, float prVenta, float prCoste, int existencias, String imageName) {
+
+    // Constructor con parámetros
+    public Catalogo(int idArticulo, String nombre, String descripcion, String categoria,
+                    String proveedor, float prVent, float prCost, int existencias, String imageName) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.categoria = categoria;
         this.proveedor = proveedor;
-        this.prVenta = prVenta;
-        this.prCoste = prCoste;
+        this.prVent = prVent;
+        this.prCost = prCost;
         this.existencias = existencias;
         this.imageName = imageName;
     }
 
-    // Getters
-    public String getIdArticulo() {
+    // Getters y setters
+    public int getIdArticulo() {
         return idArticulo;
+    }
+
+    public void setIdArticulo(String idArticulo) {
+        this.idArticulo = Integer.parseInt(idArticulo);
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public float getPrVenta() {
-        return prVenta;
-    }
-
-    public float getPrCoste() {
-        return prCoste;
-    }
-
-    public int getExistencias() {
-        return existencias;
-    }
-
-    public String getImageName() {
-        return imageName;
-    }
-
-    // Setters
-    public void setIdArticulo(String idArticulo) {
-        this.idArticulo = idArticulo;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public String getProveedor() {
+        return proveedor;
     }
 
     public void setProveedor(String proveedor) {
         this.proveedor = proveedor;
     }
 
-    public void setPrVenta(float prVenta) {
-        this.prVenta = prVenta;
+    public float getPrVent() {
+        return (float) prVent;
     }
 
-    public void setPrCoste(float prCoste) {
-        this.prCoste = prCoste;
+    public void setPrVent(float prVent) {
+        this.prVent = prVent;
+    }
+
+    public float getPrCost() {
+        return (float) prCost;
+    }
+
+    public void setPrCost(double prCost) {
+        this.prCost = prCost;
+    }
+
+    public int getExistencias() {
+        return existencias;
     }
 
     public void setExistencias(int existencias) {
         this.existencias = existencias;
     }
 
+    public String getImageName() {
+        return imageName;
+    }
+
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
+
     public boolean isSelected() {
         return isSelected;
     }
@@ -112,6 +101,16 @@ public class Catalogo {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    // Métodos adicionales para manejar la cantidad de un artículo
     public void incrementQuantity() {
         this.quantity++;
     }
@@ -122,8 +121,4 @@ public class Catalogo {
         }
     }
 
-    public int getCantidad() {
-        return this.quantity;
-    }
 }
-

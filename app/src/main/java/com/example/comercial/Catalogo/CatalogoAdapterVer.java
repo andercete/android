@@ -8,6 +8,8 @@ package com.example.comercial.Catalogo;
         import android.widget.TextView;
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
+
+        import com.example.comercial.BBDD.Articulos;
         import com.example.comercial.R;
         import java.util.List;
 
@@ -66,13 +68,12 @@ public class CatalogoAdapterVer extends RecyclerView.Adapter<CatalogoAdapterVer.
 
         public void bind(final Catalogo catalogo) {
             // Estableciendo los textos de los TextViews
-            idArticuloTextView.setText(catalogo.getIdArticulo());
+            idArticuloTextView.setText(String.valueOf(catalogo.getIdArticulo()));
             nombreTextView.setText(catalogo.getNombre());
             descripcionTextView.setText(catalogo.getDescripcion());
-            categoriaTextView.setText(catalogo.getCategoria());
             proveedorTextView.setText(catalogo.getProveedor());
-            prVentaTextView.setText(String.valueOf(catalogo.getPrVenta()));
-            prCosteTextView.setText(String.valueOf(catalogo.getPrCoste()));
+            prVentaTextView.setText(String.valueOf(catalogo.getPrVent()));
+            prCosteTextView.setText(String.valueOf(catalogo.getPrCost()));
             existenciasTextView.setText(String.valueOf(catalogo.getExistencias()));
 
             // Estableciendo la imagen del ImageView
