@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".PedidoDetalleActivity">
+
+    <!-- IdPedido -->
+
+    <!-- IdPartner -->
+
+    <TextView
+        android:id="@+id/textViewIdPedidoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID PEDIDO:"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewIdPedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewIdPedidoLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewIdPedidoLabel" />
+
+    <!-- IdComercial -->
+
+    <TextView
+        android:id="@+id/textViewIdPartnerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="ID Partner:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewIdPedidoLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIdPedidoLabel" />
+
+    <TextView
+        android:id="@+id/textViewIdPartner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewIdPartnerLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewIdPartnerLabel" />
+
+    <TextView
+        android:id="@+id/textViewIdComercialLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="ID Comercial:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewIdPartnerLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIdPartnerLabel" />
+
+    <!-- FechaPedido -->
+
+    <TextView
+        android:id="@+id/textViewIdComercial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewIdComercialLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewIdComercialLabel" />
+
+    <TextView
+        android:id="@+id/textViewFechaPedidoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="10dp"
+        android:text="Fecha del Pedido:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewIdComercialLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIdComercialLabel" />
+
+    <!-- RecyclerView para las líneas de pedido -->
+
+    <!-- Botones para editar y guardar -->
+
+    <TextView
+        android:id="@+id/textViewFechaPedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewFechaPedidoLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewFechaPedidoLabel" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewLineasPedido"
+        android:layout_width="387dp"
+        android:layout_height="552dp"
+        android:layout_below="@id/textViewFechaPedido"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFechaPedidoLabel" />
+
+    <Button
+        android:id="@+id/btnEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
