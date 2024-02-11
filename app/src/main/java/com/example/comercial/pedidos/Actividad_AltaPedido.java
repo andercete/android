@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -154,17 +153,14 @@ public class Actividad_AltaPedido extends AppCompatActivity {
                                 case "descripcion":
                                     currentCatalogo.setDescripcion(text);
                                     break;
-                                case "categoria":
-                                    currentCatalogo.setCategoria(text);
-                                    break;
                                 case "proveedor":
                                     currentCatalogo.setProveedor(text);
                                     break;
                                 case "prVenta":
-                                    currentCatalogo.setPrVenta(Float.parseFloat(text));
+                                    currentCatalogo.setPrVent(Float.parseFloat(text));
                                     break;
                                 case "prCoste":
-                                    currentCatalogo.setPrCoste(Float.parseFloat(text));
+                                    currentCatalogo.setPrCost(Float.parseFloat(text));
                                     break;
                                 case "existencias":
                                     currentCatalogo.setExistencias(Integer.parseInt(text));
@@ -213,10 +209,10 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         for (Catalogo catalogo : itemsSeleccionados) {
             LineasPedido lineaPedido = new LineasPedido();
             lineaPedido.setIdPedido((int) idPedido);
-            lineaPedido.setIdArticulo(Integer.parseInt(catalogo.getIdArticulo()));
-            lineaPedido.setCantidad(catalogo.getCantidad());
+            lineaPedido.setIdArticulo(catalogo.getIdArticulo());
+            lineaPedido.setCantidad(catalogo.getQuantity());
             lineaPedido.setDescuento(0); // Por defecto 0, ajustar si es necesario
-            lineaPedido.setPrecio(catalogo.getPrVenta());
+            lineaPedido.setPrecio(catalogo.getPrVent());
 
             long idLinea = db.addLineaPedido(lineaPedido);
             if (idLinea == -1) {
@@ -230,7 +226,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
     private List<Catalogo> getItemsSeleccionados() {
         List<Catalogo> seleccionados = new ArrayList<>();
         for (Catalogo catalogo : catalogoList) {
-            if (catalogo.isSelected() && catalogo.getCantidad() > 0) {
+            if (catalogo.isSelected() && catalogo.getQuantity() > 0) {
                 seleccionados.add(catalogo);
             }
         }

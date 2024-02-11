@@ -79,7 +79,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         Catalogo catalogo = catalogoList.get(position);
-                        if (catalogo.getCantidad() > 1) {
+                        if (catalogo.getQuantity() > 1) {
                             catalogo.decrementQuantity();
                             notifyItemChanged(position);
                         }
@@ -119,12 +119,11 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
             idArticuloTextView.setText(catalogo.getIdArticulo());
             nombreTextView.setText(catalogo.getNombre());
             descripcionTextView.setText(catalogo.getDescripcion());
-            categoriaTextView.setText(catalogo.getCategoria());
             proveedorTextView.setText(catalogo.getProveedor());
-            prVentaTextView.setText(String.valueOf(catalogo.getPrVenta()));
-            prCosteTextView.setText(String.valueOf(catalogo.getPrCoste()));
+            prVentaTextView.setText(String.valueOf(catalogo.getPrVent()));
+            prCosteTextView.setText(String.valueOf(catalogo.getPrCost()));
             existenciasTextView.setText(String.valueOf(catalogo.getExistencias()));
-            quantityText.setText(String.valueOf(catalogo.getCantidad()));
+            quantityText.setText(String.valueOf(catalogo.getQuantity()));
 
             // Estableciendo la imagen del ImageView
             // Asumiendo que el nombre de la imagen en el objeto Catalogo corresponde a un recurso en drawable
