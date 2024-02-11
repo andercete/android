@@ -76,9 +76,6 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         });
     }
     private void añadirArticulosPorDefecto() {
-        // Asumiendo que tienes un método en AnderBD para verificar si un artículo ya existe por nombre
-        // y otro para añadir un nuevo artículo si no existe.
-        // Ejemplo de cómo añadir un artículo si no existe
         if (!db.existeArticulo("Carne pollo")) {
             db.addArticulo(new Catalogo(0, "Carne pollo", "Muslos", "Euskal Okela", 5.0, 5.0, 5, "carne"));
         }

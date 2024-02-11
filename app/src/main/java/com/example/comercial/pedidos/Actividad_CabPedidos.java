@@ -77,7 +77,6 @@ public class Actividad_CabPedidos extends AppCompatActivity  {
                 startActivity(intent);
             }
         });
-       // bBorrar.setOnClickListener(v -> borrarRegistroPorId());
 
         // Inicializa el RecyclerView con la lista de CabPedidos desde la base de datos
 
