@@ -61,7 +61,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
         // Inicializar la instancia de la base de datos
         db = new AnderBD(this);
         SharedPreferences sharedPreferences = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
-        int comercial = sharedPreferences.getInt("idComercial", 1);
+        int comercial = sharedPreferences.getInt("IdComercial", 1);
         idComercial = comercial;
         String nombreRelacionado = db.buscarNombrePorIdPartnerEnCabPedido(idPartner);
 

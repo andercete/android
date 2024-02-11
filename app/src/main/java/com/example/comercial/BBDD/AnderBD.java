@@ -347,6 +347,13 @@ public class AnderBD extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Método para vaciar el catalogo
+    public void vaciarCatalogo() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("ARTICULOS", null, null);
+        db.close();
+    }
+
     // Método para obtener todos los partners
     public List<Partner> getAllPartners() {
         List<Partner> partnerList = new ArrayList<>();

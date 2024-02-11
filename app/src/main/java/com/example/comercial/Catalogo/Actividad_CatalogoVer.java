@@ -70,6 +70,9 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
 
     private void importarCatalogoDesdeXML(Uri uri) {
         try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+            // Vaciamos el catalogo para que esté acualizado y sin registros duplicados
+            db.vaciarCatalogo();
+
             List<Catalogo> catalogos = parseXMLFile(inputStream);
             for (Catalogo catalogo : catalogos) {
                 db.addArticulo(catalogo); // Ajustar a la implementación correcta
@@ -127,8 +130,7 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
                                     currentCatalogo.setExistencias(Integer.parseInt(text));
                                     break;
                                 case "ImagenBase64":
-                                    // Asumiendo que tienes un método para manejar la conversión de base64 a imagen
-                                    // currentCatalogo.setImageName(convertBase64ToImageName(text));
+                                    currentCatalogo.setImageName(text);
                                     break;
                             }
                         }
