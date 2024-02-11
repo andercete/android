@@ -18,20 +18,20 @@
         android:theme="@style/Theme.Comercial"
         tools:targetApi="31">
         <activity
+            android:name=".pedidos.Actividad_VerPedido"
+            android:exported="false" />
+        <activity
             android:name=".Actividad_Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".pedidos.Actividad_CabPedidos"
             android:exported="false" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDetsWSiLa2NUcYDskClpbdhiqZdnXQMN0" />
 
         <activity
             android:name=".partners.Actividad_AltaPartner"
@@ -47,14 +47,13 @@
             android:exported="false" />
         <activity
             android:name=".calendario.Actividad_AltaEvento"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".calendario.Actividad_Eventos"
             android:exported="false" />
         <activity
             android:name=".Actividad_Inicio"
-            android:exported="true">
-        </activity> <!-- ⬇️ Para poder adjuntar archivos del sistema en un correo electrónico ️ ⬇️ ️ -->
+            android:exported="true"></activity> <!-- ⬇️ Para poder adjuntar archivos del sistema en un correo electrónico ️ ⬇️ ️ -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.comercial.fileprovider"

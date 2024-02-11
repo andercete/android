@@ -10,6 +10,9 @@ public class Articulos {
     private double pvCost;
     private int existencias;
     private String direccionImagen;
+    private boolean isSelected = false;
+    private int quantity = 1; // Valor inicial
+
 
     // Constructor
     public Articulos(int idArticulo, String nombre, String descripcion,
@@ -108,5 +111,30 @@ public class Articulos {
 
     public void setDireccionImagen(String direccionImagen) {
         this.direccionImagen = direccionImagen;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    public void incrementQuantity() {
+        this.quantity++;
+    }
+
+    public void decrementQuantity() {
+        if (this.quantity > 1) {
+            this.quantity--;
+        }
     }
 }

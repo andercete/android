@@ -1,24 +1,18 @@
 package com.example.comercial.Catalogo;
 
 import android.content.Context;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.Context;
 
-        import com.example.comercial.BBDD.Articulos;
-        import com.example.comercial.R;
-        import java.util.List;
-
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.os.Bundle;
-        import android.util.Base64;
-        import android.widget.ImageView;
-        import androidx.appcompat.app.AppCompatActivity;
+import com.example.comercial.BBDD.Articulos;
+import com.example.comercial.R;
+import java.util.List;
 
 public class CatalogoAdapterVer extends RecyclerView.Adapter<CatalogoAdapterVer.CatalogoViewHolder> {
     private List<Catalogo> catalogoList;

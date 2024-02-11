@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.comercial.Catalogo.Catalogo;
 import com.example.comercial.calendario.Evento;
 import com.example.comercial.partners.Partner;
 
@@ -414,13 +413,6 @@ public class AnderBD extends SQLiteOpenHelper {
         return partnerList;
     }
 
-
-
-
-
-
-
-
     public long addZona(Zonas zona) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -687,21 +679,34 @@ public class AnderBD extends SQLiteOpenHelper {
         return comercialList;
     }
     // Método para agregar un nuevo artículo
-    public long addArticulo(Catalogo articulo) {
+    //ALBERTO
+    public long addArticulo(Catalogo catalogo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Nombre", articulo.getNombre());
-        values.put("Descripcion", articulo.getDescripcion());
-        values.put("Proveedor", articulo.getProveedor());
-        values.put("PvVent", articulo.getPrVent());
-        values.put("PvCost", articulo.getPrCost());
-        values.put("Existencias", articulo.getExistencias());
-        values.put("Direccion_Imagen", articulo.getImageName());
+        values.put("Nombre", catalogo.getNombre());
+        values.put("Descripcion", catalogo.getDescripcion());
+        values.put("Proveedor", catalogo.getProveedor());
+        values.put("PvVent", catalogo.getPvVent());
+        values.put("PvCost", catalogo.getPvCost());
+        values.put("Existencias", catalogo.getExistencias());
+        values.put("Direccion_Imagen", catalogo.getDireccionImagen());
 
         long id = db.insert("ARTICULOS", null, values);
         db.close();
         return id;
     }
+    public boolean existeArticulo(String nombre) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = { "IdArticulo" };
+        String selection = "Nombre = ?";
+        String[] selectionArgs = { nombre };
+        Cursor cursor = db.query("ARTICULOS", columns, selection, selectionArgs, null, null, null);
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
 
     // Método para obtener un artículo por su ID
     public Catalogo getArticulo(long id) {
@@ -712,37 +717,40 @@ public class AnderBD extends SQLiteOpenHelper {
 
         Cursor cursor = db.query("ARTICULOS", columns, "IdArticulo = ?", new String[]{String.valueOf(id)}, null, null, null);
 
-        Catalogo articulo = null;
+        Catalogo catalogo = null;
         if (cursor != null && cursor.moveToFirst()) {
-            articulo = new Catalogo();
-            articulo.setIdArticulo(cursor.getString(cursor.getColumnIndex("IdArticulo")));
-            articulo.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
-            articulo.setDescripcion(cursor.getString(cursor.getColumnIndex("Descripcion")));
-            articulo.setProveedor(cursor.getString(cursor.getColumnIndex("Proveedor")));
-            articulo.setPrVent(cursor.getFloat(cursor.getColumnIndex("PvVent")));
-            articulo.setPrCost(cursor.getFloat(cursor.getColumnIndex("PvCost")));
-            articulo.setExistencias(cursor.getInt(cursor.getColumnIndex("Existencias")));
-            articulo.setImageName(cursor.getString(cursor.getColumnIndex("Direccion_Imagen")));
+            catalogo = new Catalogo();
+            // Asegurarse de que el índice no sea -1 antes de recuperar el dato
+            catalogo.setIdArticulo(cursor.getInt(cursor.getColumnIndexOrThrow("IdArticulo")));
+            catalogo.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("Nombre")));
+            catalogo.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("Descripcion")));
+            // La categoría no estaba en tu método original, pero la incluyo aquí por consistencia con la clase Articulos
+            catalogo.setProveedor(cursor.getString(cursor.getColumnIndexOrThrow("Proveedor")));
+            catalogo.setPvVent(cursor.getDouble(cursor.getColumnIndexOrThrow("PvVent")));
+            catalogo.setPvCost(cursor.getDouble(cursor.getColumnIndexOrThrow("PvCost")));
+            catalogo.setExistencias(cursor.getInt(cursor.getColumnIndexOrThrow("Existencias")));
+            catalogo.setDireccionImagen(cursor.getString(cursor.getColumnIndexOrThrow("Direccion_Imagen")));
 
             cursor.close();
         }
         db.close();
-        return articulo;
+        return catalogo;
     }
 
+
     // Método para actualizar un artículo
-    public int updateArticulo(Catalogo articulo) {
+    public int updateArticulo(Catalogo catalogo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Nombre", articulo.getNombre());
-        values.put("Descripcion", articulo.getDescripcion());
-        values.put("Proveedor", articulo.getProveedor());
-        values.put("PvVent", articulo.getPrVent());
-        values.put("PvCost", articulo.getPrCost());
-        values.put("Existencias", articulo.getExistencias());
-        values.put("Direccion_Imagen", articulo.getImageName());
+        values.put("Nombre", catalogo.getNombre());
+        values.put("Descripcion", catalogo.getDescripcion());
+        values.put("Proveedor", catalogo.getProveedor());
+        values.put("PvVent", catalogo.getPvVent());
+        values.put("PvCost", catalogo.getPvCost());
+        values.put("Existencias", catalogo.getExistencias());
+        values.put("Direccion_Imagen", catalogo.getDireccionImagen());
 
-        return db.update("ARTICULOS", values, "IdArticulo = ?", new String[]{String.valueOf(articulo.getIdArticulo())});
+        return db.update("ARTICULOS", values, "IdArticulo = ?", new String[]{String.valueOf(catalogo.getIdArticulo())});
     }
 
     // Método para borrar un artículo por su ID
@@ -754,29 +762,40 @@ public class AnderBD extends SQLiteOpenHelper {
 
     // Método para obtener todos los artículos
     public List<Catalogo> getAllArticulos() {
-        List<Catalogo> articuloList = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        List<Catalogo> listaArticulos = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM ARTICULOS", null);
+
+        int idIndex = cursor.getColumnIndex("IdArticulo");
+        int nombreIndex = cursor.getColumnIndex("Nombre");
+        int descripcionIndex = cursor.getColumnIndex("Descripcion");
+        int proveedorIndex = cursor.getColumnIndex("Proveedor");
+        int pvVentIndex = cursor.getColumnIndex("PvVent");
+        int pvCostIndex = cursor.getColumnIndex("PvCost");
+        int existenciasIndex = cursor.getColumnIndex("Existencias");
+        int direccionImagenIndex = cursor.getColumnIndex("Direccion_Imagen");
 
         if (cursor.moveToFirst()) {
             do {
                 Catalogo articulo = new Catalogo();
-                articulo.setIdArticulo(cursor.getString(cursor.getColumnIndex("IdArticulo")));
-                articulo.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
-                articulo.setDescripcion(cursor.getString(cursor.getColumnIndex("Descripcion")));
-                articulo.setProveedor(cursor.getString(cursor.getColumnIndex("Proveedor")));
-                articulo.setPrVent(cursor.getFloat(cursor.getColumnIndex("PvVent")));
-                articulo.setPrCost(cursor.getFloat(cursor.getColumnIndex("PvCost")));
-                articulo.setExistencias(cursor.getInt(cursor.getColumnIndex("Existencias")));
-                articulo.setImageName(cursor.getString(cursor.getColumnIndex("Direccion_Imagen")));
+                if(idIndex != -1) articulo.setIdArticulo(cursor.getInt(idIndex));
+                if(nombreIndex != -1) articulo.setNombre(cursor.getString(nombreIndex));
+                if(descripcionIndex != -1) articulo.setDescripcion(cursor.getString(descripcionIndex));
+                if(proveedorIndex != -1) articulo.setProveedor(cursor.getString(proveedorIndex));
+                if(pvVentIndex != -1) articulo.setPvVent(cursor.getDouble(pvVentIndex));
+                if(pvCostIndex != -1) articulo.setPvCost(cursor.getDouble(pvCostIndex));
+                if(existenciasIndex != -1) articulo.setExistencias(cursor.getInt(existenciasIndex));
+                if(direccionImagenIndex != -1) articulo.setDireccionImagen(cursor.getString(direccionImagenIndex));
 
-                articuloList.add(articulo);
+                listaArticulos.add(articulo);
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return articuloList;
+        return listaArticulos;
     }
+
+
 
     // Método para buscar el nombre en la TablaPadre basado en el número en la TablaHija
     public String buscarNombrePorIdPartnerEnCabPedido(int idPartner) {

@@ -1,11 +1,13 @@
 package com.example.comercial.pedidos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ import com.example.comercial.BBDD.AnderBD;
 import com.example.comercial.BBDD.CabPedidos;
 import com.example.comercial.R;
 
-public class Actividad_CabPedidos extends AppCompatActivity {
+public class Actividad_CabPedidos extends AppCompatActivity  {
     TextView tNombre,tDireccion,tCif,tTelefono,tEmail;
     private CabPedidoListAdapter mAdapter;
     private RecyclerView recyclerView;
@@ -81,7 +83,18 @@ public class Actividad_CabPedidos extends AppCompatActivity {
 
         List<CabPedidos> cabPedidosList = db.getAllCabPedidos(idPartner);
         initRecyclerView(cabPedidosList);
+
+
+
     }
+
+    // En tu Actividad_CabPedidos
+    public void abrirSegundaActividad(int idPedido) {
+        Intent intent = new Intent(this, Actividad_VerPedido.class);
+        intent.putExtra("idPedido", idPedido);
+        startActivity(intent);
+    }
+
 
     private void initRecyclerView(List<CabPedidos> cabPedidos) {
         recyclerView = findViewById(R.id.listRecyclerViewCabPedidos);
