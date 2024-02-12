@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-
+import com.example.comercial.BBDD.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.BBDD.Partner;
+import com.example.comercial.BBDD.CabPedidos;
+import com.example.comercial.BBDD.LineasPedido;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -34,14 +36,16 @@ import com.example.comercial.partners.Actividad_Partners;
 import com.example.comercial.Catalogo.Actividad_CatalogoVer;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 // implements OnMapReadyCallback
-public class Actividad_Inicio extends AppCompatActivity {
+public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCallback {
     //GoogleMap mMap;
     Button bCitas, bPartner, bCatalogo, bDelegacion;
 
@@ -57,6 +61,14 @@ public class Actividad_Inicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_inicio);
+        // Google Maps
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        try {
+            mapFragment.getMapAsync(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
+        }
 
         bCitas = findViewById(R.id.bAgenda);
         bPartner = findViewById(R.id.bPresentacionPartners);
@@ -99,25 +111,31 @@ public class Actividad_Inicio extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<Partner> partnersDeHoy = db.getPartnersOfToday();
-                if (partnersDeHoy.isEmpty()) {
-                    Toast.makeText(Actividad_Inicio.this, "No hay partners para enviar hoy.", Toast.LENGTH_SHORT).show();
+                List<CabPedidos> pedidosDeHoy = db.getPedidosYLineasDelDia(); // Asume que tienes este método implementado
+
+                if (partnersDeHoy.isEmpty() && pedidosDeHoy.isEmpty()) {
+                    Toast.makeText(Actividad_Inicio.this, "No hay datos para enviar hoy.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                String nombreArchivo = "partners_hoy.xml";
-                generarArchivoXML(partnersDeHoy, nombreArchivo);
+                // Genera los archivos XML para partners y pedidos
+                String nombreArchivoPartners = "partners_hoy.xml";
+                generarArchivoXMLPartners(partnersDeHoy, nombreArchivoPartners);
 
-                File archivoXml = new File(getFilesDir(), "partners/"+nombreArchivo);
-                Uri uriArchivoXml = FileProvider.getUriForFile(
-                        Actividad_Inicio.this,
-                        "com.example.comercial.fileprovider",
-                        archivoXml);
+                String nombreArchivoPedidos = "pedidos_hoy.xml";
+                generarArchivoXMLPedidos(pedidosDeHoy, nombreArchivoPedidos);
+
+                // Prepara los URIs de los archivos XML para el envío por correo
+                Uri uriArchivoXmlPartners = FileProvider.getUriForFile(Actividad_Inicio.this, "com.example.comercial.fileprovider", new File(getFilesDir(), "partners/" + nombreArchivoPartners));
+                Uri uriArchivoXmlPedidos = FileProvider.getUriForFile(Actividad_Inicio.this, "com.example.comercial.fileprovider", new File(getFilesDir(), "pedidos/" + nombreArchivoPedidos));
+
                 ArrayList<Uri> archivosAdjuntos = new ArrayList<>();
-                archivosAdjuntos.add(uriArchivoXml);
+                archivosAdjuntos.add(uriArchivoXmlPartners);
+                archivosAdjuntos.add(uriArchivoXmlPedidos);
 
                 Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
                 emailIntent.setType("text/xml");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"DelegacionGuipuzcoa@gem.com"}); // Cambia esto por la dirección real de correo electrónico de la delegación.
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"DelegacionGuipuzcoa@gem.com"});
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Partners y pedidos de " + Metodos.obtenerFechaActual());
                 emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, archivosAdjuntos);
                 emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -129,7 +147,6 @@ public class Actividad_Inicio extends AppCompatActivity {
                 }
             }
         });
-
 
 
         bTelefono.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +175,81 @@ public class Actividad_Inicio extends AppCompatActivity {
 
         });
     }
-    public void generarArchivoXML(List<Partner> partners, String nombreArchivo) {
+    private void generarArchivoXMLPedidos(List<CabPedidos> pedidos, String nombreArchivo) {
+        File directorioPedidos = new File(getFilesDir(), "pedidos");
+        if (!directorioPedidos.exists()) {
+            directorioPedidos.mkdirs();
+        }
+
+        File archivoXml = new File(directorioPedidos, nombreArchivo);
+
+        try (FileOutputStream fos = new FileOutputStream(archivoXml)) {
+            XmlSerializer serializer = Xml.newSerializer();
+            StringWriter writer = new StringWriter();
+            serializer.setOutput(writer);
+
+            serializer.startDocument("UTF-8", true);
+            serializer.startTag("", "Pedidos");
+
+            for (CabPedidos pedido : pedidos) {
+                serializer.startTag("", "Pedido");
+
+                serializer.startTag("", "IdPedido");
+                serializer.text(String.valueOf(pedido.getIdPedido()));
+                serializer.endTag("", "IdPedido");
+
+                serializer.startTag("", "IdPartner");
+                serializer.text(String.valueOf(pedido.getIdPartner()));
+                serializer.endTag("", "IdPartner");
+
+                serializer.startTag("", "IdComercial");
+                serializer.text(String.valueOf(pedido.getIdComercial()));
+                serializer.endTag("", "IdComercial");
+
+                serializer.startTag("", "FechaPedido");
+                serializer.text(pedido.getFechaPedido());
+                serializer.endTag("", "FechaPedido");
+
+                // Aquí asumimos que tienes un método en DbHelper para obtener las líneas de un pedido
+                List<LineasPedido> lineasPedido = db.getLineasPedidoPorPedido(pedido.getIdPedido());
+                for (LineasPedido linea : lineasPedido) {
+                    serializer.startTag("", "LineaPedido");
+
+                    serializer.startTag("", "IdLinea");
+                    serializer.text(String.valueOf(linea.getIdLinea()));
+                    serializer.endTag("", "IdLinea");
+
+                    serializer.startTag("", "IdArticulo");
+                    serializer.text(String.valueOf(linea.getIdArticulo()));
+                    serializer.endTag("", "IdArticulo");
+
+                    serializer.startTag("", "Cantidad");
+                    serializer.text(String.valueOf(linea.getCantidad()));
+                    serializer.endTag("", "Cantidad");
+
+                    serializer.startTag("", "Descuento");
+                    serializer.text(String.format(Locale.US, "%.2f", linea.getDescuento()));
+                    serializer.endTag("", "Descuento");
+
+                    serializer.startTag("", "Precio");
+                    serializer.text(String.format(Locale.US, "%.2f", linea.getPrecio()));
+                    serializer.endTag("", "Precio");
+
+                    serializer.endTag("", "LineaPedido");
+                }
+
+                serializer.endTag("", "Pedido");
+            }
+
+            serializer.endTag("", "Pedidos");
+            serializer.endDocument();
+
+            fos.write(writer.toString().getBytes());
+        } catch (Exception e) {
+            Log.e("XMLGenerationError", "Error generando el archivo XML de pedidos", e);
+        }
+    }
+    public void generarArchivoXMLPartners(List<Partner> partners, String nombreArchivo) {
         // Construimos el nombre del archivo con la fecha de hoy
 
         File directorioPartners = new File(getFilesDir(), "partners");
@@ -223,26 +314,16 @@ public class Actividad_Inicio extends AppCompatActivity {
         }
         super.onDestroy();
     }
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        // this.mMap.setOnMapClickListener(this);
+        // this.mMap.setOnMapLongClickListener(this);
 
-//    @Override
-//    public void onMapReady(@NonNull GoogleMap googleMap) {
-//      mMap = googleMap;
-//      this.mMap.setOnMapClickListener(this);
-//      this.mMap.setOnMapLongClickListener(this);
-//
-//      LatLng donosti = new LatLng(43.30419712367967, -2.0165662074674695);
-//      mMap.addMarker(new MarkerOptions().position(donosti).title("Gurmet Euskadi Market"));
-//      mMap.moveCamera(CameraUpdateFactory.newLatLng(donosti));
-//
-//
-//      //  Google Maps
-//      SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-//      try {
-//          mapFragment.getMapAsync(this);
-//      } catch (Exception e) {
-//          e.printStackTrace();
-//          Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
-//      }
-//    }
+        LatLng donosti = new LatLng(43.30419712367967, -2.0165662074674695);
+        mMap.addMarker(new MarkerOptions().position(donosti).title("Gurmet Euskadi Market"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(donosti));
+
+    }
 
 }

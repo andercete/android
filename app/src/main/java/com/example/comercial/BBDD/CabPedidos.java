@@ -1,10 +1,13 @@
 package com.example.comercial.BBDD;
 
+import java.util.List;
+
 public class CabPedidos {
     private int IdPedido;
     private int IdPartner;
     private int IdComercial;
     private String FechaPedido;
+    private List<LineasPedido> lineasPedido; // Añade esta línea
 
     public CabPedidos() {
 
@@ -24,6 +27,13 @@ public class CabPedidos {
 
     public void setIdPedido(int idPedido) {
         IdPedido = idPedido;
+    }
+    public List<LineasPedido> getLineasPedido() {
+        return lineasPedido;
+    }
+
+    public void setLineasPedido(List<LineasPedido> lineasPedido) {
+        this.lineasPedido = lineasPedido;
     }
 
     public int getIdPartner() {

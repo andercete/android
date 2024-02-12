@@ -1,5 +1,8 @@
 package com.example.comercial.BBDD;
 
+import java.util.List;
+
+
 public class LineasPedido {
     private int idLinea;
     private int idArticulo;
@@ -7,6 +10,7 @@ public class LineasPedido {
     private int cantidad;
     private double descuento;
     private double precio;
+    private List<LineasPedido> lineasPedido; // Añade esta línea
 
     // Constructor
     public LineasPedido(int idLinea, int idArticulo, int idPedido,
@@ -57,7 +61,12 @@ public class LineasPedido {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-
+    public void setLineasPedido(List<LineasPedido> lineasPedido) {
+        this.lineasPedido = lineasPedido;
+    }
+    public List<LineasPedido> getLineasPedido() {
+        return this.lineasPedido;
+    }
     // Getter y Setter para descuento
     public double getDescuento() {
         return descuento;
