@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Partner {
     private int idPartner;
-    private int idZona;
     private String nombre;
     private String cif;
     private String direccion;
@@ -15,11 +14,10 @@ public class Partner {
 
     // Constructor
 
-    public Partner(int idPartner, int idZona, String nombre, String cif,
+    public Partner(int idPartner, String nombre, String cif,
                    String direccion, String telefono, String correo,
                    String fechaRegistro) {
         this.idPartner = idPartner;
-        this.idZona = idZona;
         this.nombre = nombre;
         this.cif = cif;
         this.direccion = direccion;
@@ -27,10 +25,9 @@ public class Partner {
         this.correo = correo;
         this.fechaRegistro = fechaRegistro;
     }
-    public Partner(int idZona, String nombre, String cif,
+    public Partner(String nombre, String cif,
                    String direccion, String telefono, String correo,
                    String fechaRegistro) {
-        this.idZona = idZona;
         this.nombre = nombre;
         this.cif = cif;
         this.direccion = direccion;
@@ -49,14 +46,6 @@ public class Partner {
         this.idPartner = idPartner;
     }
 
-    // Getter y Setter para idZona
-    public int getIdZona() {
-        return idZona;
-    }
-
-    public void setIdZona(int idZona) {
-        this.idZona = idZona;
-    }
 
     // Getter y Setter para nombre
     public String getNombre() {

@@ -81,9 +81,7 @@ public class Actividad_Partners extends AppCompatActivity {
                             currentPartner = new Partner();
                         } else if (currentPartner != null) {
                             switch (tagName) {
-                                case "IdZona":
-                                    currentPartner.setIdZona(Integer.parseInt(parser.nextText()));
-                                    break;
+
                                 case "Nombre":
                                     currentPartner.setNombre(parser.nextText());
                                     break;

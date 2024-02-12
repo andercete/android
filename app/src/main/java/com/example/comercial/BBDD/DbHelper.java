@@ -222,7 +222,7 @@ public class DbHelper extends SQLiteOpenHelper {
         int fechaRegistroIndex = cursor.getColumnIndex("FechaRegistro");
 
         // Verifica que todos los índices sean válidos
-        if (idIndex != -1 && idZonaIndex != -1 && nombreIndex != -1 && cifIndex != -1 &&
+        if (idIndex != -1  && nombreIndex != -1 && cifIndex != -1 &&
                 direccionIndex != -1 && telefonoIndex != -1 && correoIndex != -1 && fechaRegistroIndex != -1) {
 
             // Itera sobre los resultados y añade cada partner a la lista
@@ -256,7 +256,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Comerciales comercial = null;
 
         String[] columns = {
-                "IdComercial", "IdZona", "Nombre", "Apellidos",
+                "IdComercial", "Nombre", "Apellidos",
                 "Contraseña", "Correo", "Direccion", "DNI", "Telefono"
         };
         String selection = "DNI=?";
@@ -267,7 +267,6 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             // Obtiene los índices de columna de manera segura
             int idComercialIndex = cursor.getColumnIndexOrThrow("IdComercial");
-            int idZonaIndex = cursor.getColumnIndexOrThrow("IdZona");
             int nombreIndex = cursor.getColumnIndexOrThrow("Nombre");
             int apellidosIndex = cursor.getColumnIndexOrThrow("Apellidos");
             int contraseñaIndex = cursor.getColumnIndexOrThrow("Contraseña");
@@ -278,7 +277,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
             // Extrae los datos usando los índices de columna
             int idComercial = cursor.getInt(idComercialIndex);
-            int idZona = cursor.getInt(idZonaIndex);
             String nombre = cursor.getString(nombreIndex);
             String apellidos = cursor.getString(apellidosIndex);
             String contraseña = cursor.getString(contraseñaIndex);
@@ -288,7 +286,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
             // Crea una instancia de Comerciales con los datos extraídos
             comercial = new Comerciales(
-                    idComercial, idZona, nombre, apellidos,
+                    idComercial, nombre, apellidos,
                     contraseña, correo, direccion, dni, telefono
             );
         }
@@ -330,11 +328,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 int idPartnerIndex = cursor.getColumnIndex("IdPartner");
                 if (idPartnerIndex != -1) {
                     partner.setIdPartner(cursor.getInt(idPartnerIndex));
-                }
-
-                int idZonaIndex = cursor.getColumnIndex("IdZona");
-                if (idZonaIndex != -1) {
-                    partner.setIdZona(cursor.getInt(idZonaIndex));
                 }
 
                 int nombreIndex = cursor.getColumnIndex("Nombre");
@@ -380,7 +373,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public long addComercial(Comerciales comercial) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("IdZona", comercial.getIdZona());
         values.put("Nombre", comercial.getNombre());
         values.put("Apellidos", comercial.getApellidos());
         values.put("Contraseña", comercial.getContra());

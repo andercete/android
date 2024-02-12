@@ -120,6 +120,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
         }
 
         public void bind(final Catalogo catalogo) {
+            idArticuloTextView.setText(String.valueOf(catalogo.getIdArticulo()));
             nombreTextView.setText(catalogo.getNombre());
             descripcionTextView.setText(catalogo.getDescripcion());
             proveedorTextView.setText(catalogo.getProveedor());

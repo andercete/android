@@ -41,22 +41,22 @@ public class Actividad_Login extends AppCompatActivity {
 
     private void añadirComercialPorDefecto() {
         if (!helper.existeComercial("72538203K")) {
-            helper.addComercial(new Comerciales(0, 1, "Nombre Por Defecto", "Apellido Por Defecto", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203K", "000000000"));
+            helper.addComercial(new Comerciales(0, "Nombre Por Defecto", "Apellido Por Defecto", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203K", "000000000"));
         }
 
         if (!helper.existeComercial("72538684L")) {
-            helper.addComercial(new Comerciales(0, 1, "Iñigo", "Valdivia", "12345", "correo1@ejemplo.com", "Direccion1 Por Defecto", "72538684L", "000000001"));
+            helper.addComercial(new Comerciales(0, "Iñigo", "Valdivia", "12345", "correo1@ejemplo.com", "Direccion1 Por Defecto", "72538684L", "000000001"));
         }
 
         if (!helper.existeComercial("73034420J")) {
-            helper.addComercial(new Comerciales(0, 1, "Julen", "Izeta", "12345", "correo2@ejemplo.com", "Direccion2 Por Defecto", "73034420J", "000000002"));
+            helper.addComercial(new Comerciales(0, "Julen", "Izeta", "12345", "correo2@ejemplo.com", "Direccion2 Por Defecto", "73034420J", "000000002"));
         }
 
         if (!helper.existeComercial("44570590V")) {
-            helper.addComercial(new Comerciales(0, 1, "Alberto", "", "12345", "correo3@ejemplo.com", "Direccion3 Por Defecto", "44570590V", "000000003"));
+            helper.addComercial(new Comerciales(0, "Alberto", "", "12345", "correo3@ejemplo.com", "Direccion3 Por Defecto", "44570590V", "000000003"));
         }
         if (!helper.existeComercial("")) {
-            helper.addComercial(new Comerciales(0, 1, "Alberto", "", "", "correo3@ejemplo.com", "Direccion3 Por Defecto", "", "000000003"));
+            helper.addComercial(new Comerciales(0, "Alberto", "", "", "correo3@ejemplo.com", "Direccion3 Por Defecto", "", "000000003"));
         }
 
     }
@@ -80,7 +80,6 @@ public class Actividad_Login extends AppCompatActivity {
             // Guardar datos del comercial en Preferencias Compartidas
             SharedPreferences sharedPref = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("IdZona", comercial.getIdZona());
             editor.putString("NombreComercial", comercial.getNombre());
             editor.putInt("IdComercial", comercial.getIdComercial());
             editor.apply();

@@ -172,10 +172,6 @@ public class Actividad_Inicio extends AppCompatActivity {
             for (Partner partner : partners) {
                 serializer.startTag("", "Partner");
 
-                serializer.startTag("", "IdZona");
-                serializer.text(String.valueOf(partner.getIdZona()));
-                serializer.endTag("", "IdZona");
-
                 serializer.startTag("", "Nombre");
                 serializer.text(partner.getNombre());
                 serializer.endTag("", "Nombre");

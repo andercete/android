@@ -51,12 +51,9 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         String telefono = eTelefono.getText().toString();
         String email = eEmail.getText().toString();
 
-        // Recupera el IdZona del comercial logueado
-        int idZona = obtenerIdZonaDelComercialLogueado();
-
         String fechaRegistro = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-        Partner nuevoPartner = new Partner(idZona, nombre, cif, direccion, telefono, email, fechaRegistro);
+        Partner nuevoPartner = new Partner(nombre, cif, direccion, telefono, email, fechaRegistro);
 
         long id = db.addPartner(nuevoPartner);
         if (id > 0) {
@@ -67,14 +64,6 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         }
     }
 
-    // Implementa esta función para determinar la IdZona basada en tu lógica de aplicación
-    private int obtenerIdZonaDelComercialLogueado() {
-        // Obtener instancia de SharedPreferences
-        SharedPreferences sharedPref = getSharedPreferences("ComercialLogueado", Context.MODE_PRIVATE);
-        // Recuperar el IdZona guardado, con un valor por defecto de 1 (o cualquier valor que consideres adecuado como valor por defecto)
-        int idZona = sharedPref.getInt("IdZona", 1); // Asegúrate de que la clave que uses aquí coincide con la que usaste para guardar el IdZona
-        return idZona;
-    }
 
     private boolean validarCampos() {
         // Implementación de validación de campos

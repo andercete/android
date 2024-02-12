@@ -2,7 +2,6 @@ package com.example.comercial.BBDD;
 
 public class Comerciales {
     private int idComercial;
-    private int idZona;
     private String nombre;
     private String apellidos;
     private String contra;
@@ -12,11 +11,10 @@ public class Comerciales {
     private String telefono;
 
     // Constructor
-    public Comerciales(int idComercial, int idZona, String nombre, String apellidos,
+    public Comerciales(int idComercial, String nombre, String apellidos,
                        String contra, String correo, String direccion,
                        String dni, String telefono) {
         this.idComercial = idComercial;
-        this.idZona = idZona;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.contra = contra;
@@ -38,14 +36,6 @@ public class Comerciales {
         this.idComercial = idComercial;
     }
 
-    // Getter y Setter para idZona
-    public int getIdZona() {
-        return idZona;
-    }
-
-    public void setIdZona(int idZona) {
-        this.idZona = idZona;
-    }
 
     // Getter y Setter para nombre
     public String getNombre() {
