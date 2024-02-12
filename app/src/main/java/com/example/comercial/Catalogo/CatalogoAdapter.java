@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,11 +131,18 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
             // Estableciendo la imagen del ImageView
             // Asumiendo que el nombre de la imagen en el objeto Catalogo corresponde a un recurso en drawable
             String imageName = catalogo.getImagen();
-            if (imageName != null) {
-                byte[] decodedString = Base64.decode(imageName, Base64.DEFAULT);
-                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                iconImageView.setImageBitmap(decodedBitmap);
-            } else {
+            if (imageName != null && !imageName.trim().isEmpty()) {
+                try {
+                    byte[] decodedString = Base64.decode(imageName, Base64.DEFAULT);
+                    Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    iconImageView.setImageBitmap(decodedBitmap);
+                } catch (IllegalArgumentException e) {
+                    // Este bloque catch captura la excepción de Base64 mal formado
+                    Log.e("CatalogoAdapter", "Error al decodificar Base64", e);
+                    // Opcional: establece una imagen predeterminada o maneja el error como desees
+                    iconImageView.setImageResource(R.drawable.articulo_imagen_pordefecto);
+                }
+            }else {
                 // Maneja el caso en el que imageName es null, por ejemplo, estableciendo una imagen predeterminada
                 iconImageView.setImageResource(R.drawable.articulo_imagen_pordefecto);
             }
