@@ -155,5 +155,6 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
                 itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.defaultItemBackground)); // Define este color en tus recursos
             }
         }
+
     }
 }

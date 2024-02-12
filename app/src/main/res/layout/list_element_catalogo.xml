@@ -14,6 +14,37 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/existencias"
+            app:layout_constraintStart_toStartOf="@+id/descripcionCatalogoTextView"
+            app:layout_constraintTop_toBottomOf="@+id/proveedorCatalogoTextView" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="20sp"
+            android:layout_height="25sp"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/precio_venta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:layout_marginEnd="60dp"
+            android:src="@drawable/precio_coste"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView4"
+            tools:srcCompat="@drawable/precio_coste" />
+
+
+        <ImageView
             android:id="@+id/iconImageCatalogoView"
             android:layout_width="111dp"
             android:layout_height="114dp"
@@ -22,77 +53,75 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/pedidoimage" />
 
         <TextView
             android:id="@+id/idArticuloCatalogoTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
+            android:layout_marginStart="10dp"
             android:text="Id"
+            android:textColor="#959595"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/nombreCatalogoTextView"
+            app:layout_constraintStart_toEndOf="@+id/nombreCatalogoTextView"
+            app:layout_constraintTop_toTopOf="@+id/nombreCatalogoTextView" />
+
+        <TextView
+            android:id="@+id/nombreCatalogoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Nombre"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/nombreCatalogoTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:text="Nombre"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/iconImageCatalogoView"
-            app:layout_constraintTop_toBottomOf="@+id/idArticuloCatalogoTextView" />
-
-        <TextView
             android:id="@+id/descripcionCatalogoTextView"
-            android:layout_width="0dp"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
+            android:layout_marginTop="5dp"
             android:text="Descripcion"
             android:textSize="13sp"
-            app:layout_constraintEnd_toStartOf="@+id/precioCatalogoTextView"
             app:layout_constraintStart_toStartOf="@id/nombreCatalogoTextView"
             app:layout_constraintTop_toBottomOf="@id/nombreCatalogoTextView" />
 
         <TextView
             android:id="@+id/proveedorCatalogoTextView"
-            android:layout_width="211dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingLeft="12dp"
+            android:layout_marginTop="5dp"
             android:text="Proveedor"
             android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@+id/iconImageCatalogoView"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/descripcionCatalogoTextView"
             app:layout_constraintTop_toBottomOf="@+id/descripcionCatalogoTextView" />
 
         <TextView
             android:id="@+id/precioCatalogoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
-            android:paddingLeft="12dp"
+            android:layout_marginStart="2dp"
             android:text="prVenta"
             android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
         <TextView
             android:id="@+id/precioCostoCatalogoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="2dp"
             android:layout_marginEnd="16dp"
-            android:paddingLeft="12dp"
             android:text="prCoste"
             android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/precioCatalogoTextView" />
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
         <!-- Asegúrate de tener un icono adecuado -->
 
@@ -100,55 +129,50 @@
             android:id="@+id/ExistenciasCatalogoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp"
-            android:paddingLeft="12dp"
+            android:layout_marginStart="2dp"
             android:text="Existencias"
             android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/precioCostoCatalogoTextView" />
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
         <EditText
             android:id="@+id/editTextCantidad"
-            android:layout_width="48dp"
+            android:layout_width="30dp"
             android:layout_height="48dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginTop="2dp"
             android:inputType="number"
             android:text="1"
             android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnIncrease"
-            app:layout_constraintTop_toBottomOf="@+id/proveedorCatalogoTextView" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/proveedorCatalogoTextView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <ImageButton
             android:id="@+id/btnDecrease"
-            android:layout_width="@android:dimen/app_icon_size"
-            android:layout_height="@android:dimen/app_icon_size"
-            android:layout_marginTop="31dp"
-            android:layout_marginEnd="2dp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:contentDescription="Icono Restar Cantidad"
             android:scaleType="fitCenter"
             android:src="@drawable/minus_992683"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextCantidad"
             app:layout_constraintEnd_toStartOf="@+id/editTextCantidad"
-            app:layout_constraintTop_toBottomOf="@+id/proveedorCatalogoTextView"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/editTextCantidad" />
 
         <ImageButton
             android:id="@+id/btnIncrease"
-            android:layout_width="@android:dimen/app_icon_size"
-            android:layout_height="@android:dimen/app_icon_size"
-            android:layout_marginEnd="12dp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:contentDescription="Icono Sumar Cantidad"
             android:scaleType="fitCenter"
             android:src="@drawable/video_10879252"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextCantidad"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintBottom_toBottomOf="@+id/editTextCantidad"
+            app:layout_constraintStart_toEndOf="@+id/editTextCantidad"
+            app:layout_constraintTop_toTopOf="@+id/editTextCantidad" />
 
         <!-- Asegúrate de tener un icono adecuado -->
 
