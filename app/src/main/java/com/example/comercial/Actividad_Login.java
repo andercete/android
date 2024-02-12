@@ -41,7 +41,7 @@ public class Actividad_Login extends AppCompatActivity {
 
     private void añadirComercialPorDefecto() {
         if (!helper.existeComercial("72538203K")) {
-            helper.addComercial(new Comerciales(0, "Nombre Por Defecto", "Apellido Por Defecto", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203K", "000000000"));
+            helper.addComercial(new Comerciales(0, "Ander", "Oria", "12345", "correo@ejemplo.com", "Direccion Por Defecto", "72538203K", "000000000"));
         }
 
         if (!helper.existeComercial("72538684L")) {
