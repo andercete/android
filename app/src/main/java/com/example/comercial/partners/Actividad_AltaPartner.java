@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.BBDD.Partner;
+import com.example.comercial.Metodos;
 import com.example.comercial.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -67,12 +68,15 @@ public class Actividad_AltaPartner extends AppCompatActivity {
 
 
     private boolean validarCampos() {
-        // Implementación de validación de campos
-        return !eNombre.getText().toString().isEmpty() &&
-                !eDireccion.getText().toString().isEmpty() &&
-                !eCif.getText().toString().isEmpty() &&
-                !eTelefono.getText().toString().isEmpty() &&
-                !eEmail.getText().toString().isEmpty();
+        // Asegurarse de que todos los campos cumplen con los criterios de validación
+        boolean nombreValido = Metodos.isValidCampo(eNombre, "Nombre", Metodos.FieldType.STRING, this);
+        boolean direccionValida = Metodos.isValidCampo(eDireccion, "Dirección", Metodos.FieldType.STRING, this);
+        boolean cifValido = Metodos.isValidCampo(eCif, "CIF", Metodos.FieldType.STRING, this);
+        boolean telefonoValido = Metodos.isValidCampo(eTelefono, "Teléfono", Metodos.FieldType.TELEPHONE, this);
+        boolean emailValido = Metodos.isValidCampo(eEmail, "Email", Metodos.FieldType.EMAIL, this);
+
+        // Si todos los campos son válidos, retorna true. De lo contrario, false.
+        return nombreValido && direccionValida && cifValido && telefonoValido && emailValido;
     }
 
     private void limpiarCampos() {
