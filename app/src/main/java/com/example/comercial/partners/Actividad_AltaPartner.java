@@ -7,12 +7,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.comercial.BBDD.DbHelper;
+import com.example.comercial.BBDD.Partner;
 import com.example.comercial.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 public class Actividad_AltaPartner extends AppCompatActivity {
 
@@ -40,6 +39,8 @@ public class Actividad_AltaPartner extends AppCompatActivity {
         bAlta.setOnClickListener(v -> {
             if (validarCampos()) {
                 altaPartner();
+            } else {
+                Toast.makeText(this, "Rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
         });
     }

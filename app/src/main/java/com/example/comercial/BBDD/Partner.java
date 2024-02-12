@@ -1,4 +1,4 @@
-package com.example.comercial.partners;
+package com.example.comercial.BBDD;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

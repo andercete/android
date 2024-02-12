@@ -7,9 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.comercial.calendario.Evento;
-import com.example.comercial.partners.Partner;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -198,6 +195,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public List<Partner> getPartnersOfToday() {
         List<Partner> partners = new ArrayList<>();
+
         // Obtén la fecha actual en formato YYYY-MM-DD
         String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
@@ -490,72 +488,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
-    public void deleteAllPartners() {
-        // Obtiene la base de datos en modo escritura
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // Ejecuta la sentencia SQL para borrar todos los registros
-        db.execSQL("DELETE FROM PARTNERS");
-
-        // Opcional: Si también deseas reiniciar el contador del ID autoincremental, puedes descomentar la siguiente línea
-        // db.execSQL("DELETE FROM sqlite_sequence WHERE name='PARTNERS'"); // Cuidado al usar, ya que reiniciará los IDs
-
-        db.close(); // Cierra la base de datos para liberar recursos
-    }
-
-    // Método para obtener un registro en CAB_PEDIDOS por su ID
-    public CabPedidos getCabPedido(long id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String[] columns = {
-                "IdPedido", "IdPartner", "IdComercial", "FechaPedido"
-        };
-
-        Cursor cursor = db.query("CAB_PEDIDOS", columns, "IdPedido = ?",
-                new String[]{String.valueOf(id)}, null, null, null);
-
-        CabPedidos cabPedido = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            cabPedido = new CabPedidos();
-
-            int idPedidoIndex = cursor.getColumnIndex("IdPedido");
-            if (idPedidoIndex != -1) {
-                cabPedido.setIdPedido(cursor.getInt(idPedidoIndex));
-            }
-
-            int idPartnerIndex = cursor.getColumnIndex("IdPartner");
-            if (idPartnerIndex != -1) {
-                cabPedido.setIdPartner(cursor.getInt(idPartnerIndex));
-            }
-
-            int idComercialIndex = cursor.getColumnIndex("IdComercial");
-            if (idComercialIndex != -1) {
-                cabPedido.setIdComercial(cursor.getInt(idComercialIndex));
-            }
-
-            int fechaPedidoIndex = cursor.getColumnIndex("FechaPedido");
-            if (fechaPedidoIndex != -1) {
-                cabPedido.setFechaPedido(cursor.getString(fechaPedidoIndex));
-            }
-
-            cursor.close();
-        }
-        db.close();
-        return cabPedido;
-    }
-
-    // Método para actualizar un registro en CAB_PEDIDOS
-    public int updateCabPedido(CabPedidos cabPedido) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("IdPartner", cabPedido.getIdPartner());
-        values.put("IdComercial", cabPedido.getIdComercial());
-        values.put("FechaPedido", cabPedido.getFechaPedido());
-
-        // Actualizar fila
-        return db.update("CAB_PEDIDOS", values, "IdPedido = ?",
-                new String[]{String.valueOf(cabPedido.getIdPedido())});
-    }
 
     // Método para borrar un registro en CAB_PEDIDOS por su ID
     public void deleteCabPedido(long id) {
@@ -564,24 +496,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(id)});
         db.close();
     }
-
-    // Método para obtener todos los registros en CAB_PEDIDOS
-   /* public List<CabPedidos> getAllCabPedidos() {
-        List<CabPedidos> cabPedidoList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM CAB_PEDIDOS";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return cabPedidoList;
-    }*/
 
     //Metodo para obtener todos los registros en CAB_PEDIDOS cuyo id partner coincida con el partner seleccionado
     public List<CabPedidos> getAllCabPedidos(int idPartner) {
@@ -640,124 +554,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Método para obtener una línea de pedido por su ID
-    public LineasPedido getLineaPedido(long id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String[] columns = {
-                "IdLinea", "IdArticulo", "IdPedido", "Cantidad", "Descuento", "Precio"
-        };
-
-        Cursor cursor = db.query("LINEAS_PEDIDO", columns, "IdLinea = ?",
-                new String[]{String.valueOf(id)}, null, null, null);
-
-        LineasPedido lineaPedido = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            lineaPedido = new LineasPedido();
-
-            int idLineaIndex = cursor.getColumnIndex("IdLinea");
-            if (idLineaIndex != -1) {
-                lineaPedido.setIdLinea(cursor.getInt(idLineaIndex));
-            }
-
-            int idArticuloIndex = cursor.getColumnIndex("IdArticulo");
-            if (idArticuloIndex != -1) {
-                lineaPedido.setIdArticulo(cursor.getInt(idArticuloIndex));
-            }
-
-            int idPedidoIndex = cursor.getColumnIndex("IdPedido");
-            if (idPedidoIndex != -1) {
-                lineaPedido.setIdPedido(cursor.getInt(idPedidoIndex));
-            }
-
-            int cantidadIndex = cursor.getColumnIndex("Cantidad");
-            if (cantidadIndex != -1) {
-                lineaPedido.setCantidad(cursor.getInt(cantidadIndex));
-            }
-
-            int descuentoIndex = cursor.getColumnIndex("Descuento");
-            if (descuentoIndex != -1) {
-                lineaPedido.setDescuento(cursor.getDouble(descuentoIndex));
-            }
-
-            int precioIndex = cursor.getColumnIndex("Precio");
-            if (precioIndex != -1) {
-                lineaPedido.setPrecio(cursor.getDouble(precioIndex));
-            }
-
-            cursor.close();
-        }
-        db.close();
-        return lineaPedido;
-    }
-
-    // Método para actualizar una línea de pedido
-    public int updateLineaPedido(LineasPedido lineaPedido) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("IdArticulo", lineaPedido.getIdArticulo());
-        values.put("IdPedido", lineaPedido.getIdPedido());
-        values.put("Cantidad", lineaPedido.getCantidad());
-        values.put("Descuento", lineaPedido.getDescuento());
-        values.put("Precio", lineaPedido.getPrecio());
-
-        // Actualizar fila
-        return db.update("LINEAS_PEDIDO", values, "IdLinea = ?",
-                new String[]{String.valueOf(lineaPedido.getIdLinea())});
-    }
-
-    // Método para borrar una línea de pedido por su ID
-    public void deleteLineaPedido(long id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("LINEAS_PEDIDO", "IdLinea = ?",
-                new String[]{String.valueOf(id)});
-        db.close();
-    }
-
-    // Método para obtener todas las líneas de pedido de un pedido específico
-    public List<LineasPedido> getLineasPedidoPorPedido(long idPedido) {
-        List<LineasPedido> lineaPedidoList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT  * FROM LINEAS_PEDIDO WHERE IdPedido = ?";
-
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(idPedido)});
-
-        if (cursor.moveToFirst()) {
-            do {
-                LineasPedido lineaPedido = new LineasPedido();
-
-                int idLineaIndex = cursor.getColumnIndex("IdLinea");
-                if (idLineaIndex != -1) {
-                    lineaPedido.setIdLinea(cursor.getInt(idLineaIndex));
-                }
-
-                int idArticuloIndex = cursor.getColumnIndex("IdArticulo");
-                if (idArticuloIndex != -1) {
-                    lineaPedido.setIdArticulo(cursor.getInt(idArticuloIndex));
-                }
-
-                int cantidadIndex = cursor.getColumnIndex("Cantidad");
-                if (cantidadIndex != -1) {
-                    lineaPedido.setCantidad(cursor.getInt(cantidadIndex));
-                }
-
-                int descuentoIndex = cursor.getColumnIndex("Descuento");
-                if (descuentoIndex != -1) {
-                    lineaPedido.setDescuento(cursor.getDouble(descuentoIndex));
-                }
-
-                int precioIndex = cursor.getColumnIndex("Precio");
-                if (precioIndex != -1) {
-                    lineaPedido.setPrecio(cursor.getDouble(precioIndex));
-                }
-
-                lineaPedidoList.add(lineaPedido);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return lineaPedidoList;
-    }
     public boolean existeComercial(String dni) {
         SQLiteDatabase db = this.getReadableDatabase();
 

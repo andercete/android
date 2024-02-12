@@ -86,8 +86,6 @@ public class Actividad_Login extends AppCompatActivity {
         }
     }
 
-
-
     private boolean validateLogin(String dni, String contraseña) {
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columns = {"DNI", "Contraseña"};

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercial.BBDD.DbHelper;
+import com.example.comercial.BBDD.Evento;
 import com.example.comercial.R;
 import java.util.List;
 

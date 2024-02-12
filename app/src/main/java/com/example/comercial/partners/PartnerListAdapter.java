@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comercial.BBDD.DbHelper;
+import com.example.comercial.BBDD.Partner;
 import com.example.comercial.R;
 import com.example.comercial.pedidos.Actividad_CabPedidos;
 

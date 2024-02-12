@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.comercial.BBDD.DbHelper;
+import com.example.comercial.BBDD.Partner;
 import com.example.comercial.R;
 
 import org.xmlpull.v1.XmlPullParser;

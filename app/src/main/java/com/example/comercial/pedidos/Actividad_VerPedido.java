@@ -2,6 +2,7 @@ package com.example.comercial.pedidos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -84,16 +85,33 @@ public class Actividad_VerPedido extends AppCompatActivity {
                 null
         );
 
-        CabPedidos cabeceraPedido = new CabPedidos();
+        CabPedidos cabeceraPedido = null;
 
-        if (cursor.moveToFirst()) {
-            cabeceraPedido.setIdPedido(cursor.getInt(cursor.getColumnIndex("IdPedido")));
-            cabeceraPedido.setIdPartner(cursor.getInt(cursor.getColumnIndex("IdPartner")));
-            cabeceraPedido.setIdComercial(cursor.getInt(cursor.getColumnIndex("IdComercial")));
-            cabeceraPedido.setFechaPedido(cursor.getString(cursor.getColumnIndex("FechaPedido")));
+        if (cursor != null && cursor.moveToFirst()) {
+            cabeceraPedido = new CabPedidos();
+            int idPedidoIndex = cursor.getColumnIndex("IdPedido");
+            int idPartnerIndex = cursor.getColumnIndex("IdPartner");
+            int idComercialIndex = cursor.getColumnIndex("IdComercial");
+            int fechaPedidoIndex = cursor.getColumnIndex("FechaPedido");
+
+            // Validar si el indiice del cursor es positibo
+            if (idPedidoIndex != -1) {
+                cabeceraPedido.setIdPedido(cursor.getInt(idPedidoIndex));
+            }
+            if (idPartnerIndex != -1) {
+                cabeceraPedido.setIdPartner(cursor.getInt(idPartnerIndex));
+            }
+            if (idComercialIndex != -1) {
+                cabeceraPedido.setIdComercial(cursor.getInt(idComercialIndex));
+            }
+            if (fechaPedidoIndex != -1) {
+                cabeceraPedido.setFechaPedido(cursor.getString(fechaPedidoIndex));
+            }
         }
 
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         db.close();
 
         return cabeceraPedido;
@@ -114,23 +132,45 @@ public class Actividad_VerPedido extends AppCompatActivity {
 
         List<LineasPedido> lineasPedidoList = new ArrayList<>();
 
-        while (cursor.moveToNext()) {
-            LineasPedido lineaPedido = new LineasPedido();
-            lineaPedido.setIdLinea(cursor.getInt(cursor.getColumnIndex("IdLinea")));
-            lineaPedido.setIdArticulo(cursor.getInt(cursor.getColumnIndex("IdArticulo")));
-            lineaPedido.setIdPedido(cursor.getInt(cursor.getColumnIndex("IdPedido")));
-            lineaPedido.setCantidad(cursor.getInt(cursor.getColumnIndex("Cantidad")));
-            lineaPedido.setDescuento(cursor.getDouble(cursor.getColumnIndex("Descuento")));
-            lineaPedido.setPrecio(cursor.getDouble(cursor.getColumnIndex("Precio")));
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                LineasPedido lineaPedido = new LineasPedido();
+                int idLineaIndex = cursor.getColumnIndex("IdLinea");
+                int idArticuloIndex = cursor.getColumnIndex("IdArticulo");
+                int idPedidoIndex = cursor.getColumnIndex("IdPedido");
+                int cantidadIndex = cursor.getColumnIndex("Cantidad");
+                int descuentoIndex = cursor.getColumnIndex("Descuento");
+                int precioIndex = cursor.getColumnIndex("Precio");
 
-            lineasPedidoList.add(lineaPedido);
+                if (idLineaIndex != -1) {
+                    lineaPedido.setIdLinea(cursor.getInt(idLineaIndex));
+                }
+                if (idArticuloIndex != -1) {
+                    lineaPedido.setIdArticulo(cursor.getInt(idArticuloIndex));
+                }
+                if (idPedidoIndex != -1) {
+                    lineaPedido.setIdPedido(cursor.getInt(idPedidoIndex));
+                }
+                if (cantidadIndex != -1) {
+                    lineaPedido.setCantidad(cursor.getInt(cantidadIndex));
+                }
+                if (descuentoIndex != -1) {
+                    lineaPedido.setDescuento(cursor.getDouble(descuentoIndex));
+                }
+                if (precioIndex != -1) {
+                    lineaPedido.setPrecio(cursor.getDouble(precioIndex));
+                }
+
+                lineasPedidoList.add(lineaPedido);
+            }
+
+            cursor.close();
         }
-
-        cursor.close();
         db.close();
 
         return lineasPedidoList;
     }
+
 
     private String obtenerNombrePartner(DbHelper dbHelper, int idPartner) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -147,15 +187,21 @@ public class Actividad_VerPedido extends AppCompatActivity {
 
         String nombre = "";
 
-        if (cursor.moveToFirst()) {
-            nombre = cursor.getString(cursor.getColumnIndex("Nombre"));
+        if (cursor != null && cursor.moveToFirst()) {
+            int nombreIndex = cursor.getColumnIndex("Nombre");
+            if (nombreIndex != -1) {
+                nombre = cursor.getString(nombreIndex);
+            }
         }
 
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         db.close();
 
         return nombre;
     }
+
 
     private String obtenerNombreComercial(DbHelper dbHelper, int idComercial) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -172,13 +218,19 @@ public class Actividad_VerPedido extends AppCompatActivity {
 
         String nombre = "";
 
-        if (cursor.moveToFirst()) {
-            nombre = cursor.getString(cursor.getColumnIndex("Nombre"));
+        if (cursor != null && cursor.moveToFirst()) {
+            int nombreIndex = cursor.getColumnIndex("Nombre");
+            if (nombreIndex != -1) {
+                nombre = cursor.getString(nombreIndex);
+            }
         }
 
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         db.close();
 
         return nombre;
     }
+
 }

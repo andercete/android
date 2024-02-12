@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comercial.BBDD.DbHelper;
+import com.example.comercial.BBDD.Evento;
 import com.example.comercial.R;
 
 import java.text.SimpleDateFormat;
@@ -105,7 +108,7 @@ public class Actividad_AltaEvento extends AppCompatActivity {
             setResult(RESULT_OK);
             finish();
         } else {
-            // Puedes manejar el caso donde algún campo está vacío
+            Toast.makeText(this, "Rellene todos los campos.", Toast.LENGTH_SHORT).show();
         }
     }
 

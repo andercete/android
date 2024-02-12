@@ -130,7 +130,6 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
             quantityText.setText(String.valueOf(catalogo.getQuantity()));
 
             // Estableciendo la imagen del ImageView
-            // Asumiendo que el nombre de la imagen en el objeto Catalogo corresponde a un recurso en drawable
             String imageName = catalogo.getImagen();
             if (imageName != null && !imageName.trim().isEmpty()) {
                 try {
@@ -155,6 +154,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
                 // Restablece el fondo para elementos no seleccionados
                 itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.defaultItemBackground)); // Define este color en tus recursos
             }
+
         }
     }
 }

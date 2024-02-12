@@ -34,7 +34,7 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_catalogo);
 
-        db = new DbHelper(this);
+                db = new DbHelper(this);
 
         bImportarCatalogo = findViewById(R.id.bImportar2);
         rvCatalogo = findViewById(R.id.rCatalogo);
@@ -44,7 +44,7 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        List<Catalogo> catalogos = db.getAllArticulos(); // Actualizar nombre del método si necesario
+        List<Catalogo> catalogos = db.getAllArticulos();
         mAdapter = new CatalogoAdapterVer(this, catalogos);
         rvCatalogo.setLayoutManager(new LinearLayoutManager(this));
         rvCatalogo.setAdapter(mAdapter);
@@ -75,7 +75,7 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
 
             List<Catalogo> catalogos = parseXMLFile(inputStream);
             for (Catalogo catalogo : catalogos) {
-                db.addArticulo(catalogo); // Ajustar a la implementación correcta
+                db.addArticulo(catalogo);
             }
             mAdapter.setCatalogo(catalogos);
             mAdapter.notifyDataSetChanged();

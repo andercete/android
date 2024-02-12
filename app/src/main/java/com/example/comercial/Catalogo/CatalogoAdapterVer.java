@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class CatalogoAdapterVer extends RecyclerView.Adapter<CatalogoAdapterVer.
 
         public void bind(final Catalogo catalogo) { // Cambiado de Articulos a Catalogo en el parámetro del método bind
             // Actualización de las vistas con información de Catalogo
+            idArticuloTextView.setText(String.valueOf(catalogo.getIdArticulo()));
             nombreTextView.setText(catalogo.getNombre());
             descripcionTextView.setText(catalogo.getDescripcion());
             proveedorTextView.setText(catalogo.getProveedor());
@@ -79,14 +81,22 @@ public class CatalogoAdapterVer extends RecyclerView.Adapter<CatalogoAdapterVer.
 
             // Estableciendo la imagen del ImageView
             String imageName = catalogo.getImagen();
-            if (imageName != null) {
-                byte[] decodedString = Base64.decode(imageName, Base64.DEFAULT);
-                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                iconImageView.setImageBitmap(decodedBitmap);
+            if (imageName != null && !imageName.trim().isEmpty()) {
+                try {
+                    byte[] decodedString = Base64.decode(imageName, Base64.DEFAULT);
+                    Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    iconImageView.setImageBitmap(decodedBitmap);
+                } catch (IllegalArgumentException e) {
+                    // Este bloque catch captura la excepción de Base64 mal formado
+                    Log.e("CatalogoAdapter", "Error al decodificar Base64", e);
+                    // Opcional: establece una imagen predeterminada o maneja el error como desees
+                    iconImageView.setImageResource(R.drawable.articulo_imagen_pordefecto);
+                }
             } else {
                 // Maneja el caso en el que imageName es null, por ejemplo, estableciendo una imagen predeterminada
                 iconImageView.setImageResource(R.drawable.articulo_imagen_pordefecto);
             }
+
 
         }
     }
