@@ -23,35 +23,25 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Creación de tablas
-    private static final String CREATE_TABLE_ZONAS = "CREATE TABLE ZONAS (" +
-            "IdZona INTEGER PRIMARY KEY," +
-            "Descripcion TEXT" +
-            ")";
-
     private static final String CREATE_TABLE_COMERCIALES = "CREATE TABLE COMERCIALES (" +
             "IdComercial INTEGER PRIMARY KEY," +
-            "IdZona INTEGER," +
+
             "Nombre TEXT," +
             "Apellidos TEXT," +
             "Contraseña TEXT," +
             "Correo TEXT," +
             "Direccion TEXT," +
             "DNI TEXT," +
-            "Telefono TEXT," +
-            "FOREIGN KEY(IdZona) REFERENCES ZONAS(IdZona)" +
-            ")";
+            "Telefono TEXT)";
 
     private static final String CREATE_TABLE_PARTNERS = "CREATE TABLE PARTNERS (" +
             "IdPartner INTEGER PRIMARY KEY," +
-            "IdZona INTEGER," +
             "Nombre TEXT," +
             "CIF TEXT," +
             "Direccion TEXT," +
             "Telefono TEXT," +
             "Correo TEXT," +
-            "FechaRegistro TEXT," +
-            "FOREIGN KEY(IdZona) REFERENCES ZONAS(IdZona)" +
-            ")";
+            "FechaRegistro TEXT)";
 
 
     private static final String CREATE_TABLE_ARTICULOS = "CREATE TABLE ARTICULOS (" +
@@ -100,7 +90,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_ZONAS);
+
         db.execSQL(CREATE_TABLE_COMERCIALES);
         db.execSQL(CREATE_TABLE_PARTNERS);
         db.execSQL(CREATE_TABLE_ARTICULOS);
@@ -117,7 +107,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS ARTICULOS");
         db.execSQL("DROP TABLE IF EXISTS PARTNERS");
         db.execSQL("DROP TABLE IF EXISTS COMERCIALES");
-        db.execSQL("DROP TABLE IF EXISTS ZONAS");
         db.execSQL("DROP TABLE IF EXISTS EVENTS");
         // Crear nuevas tablas
         onCreate(db);
@@ -194,7 +183,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public long addPartner(Partner partner) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("IdZona", partner.getIdZona());
         values.put("Nombre", partner.getNombre());
         values.put("CIF", partner.getCif());
         values.put("Direccion", partner.getDireccion());
@@ -208,66 +196,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Método para obtener un partner
-    public Partner getPartner(long id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String[] columns = {
-                "IdPartner", "IdZona", "Nombre", "CIF", "Direccion", "Telefono", "Correo", "FechaRegistro"
-        };
-
-        Cursor cursor = db.query("PARTNERS", columns, "IdPartner = ?",
-                new String[]{String.valueOf(id)}, null, null, null);
-
-        Partner partner = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            partner = new Partner();
-
-            int idPartnerIndex = cursor.getColumnIndex("IdPartner");
-            if (idPartnerIndex != -1) {
-                partner.setIdPartner(cursor.getInt(idPartnerIndex));
-            }
-
-            int idZonaIndex = cursor.getColumnIndex("IdZona");
-            if (idZonaIndex != -1) {
-                partner.setIdZona(cursor.getInt(idZonaIndex));
-            }
-
-            int nombreIndex = cursor.getColumnIndex("Nombre");
-            if (nombreIndex != -1) {
-                partner.setNombre(cursor.getString(nombreIndex));
-            }
-
-            int cifIndex = cursor.getColumnIndex("CIF");
-            if (cifIndex != -1) {
-                partner.setCif(cursor.getString(cifIndex));
-            }
-
-            int direccionIndex = cursor.getColumnIndex("Direccion");
-            if (direccionIndex != -1) {
-                partner.setDireccion(cursor.getString(direccionIndex));
-            }
-
-            int telefonoIndex = cursor.getColumnIndex("Telefono");
-            if (telefonoIndex != -1) {
-                partner.setTelefono(cursor.getString(telefonoIndex));
-            }
-
-            int correoIndex = cursor.getColumnIndex("Correo");
-            if (correoIndex != -1) {
-                partner.setCorreo(cursor.getString(correoIndex));
-            }
-
-            int fechaRegistroIndex = cursor.getColumnIndex("FechaRegistro");
-            if (fechaRegistroIndex != -1) {
-                partner.setFechaRegistro(cursor.getString(fechaRegistroIndex));
-            }
-
-            cursor.close();
-        }
-        db.close();
-        return partner;
-    }
     public List<Partner> getPartnersOfToday() {
         List<Partner> partners = new ArrayList<>();
         // Obtén la fecha actual en formato YYYY-MM-DD
@@ -285,7 +213,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // Obtiene los índices de las columnas
         int idIndex = cursor.getColumnIndex("IdPartner");
-        int idZonaIndex = cursor.getColumnIndex("IdZona");
+
         int nombreIndex = cursor.getColumnIndex("Nombre");
         int cifIndex = cursor.getColumnIndex("CIF");
         int direccionIndex = cursor.getColumnIndex("Direccion");
@@ -302,7 +230,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 do {
                     Partner partner = new Partner();
                     partner.setIdPartner(cursor.getInt(idIndex));
-                    partner.setIdZona(cursor.getInt(idZonaIndex));
+
                     partner.setNombre(cursor.getString(nombreIndex));
                     partner.setCif(cursor.getString(cifIndex));
                     partner.setDireccion(cursor.getString(direccionIndex));
@@ -371,30 +299,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return comercial;
     }
 
-
-    // Add this method for deleting a partner by object
-    public void deletePartner(Partner partner) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("PARTNERS", "IdPartner = ?", new String[]{String.valueOf(partner.getIdPartner())});
-        db.close();
-    }
-
-    // Método para actualizar un partner
-    public int updatePartner(Partner partner) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("IdZona", partner.getIdZona());
-        values.put("Nombre", partner.getNombre());
-        values.put("CIF", partner.getCif());
-        values.put("Direccion", partner.getDireccion());
-        values.put("Telefono", partner.getTelefono());
-        values.put("Correo", partner.getCorreo());
-        values.put("FechaRegistro", partner.getFechaRegistro());
-
-        // Actualizar fila
-        return db.update("PARTNERS", values, "IdPartner = ?",
-                new String[]{String.valueOf(partner.getIdPartner())});
-    }
 
     // Método para borrar un partner
     public void deletePartner(long id) {
@@ -471,96 +375,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return partnerList;
     }
 
-    public long addZona(Zonas zona) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("Descripcion", zona.getDescripcion());
 
-        // Insertar fila
-        long id = db.insert("ZONAS", null, values);
-        db.close();
-        return id;
-    }
-
-    // Método para obtener una zona por su ID
-    public Zonas getZona(long id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String[] columns = {
-                "IdZona", "Descripcion"
-        };
-
-        Cursor cursor = db.query("ZONAS", columns, "IdZona = ?",
-                new String[]{String.valueOf(id)}, null, null, null);
-
-        Zonas zona = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            zona = new Zonas();
-
-            int idZonaIndex = cursor.getColumnIndex("IdZona");
-            if (idZonaIndex != -1) {
-                zona.setIdZona(cursor.getInt(idZonaIndex));
-            }
-
-            int descripcionIndex = cursor.getColumnIndex("Descripcion");
-            if (descripcionIndex != -1) {
-                zona.setDescripcion(cursor.getString(descripcionIndex));
-            }
-
-            cursor.close();
-        }
-        db.close();
-        return zona;
-    }
-
-    // Método para actualizar una zona
-    public int updateZona(Zonas zona) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("Descripcion", zona.getDescripcion());
-
-        // Actualizar fila
-        return db.update("ZONAS", values, "IdZona = ?",
-                new String[]{String.valueOf(zona.getIdZona())});
-    }
-
-    // Método para borrar una zona por su ID
-    public void deleteZona(long id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("ZONAS", "IdZona = ?",
-                new String[]{String.valueOf(id)});
-        db.close();
-    }
-
-    // Método para obtener todas las zonas
-    public List<Zonas> getAllZonas() {
-        List<Zonas> zonaList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM ZONAS";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Zonas zona = new Zonas();
-
-                int idZonaIndex = cursor.getColumnIndex("IdZona");
-                if (idZonaIndex != -1) {
-                    zona.setIdZona(cursor.getInt(idZonaIndex));
-                }
-
-                int descripcionIndex = cursor.getColumnIndex("Descripcion");
-                if (descripcionIndex != -1) {
-                    zona.setDescripcion(cursor.getString(descripcionIndex));
-                }
-
-                zonaList.add(zona);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return zonaList;
-    }
     // Método para agregar un nuevo comercial
     public long addComercial(Comerciales comercial) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -580,162 +395,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Método para obtener un comercial por su ID
-    public Comerciales getComercial(long id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String[] columns = {
-                "IdComercial", "IdZona", "Nombre", "Apellidos", "Contraseña", "Correo", "Direccion", "DNI", "Telefono"
-        };
-
-        Cursor cursor = db.query("COMERCIALES", columns, "IdComercial = ?",
-                new String[]{String.valueOf(id)}, null, null, null);
-
-        Comerciales comercial = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            comercial = new Comerciales();
-
-            int idComercialIndex = cursor.getColumnIndex("IdComercial");
-            if (idComercialIndex != -1) {
-                comercial.setIdComercial(cursor.getInt(idComercialIndex));
-            }
-
-            int idZonaIndex = cursor.getColumnIndex("IdZona");
-            if (idZonaIndex != -1) {
-                comercial.setIdZona(cursor.getInt(idZonaIndex));
-            }
-
-            int nombreIndex = cursor.getColumnIndex("Nombre");
-            if (nombreIndex != -1) {
-                comercial.setNombre(cursor.getString(nombreIndex));
-            }
-
-            int apellidosIndex = cursor.getColumnIndex("Apellidos");
-            if (apellidosIndex != -1) {
-                comercial.setApellidos(cursor.getString(apellidosIndex));
-            }
-
-            int contraseñaIndex = cursor.getColumnIndex("Contraseña");
-            if (contraseñaIndex != -1) {
-                comercial.setContra(cursor.getString(contraseñaIndex));
-            }
-
-            int correoIndex = cursor.getColumnIndex("Correo");
-            if (correoIndex != -1) {
-                comercial.setCorreo(cursor.getString(correoIndex));
-            }
-
-            int direccionIndex = cursor.getColumnIndex("Direccion");
-            if (direccionIndex != -1) {
-                comercial.setDireccion(cursor.getString(direccionIndex));
-            }
-
-            int dniIndex = cursor.getColumnIndex("DNI");
-            if (dniIndex != -1) {
-                comercial.setDni(cursor.getString(dniIndex));
-            }
-
-            int telefonoIndex = cursor.getColumnIndex("Telefono");
-            if (telefonoIndex != -1) {
-                comercial.setTelefono(cursor.getString(telefonoIndex));
-            }
-
-            cursor.close();
-        }
-        db.close();
-        return comercial;
-    }
-
-    // Método para actualizar un comercial
-    public int updateComercial(Comerciales comercial) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("IdZona", comercial.getIdZona());
-        values.put("Nombre", comercial.getNombre());
-        values.put("Apellidos", comercial.getApellidos());
-        values.put("Contraseña", comercial.getContra());
-        values.put("Correo", comercial.getCorreo());
-        values.put("Direccion", comercial.getDireccion());
-        values.put("DNI", comercial.getDni());
-        values.put("Telefono", comercial.getTelefono());
-
-        // Actualizar fila
-        return db.update("COMERCIALES", values, "IdComercial = ?",
-                new String[]{String.valueOf(comercial.getIdComercial())});
-    }
-
-    // Método para borrar un comercial por su ID
-    public void deleteComercial(long id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("COMERCIALES", "IdComercial = ?",
-                new String[]{String.valueOf(id)});
-        db.close();
-    }
-
-    // Método para obtener todos los comerciales
-    public List<Comerciales> getAllComerciales() {
-        List<Comerciales> comercialList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM COMERCIALES";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Comerciales comercial = new Comerciales();
-
-                int idComercialIndex = cursor.getColumnIndex("IdComercial");
-                if (idComercialIndex != -1) {
-                    comercial.setIdComercial(cursor.getInt(idComercialIndex));
-                }
-
-                int idZonaIndex = cursor.getColumnIndex("IdZona");
-                if (idZonaIndex != -1) {
-                    comercial.setIdZona(cursor.getInt(idZonaIndex));
-                }
-
-                int nombreIndex = cursor.getColumnIndex("Nombre");
-                if (nombreIndex != -1) {
-                    comercial.setNombre(cursor.getString(nombreIndex));
-                }
-
-                int apellidosIndex = cursor.getColumnIndex("Apellidos");
-                if (apellidosIndex != -1) {
-                    comercial.setApellidos(cursor.getString(apellidosIndex));
-                }
-
-                int contraseñaIndex = cursor.getColumnIndex("Contraseña");
-                if (contraseñaIndex != -1) {
-                    comercial.setContra(cursor.getString(contraseñaIndex));
-                }
-
-                int correoIndex = cursor.getColumnIndex("Correo");
-                if (correoIndex != -1) {
-                    comercial.setCorreo(cursor.getString(correoIndex));
-                }
-
-                int direccionIndex = cursor.getColumnIndex("Direccion");
-                if (direccionIndex != -1) {
-                    comercial.setDireccion(cursor.getString(direccionIndex));
-                }
-
-                int dniIndex = cursor.getColumnIndex("DNI");
-                if (dniIndex != -1) {
-                    comercial.setDni(cursor.getString(dniIndex));
-                }
-
-                int telefonoIndex = cursor.getColumnIndex("Telefono");
-                if (telefonoIndex != -1) {
-                    comercial.setTelefono(cursor.getString(telefonoIndex));
-                }
-
-                comercialList.add(comercial);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return comercialList;
-    }
     // Método para agregar un nuevo artículo
     //ALBERTO
     public long addArticulo(Catalogo catalogo) {
@@ -765,58 +424,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-
-    // Método para obtener un artículo por su ID
-    public Catalogo getArticulo(long id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {
-                "IdArticulo", "Nombre", "Descripcion", "Proveedor", "PvVent", "PvCost", "Existencias", "Direccion_Imagen"
-        };
-
-        Cursor cursor = db.query("ARTICULOS", columns, "IdArticulo = ?", new String[]{String.valueOf(id)}, null, null, null);
-
-        Catalogo catalogo = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            catalogo = new Catalogo();
-            // Asegurarse de que el índice no sea -1 antes de recuperar el dato
-            catalogo.setIdArticulo(cursor.getInt(cursor.getColumnIndexOrThrow("IdArticulo")));
-            catalogo.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("Nombre")));
-            catalogo.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("Descripcion")));
-            // La categoría no estaba en tu método original, pero la incluyo aquí por consistencia con la clase Articulos
-            catalogo.setProveedor(cursor.getString(cursor.getColumnIndexOrThrow("Proveedor")));
-            catalogo.setPvVent(cursor.getDouble(cursor.getColumnIndexOrThrow("PvVent")));
-            catalogo.setPvCost(cursor.getDouble(cursor.getColumnIndexOrThrow("PvCost")));
-            catalogo.setExistencias(cursor.getInt(cursor.getColumnIndexOrThrow("Existencias")));
-            catalogo.setImagen(cursor.getString(cursor.getColumnIndexOrThrow("Direccion_Imagen")));
-
-            cursor.close();
-        }
-        db.close();
-        return catalogo;
-    }
-
-
-    // Método para actualizar un artículo
-    public int updateArticulo(Catalogo catalogo) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("Nombre", catalogo.getNombre());
-        values.put("Descripcion", catalogo.getDescripcion());
-        values.put("Proveedor", catalogo.getProveedor());
-        values.put("PvVent", catalogo.getPvVent());
-        values.put("PvCost", catalogo.getPvCost());
-        values.put("Existencias", catalogo.getExistencias());
-        values.put("Direccion_Imagen", catalogo.getImagen());
-
-        return db.update("ARTICULOS", values, "IdArticulo = ?", new String[]{String.valueOf(catalogo.getIdArticulo())});
-    }
-
-    // Método para borrar un artículo por su ID
-    public void deleteArticulo(long id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("ARTICULOS", "IdArticulo = ?", new String[]{String.valueOf(id)});
-        db.close();
-    }
 
     // Método para obtener todos los artículos
     public List<Catalogo> getAllArticulos() {
