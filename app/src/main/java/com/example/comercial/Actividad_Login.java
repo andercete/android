@@ -55,9 +55,6 @@ public class Actividad_Login extends AppCompatActivity {
         if (!helper.existeComercial("44570590V")) {
             helper.addComercial(new Comerciales(0, "Alberto", "", "12345", "correo3@ejemplo.com", "Direccion3 Por Defecto", "44570590V", "000000003"));
         }
-        if (!helper.existeComercial("")) {
-            helper.addComercial(new Comerciales(0, "Alberto", "", "", "correo3@ejemplo.com", "Direccion3 Por Defecto", "", "000000003"));
-        }
 
     }
 
