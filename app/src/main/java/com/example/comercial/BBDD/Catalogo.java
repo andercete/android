@@ -72,8 +72,6 @@ public class Catalogo {
     }
 
     public void setPvVent(double pvVent) {
-        String precio = String.valueOf(pvVent).replace(".","").replace(",",".");
-        pvVent = Double.parseDouble(precio);
         this.pvVent = pvVent;
     }
 

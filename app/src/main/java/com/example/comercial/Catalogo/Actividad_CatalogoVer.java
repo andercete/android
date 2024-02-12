@@ -124,7 +124,7 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
                                 case "PrVent":
                                     currentCatalogo.setPvVent(Float.parseFloat(text));
                                     break;
-                                case "a":
+                                case "PrCost":
                                     currentCatalogo.setPvCost(Float.parseFloat(text));
                                     break;
                                 case "Existencias":
