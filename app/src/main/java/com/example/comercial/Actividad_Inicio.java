@@ -36,6 +36,7 @@ import com.example.comercial.partners.Actividad_Partners;
 import com.example.comercial.Catalogo.Actividad_CatalogoVer;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 // implements OnMapReadyCallback
-public class Actividad_Inicio extends AppCompatActivity {
+public class Actividad_Inicio extends AppCompatActivity implements OnMapReadyCallback {
     //GoogleMap mMap;
     Button bCitas, bPartner, bCatalogo, bDelegacion;
 
@@ -60,6 +61,14 @@ public class Actividad_Inicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_inicio);
+        // Google Maps
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        try {
+            mapFragment.getMapAsync(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
+        }
 
         bCitas = findViewById(R.id.bAgenda);
         bPartner = findViewById(R.id.bPresentacionPartners);
@@ -305,26 +314,16 @@ public class Actividad_Inicio extends AppCompatActivity {
         }
         super.onDestroy();
     }
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        // this.mMap.setOnMapClickListener(this);
+        // this.mMap.setOnMapLongClickListener(this);
 
-//    @Override
-//    public void onMapReady(@NonNull GoogleMap googleMap) {
-//      mMap = googleMap;
-//      this.mMap.setOnMapClickListener(this);
-//      this.mMap.setOnMapLongClickListener(this);
-//
-//      LatLng donosti = new LatLng(43.30419712367967, -2.0165662074674695);
-//      mMap.addMarker(new MarkerOptions().position(donosti).title("Gurmet Euskadi Market"));
-//      mMap.moveCamera(CameraUpdateFactory.newLatLng(donosti));
-//
-//
-//      //  Google Maps
-//      SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-//      try {
-//          mapFragment.getMapAsync(this);
-//      } catch (Exception e) {
-//          e.printStackTrace();
-//          Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
-//      }
-//    }
+        LatLng donosti = new LatLng(43.30419712367967, -2.0165662074674695);
+        mMap.addMarker(new MarkerOptions().position(donosti).title("Gurmet Euskadi Market"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(donosti));
+
+    }
 
 }
