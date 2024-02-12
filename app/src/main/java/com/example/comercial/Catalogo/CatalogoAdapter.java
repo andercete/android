@@ -116,6 +116,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
         }
 
         public void bind(final Catalogo catalogo) {
+            idArticuloTextView.setText(catalogo.getIdArticulo());
             nombreTextView.setText(catalogo.getNombre());
             descripcionTextView.setText(catalogo.getDescripcion());
             proveedorTextView.setText(catalogo.getProveedor());
@@ -132,9 +133,6 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
                 // Check if the resource was found
                 if (imageResId != 0) {
                     iconImageView.setImageResource(imageResId);
-                } else {
-                    // Resource not found, set a default image
-                    iconImageView.setImageResource(R.drawable.ic_launcher_background); // Use your default image here
                 }
             } else {
                 // imageName is null or empty, set a default image
