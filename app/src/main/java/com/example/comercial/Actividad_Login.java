@@ -12,12 +12,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.BBDD.Comerciales;
 
 public class Actividad_Login extends AppCompatActivity {
 
-    private AnderBD helper;
+    private DbHelper helper;
     private EditText eDNI, eContra;
 
     @Override
@@ -25,7 +25,7 @@ public class Actividad_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_login);
 
-        helper = new AnderBD(this);
+        helper = new DbHelper(this);
         eDNI = findViewById(R.id.eUsuario);
         eContra = findViewById(R.id.eContra);
 

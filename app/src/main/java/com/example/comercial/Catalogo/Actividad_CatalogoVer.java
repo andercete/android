@@ -3,7 +3,6 @@ package com.example.comercial.Catalogo;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -12,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.BBDD.Catalogo;
 import com.example.comercial.R;
 
@@ -28,14 +27,14 @@ public class Actividad_CatalogoVer extends AppCompatActivity {
     private CatalogoAdapterVer mAdapter;
     private RecyclerView rvCatalogo;
     private Button bImportarCatalogo;
-    private AnderBD db;
+    private DbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_catalogo);
 
-        db = new AnderBD(this);
+        db = new DbHelper(this);
 
         bImportarCatalogo = findViewById(R.id.bImportar2);
         rvCatalogo = findViewById(R.id.rCatalogo);

@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,14 +18,14 @@ public class Actividad_AltaPartner extends AppCompatActivity {
 
     EditText eNombre, eDireccion, eCif, eTelefono, eEmail;
     Button bAlta, bLimpiar;
-    AnderBD db;
+    DbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_altapartner);
 
-        db = new AnderBD(this);
+        db = new DbHelper(this);
 
         eNombre = findViewById(R.id.eAltaNombre);
         eDireccion = findViewById(R.id.eAltaDireccion);

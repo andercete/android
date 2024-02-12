@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.BBDD.CabPedidos;
 import com.example.comercial.BBDD.LineasPedido;
 import com.example.comercial.R;
@@ -44,23 +44,23 @@ public class Actividad_VerPedido extends AppCompatActivity {
         idPedido = codPedido;
 
         // Inicializar la base de datos
-        AnderBD anderBD = new AnderBD(this);
+        DbHelper dbHelper = new DbHelper(this);
 
         // Obtener la cabecera del pedido
-        CabPedidos cabeceraPedido = obtenerCabeceraPedido(anderBD, idPedido);
+        CabPedidos cabeceraPedido = obtenerCabeceraPedido(dbHelper, idPedido);
 
         // Obtener las líneas de pedido
-        List<LineasPedido> lineasPedido = obtenerLineasPedido(anderBD, idPedido);
+        List<LineasPedido> lineasPedido = obtenerLineasPedido(dbHelper, idPedido);
 
         // Mostrar información en los TextViews
         textViewIdPedido.setText(String.valueOf(cabeceraPedido.getIdPedido()));
 
         // Obtener el nombre del Partner
-        String nombrePartner = obtenerNombrePartner(anderBD, cabeceraPedido.getIdPartner());
+        String nombrePartner = obtenerNombrePartner(dbHelper, cabeceraPedido.getIdPartner());
         textViewIdPartner.setText(nombrePartner);
 
         // Obtener el nombre del Comercial
-        String nombreComercial = obtenerNombreComercial(anderBD, cabeceraPedido.getIdComercial());
+        String nombreComercial = obtenerNombreComercial(dbHelper, cabeceraPedido.getIdComercial());
         textViewIdComercial.setText(nombreComercial);
 
         textViewFechaPedido.setText(cabeceraPedido.getFechaPedido());
@@ -71,8 +71,8 @@ public class Actividad_VerPedido extends AppCompatActivity {
         recyclerViewLineasPedido.setAdapter(adapter);
     }
 
-    private CabPedidos obtenerCabeceraPedido(AnderBD anderBD, int idPedido) {
-        SQLiteDatabase db = anderBD.getReadableDatabase();
+    private CabPedidos obtenerCabeceraPedido(DbHelper dbHelper, int idPedido) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
                 "CAB_PEDIDOS",
@@ -99,8 +99,8 @@ public class Actividad_VerPedido extends AppCompatActivity {
         return cabeceraPedido;
     }
 
-    private List<LineasPedido> obtenerLineasPedido(AnderBD anderBD, int idPedido) {
-        SQLiteDatabase db = anderBD.getReadableDatabase();
+    private List<LineasPedido> obtenerLineasPedido(DbHelper dbHelper, int idPedido) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
                 "LINEAS_PEDIDO",
@@ -132,8 +132,8 @@ public class Actividad_VerPedido extends AppCompatActivity {
         return lineasPedidoList;
     }
 
-    private String obtenerNombrePartner(AnderBD anderBD, int idPartner) {
-        SQLiteDatabase db = anderBD.getReadableDatabase();
+    private String obtenerNombrePartner(DbHelper dbHelper, int idPartner) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
                 "PARTNERS",
@@ -157,8 +157,8 @@ public class Actividad_VerPedido extends AppCompatActivity {
         return nombre;
     }
 
-    private String obtenerNombreComercial(AnderBD anderBD, int idComercial) {
-        SQLiteDatabase db = anderBD.getReadableDatabase();
+    private String obtenerNombreComercial(DbHelper dbHelper, int idComercial) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
                 "COMERCIALES",

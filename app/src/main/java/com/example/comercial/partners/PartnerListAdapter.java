@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.R;
 import com.example.comercial.pedidos.Actividad_CabPedidos;
 
@@ -63,7 +63,7 @@ public class PartnerListAdapter extends RecyclerView.Adapter<PartnerListAdapter.
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     // Borrar el socio de la base de datos
-                                    AnderBD db = new AnderBD(context); // Asegúrate de tener la instancia correcta de tu base de datos
+                                    DbHelper db = new DbHelper(context); // Asegúrate de tener la instancia correcta de tu base de datos
                                     db.deletePartner(currentPartner.getIdPartner());
 
                                     // Actualizar la lista en el RecyclerView

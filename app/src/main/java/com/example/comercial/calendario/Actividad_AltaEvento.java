@@ -8,7 +8,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.R;
 
 import java.text.SimpleDateFormat;
@@ -19,7 +19,7 @@ public class Actividad_AltaEvento extends AppCompatActivity {
 
     private EditText editTextTitle, editTextLocation, editTextDate, editTextTime, editTextDescription;
     private Button buttonGuardar, buttonLimpiar;
-    private AnderBD dbHelper;
+    private DbHelper dbHelper;
 
     private Calendar calendar;
 
@@ -28,7 +28,7 @@ public class Actividad_AltaEvento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_altaevento);
 
-        dbHelper = new AnderBD(this);
+        dbHelper = new DbHelper(this);
 
         editTextTitle = findViewById(R.id.tituloEditText);
         editTextLocation = findViewById(R.id.ubicacionEditText);

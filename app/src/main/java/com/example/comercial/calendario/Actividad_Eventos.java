@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.R;
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class Actividad_Eventos extends AppCompatActivity {
     private EventoListAdapter eventAdapter;
     private Button botonAbrirActividad;
     private List<Evento> eventList;
-    private AnderBD dbHelper;
+    private DbHelper dbHelper;
 
     private static final int REQUEST_CODE_NUEVO_EVENTO = 1;
 
@@ -27,7 +27,7 @@ public class Actividad_Eventos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_eventos);
 
-        dbHelper = new AnderBD(this);
+        dbHelper = new DbHelper(this);
         eventList = dbHelper.getAllEventos();
 
         botonAbrirActividad = findViewById(R.id.bLogin);

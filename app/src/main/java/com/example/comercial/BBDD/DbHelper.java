@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.comercial.calendario.Evento;
 import com.example.comercial.partners.Partner;
@@ -15,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AnderBD extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
 
     // Nombre y versión de la base de datos
     private static final String DATABASE_NAME = "comercial.db";
@@ -93,7 +94,7 @@ public class AnderBD extends SQLiteOpenHelper {
             "Description TEXT" +
             ")";
 
-    public AnderBD(Context context) {
+    public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -128,18 +129,30 @@ public class AnderBD extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM EVENTOS", null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(cursor.getColumnIndex("IdEvento"));
-                String title = cursor.getString(cursor.getColumnIndex("Title"));
-                String location = cursor.getString(cursor.getColumnIndex("Location"));
-                String date = cursor.getString(cursor.getColumnIndex("Date"));
-                String time = cursor.getString(cursor.getColumnIndex("Time"));
-                String description = cursor.getString(cursor.getColumnIndex("Description"));
+        int idIndex = cursor.getColumnIndex("IdEvento");
+        int titleIndex = cursor.getColumnIndex("Title");
+        int locationIndex = cursor.getColumnIndex("Location");
+        int dateIndex = cursor.getColumnIndex("Date");
+        int timeIndex = cursor.getColumnIndex("Time");
+        int descriptionIndex = cursor.getColumnIndex("Description");
 
-                Evento evento = new Evento(id, title, location, date, time, description);
-                eventosList.add(evento);
-            } while (cursor.moveToNext());
+        if (idIndex != -1 && titleIndex != -1 && locationIndex != -1 && dateIndex != -1 && timeIndex != -1 && descriptionIndex != -1) {
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(idIndex);
+                    String title = cursor.getString(titleIndex);
+                    String location = cursor.getString(locationIndex);
+                    String date = cursor.getString(dateIndex);
+                    String time = cursor.getString(timeIndex);
+                    String description = cursor.getString(descriptionIndex);
+
+                    Evento evento = new Evento(id, title, location, date, time, description);
+                    eventosList.add(evento);
+                } while (cursor.moveToNext());
+            }
+        } else {
+            // Manejar el caso donde alguna columna no exista
+            Log.e("getAllEventos", "Una o más columnas no existen en la tabla EVENTOS.");
         }
 
         cursor.close();
@@ -147,6 +160,7 @@ public class AnderBD extends SQLiteOpenHelper {
 
         return eventosList;
     }
+
 
     // Método para agregar un nuevo evento
     public long addEvento(Evento evento) {
@@ -269,42 +283,86 @@ public class AnderBD extends SQLiteOpenHelper {
         // Ejecuta la consulta
         Cursor cursor = db.query("PARTNERS", null, selection, selectionArgs, null, null, null);
 
-        // Itera sobre los resultados y añade cada partner a la lista
-        if (cursor.moveToFirst()) {
-            do {
-                Partner partner = new Partner();
-                partner.setIdPartner(cursor.getInt(cursor.getColumnIndex("IdPartner")));
-                partner.setIdZona(cursor.getInt(cursor.getColumnIndex("IdZona")));
-                partner.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
-                partner.setCif(cursor.getString(cursor.getColumnIndex("CIF")));
-                partner.setDireccion(cursor.getString(cursor.getColumnIndex("Direccion")));
-                partner.setTelefono(cursor.getString(cursor.getColumnIndex("Telefono")));
-                partner.setCorreo(cursor.getString(cursor.getColumnIndex("Correo")));
-                partner.setFechaRegistro(cursor.getString(cursor.getColumnIndex("FechaRegistro")));
-                partners.add(partner);
-            } while (cursor.moveToNext());
+        // Obtiene los índices de las columnas
+        int idIndex = cursor.getColumnIndex("IdPartner");
+        int idZonaIndex = cursor.getColumnIndex("IdZona");
+        int nombreIndex = cursor.getColumnIndex("Nombre");
+        int cifIndex = cursor.getColumnIndex("CIF");
+        int direccionIndex = cursor.getColumnIndex("Direccion");
+        int telefonoIndex = cursor.getColumnIndex("Telefono");
+        int correoIndex = cursor.getColumnIndex("Correo");
+        int fechaRegistroIndex = cursor.getColumnIndex("FechaRegistro");
+
+        // Verifica que todos los índices sean válidos
+        if (idIndex != -1 && idZonaIndex != -1 && nombreIndex != -1 && cifIndex != -1 &&
+                direccionIndex != -1 && telefonoIndex != -1 && correoIndex != -1 && fechaRegistroIndex != -1) {
+
+            // Itera sobre los resultados y añade cada partner a la lista
+            if (cursor.moveToFirst()) {
+                do {
+                    Partner partner = new Partner();
+                    partner.setIdPartner(cursor.getInt(idIndex));
+                    partner.setIdZona(cursor.getInt(idZonaIndex));
+                    partner.setNombre(cursor.getString(nombreIndex));
+                    partner.setCif(cursor.getString(cifIndex));
+                    partner.setDireccion(cursor.getString(direccionIndex));
+                    partner.setTelefono(cursor.getString(telefonoIndex));
+                    partner.setCorreo(cursor.getString(correoIndex));
+                    partner.setFechaRegistro(cursor.getString(fechaRegistroIndex));
+                    partners.add(partner);
+                } while (cursor.moveToNext());
+            }
+        } else {
+            // Log o manejo de error si alguna columna no existe
+            Log.e("getPartnersOfToday", "Una o más columnas no existen en la tabla PARTNERS.");
         }
+
         cursor.close();
         db.close();
-
         return partners;
     }
+
+
     public Comerciales obtenerComercialPorDNI(String dni) {
         SQLiteDatabase db = this.getReadableDatabase();
         Comerciales comercial = null;
 
-        String[] columns = {"IdComercial", "IdZona", "Nombre", "Apellidos", "Contraseña", "Correo", "Direccion", "DNI", "Telefono"};
+        String[] columns = {
+                "IdComercial", "IdZona", "Nombre", "Apellidos",
+                "Contraseña", "Correo", "Direccion", "DNI", "Telefono"
+        };
         String selection = "DNI=?";
-        String[] selectionArgs = {dni};
+        String[] selectionArgs = { dni };
 
         Cursor cursor = db.query("COMERCIALES", columns, selection, selectionArgs, null, null, null);
 
         if (cursor.moveToFirst()) {
-            int idComercial = cursor.getInt(cursor.getColumnIndex("IdComercial"));
-            int idZona = cursor.getInt(cursor.getColumnIndex("IdZona"));
-            String nombre = cursor.getString(cursor.getColumnIndex("Nombre"));
+            // Obtiene los índices de columna de manera segura
+            int idComercialIndex = cursor.getColumnIndexOrThrow("IdComercial");
+            int idZonaIndex = cursor.getColumnIndexOrThrow("IdZona");
+            int nombreIndex = cursor.getColumnIndexOrThrow("Nombre");
+            int apellidosIndex = cursor.getColumnIndexOrThrow("Apellidos");
+            int contraseñaIndex = cursor.getColumnIndexOrThrow("Contraseña");
+            int correoIndex = cursor.getColumnIndexOrThrow("Correo");
+            int direccionIndex = cursor.getColumnIndexOrThrow("Direccion");
+            // El DNI ya se proporciona como parámetro, no es necesario obtenerlo del cursor
+            int telefonoIndex = cursor.getColumnIndexOrThrow("Telefono");
 
-            comercial = new Comerciales(idComercial, idZona, nombre, "", "", "", "", dni, "");
+            // Extrae los datos usando los índices de columna
+            int idComercial = cursor.getInt(idComercialIndex);
+            int idZona = cursor.getInt(idZonaIndex);
+            String nombre = cursor.getString(nombreIndex);
+            String apellidos = cursor.getString(apellidosIndex);
+            String contraseña = cursor.getString(contraseñaIndex);
+            String correo = cursor.getString(correoIndex);
+            String direccion = cursor.getString(direccionIndex);
+            String telefono = cursor.getString(telefonoIndex);
+
+            // Crea una instancia de Comerciales con los datos extraídos
+            comercial = new Comerciales(
+                    idComercial, idZona, nombre, apellidos,
+                    contraseña, correo, direccion, dni, telefono
+            );
         }
 
         cursor.close();

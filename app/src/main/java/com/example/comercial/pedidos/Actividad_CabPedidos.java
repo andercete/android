@@ -1,13 +1,11 @@
 package com.example.comercial.pedidos;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.BBDD.CabPedidos;
 import com.example.comercial.R;
 
@@ -24,7 +22,7 @@ public class Actividad_CabPedidos extends AppCompatActivity  {
     private CabPedidoListAdapter mAdapter;
     private RecyclerView recyclerView;
     private Button bAgregar, bBorrar;
-    private AnderBD db;
+    private DbHelper db;
     private int idPartner; // Declare idPartner globally
 
 
@@ -40,7 +38,7 @@ public class Actividad_CabPedidos extends AppCompatActivity  {
         tEmail = findViewById(R.id.tEmail);
         bAgregar = findViewById(R.id.bAgregarPedido);
 
-        db = new AnderBD(this); // Asegúrate de que esta línea esté antes de cualquier uso de db
+        db = new DbHelper(this); // Asegúrate de que esta línea esté antes de cualquier uso de db
 
         Intent intent = getIntent();
         idPartner = intent.getIntExtra("partnerId", -1); // El ID del partner seleccionado
@@ -64,7 +62,7 @@ public class Actividad_CabPedidos extends AppCompatActivity  {
         tTelefono.setText(String.valueOf(telefono));
         tEmail.setText(email);
 
-        db = new AnderBD(this); // Inicializa la base de datos
+        db = new DbHelper(this); // Inicializa la base de datos
 
         bAgregar = findViewById(R.id.bAgregarPedido);
       //  bBorrar = findViewById(R.id.bBorrarPedidos);

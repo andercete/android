@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.BBDD.CabPedidos;
 import com.example.comercial.BBDD.LineasPedido;
 import com.example.comercial.BBDD.Catalogo;
@@ -31,7 +31,7 @@ public class Actividad_AltaPedido extends AppCompatActivity {
 
     TextView FechaPedido, NombrePartner;
     RecyclerView catalogoPedido;
-    private AnderBD db;
+    private DbHelper db;
 
     private List<Catalogo> catalogoList; // Lista de ítems del catálogo
 
@@ -42,14 +42,14 @@ public class Actividad_AltaPedido extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_altapedido);
-        db = new AnderBD(this);
+        db = new DbHelper(this);
         FechaPedido = findViewById(R.id.textFechaPedido);
         NombrePartner = findViewById(R.id.textNombrePartner);
         catalogoPedido = findViewById(R.id.rCatalogoPedido);
         Intent intent = getIntent();
         idPartner = intent.getIntExtra("partnerId", -1); // El ID del partner seleccionado
         // Inicializar la instancia de la base de datos
-        db = new AnderBD(this);
+        db = new DbHelper(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences("PreferenciasComerciales", Context.MODE_PRIVATE);
         int comercial = sharedPreferences.getInt("IdComercial", 1);

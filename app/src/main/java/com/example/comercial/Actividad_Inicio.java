@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.partners.Partner;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,7 +41,7 @@ public class Actividad_Inicio extends AppCompatActivity {
     TextView textViewUsuario;
     ImageButton bTelefono, bEmail;
     AlertDialog.Builder dialog;
-    private AnderBD db;
+    private DbHelper db;
 
 
     @Override
@@ -55,7 +55,7 @@ public class Actividad_Inicio extends AppCompatActivity {
         bPartner = findViewById(R.id.bPresentacionPartners);
         bCatalogo = findViewById(R.id.bCatalogo);
         bDelegacion = findViewById(R.id.bPresentacionDelegacion);
-        db = new AnderBD(this);
+        db = new DbHelper(this);
         bTelefono = findViewById(R.id.bTelefono);
         bEmail = findViewById(R.id.bEmail);
         textViewUsuario = findViewById(R.id.textView12);

@@ -7,16 +7,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.R;
 import java.util.List;
 
 public class EventoListAdapter extends RecyclerView.Adapter<EventoListAdapter.EventoViewHolder> {
 
     private List<Evento> eventList;
-    private AnderBD dbHelper;
+    private DbHelper dbHelper;
 
-    public EventoListAdapter(List<Evento> eventList, AnderBD dbHelper) {
+    public EventoListAdapter(List<Evento> eventList, DbHelper dbHelper) {
         this.eventList = eventList;
         this.dbHelper = dbHelper;
     }

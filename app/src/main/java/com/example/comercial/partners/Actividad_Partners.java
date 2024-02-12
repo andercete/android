@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.DbHelper;
 import com.example.comercial.R;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -26,14 +26,14 @@ public class Actividad_Partners extends AppCompatActivity {
     private PartnerListAdapter mAdapter;
     private RecyclerView recyclerView;
     private Button bAgregar, bImportar;
-    private AnderBD db;
+    private DbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_partners);
 
-        db = new AnderBD(this); // Inicializa la base de datos
+        db = new DbHelper(this); // Inicializa la base de datos
 
         bAgregar = findViewById(R.id.bPartnerAgregar);
         bImportar = findViewById(R.id.bImportar);
