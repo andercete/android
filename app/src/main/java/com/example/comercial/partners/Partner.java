@@ -1,5 +1,8 @@
 package com.example.comercial.partners;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 public class Partner {
     private int idPartner;
     private int idZona;

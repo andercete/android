@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.example.comercial.BBDD.AnderBD;
+import com.example.comercial.BBDD.CabPedidos;
+import com.example.comercial.BBDD.LineasPedido;
 import com.example.comercial.R;
 
 import android.widget.Button;
@@ -14,23 +16,21 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.comercial.BBDD.CabPedidos;
-import com.example.comercial.BBDD.LineasPedido;
 
 import java.util.ArrayList;
 import java.util.List;
-public class Actividad_VerPedido extends AppCompatActivity {
 
+public class Actividad_VerPedido extends AppCompatActivity {
 
     private TextView textViewIdPedido, textViewIdPartner, textViewIdComercial, textViewFechaPedido;
     private RecyclerView recyclerViewLineasPedido;
     private Button btnEditar;
     int idPedido;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_ver_pedido);
-
 
         // Obtener referencias a los elementos de la interfaz
         textViewIdPedido = findViewById(R.id.textViewIdPedido);
@@ -39,12 +39,10 @@ public class Actividad_VerPedido extends AppCompatActivity {
         textViewFechaPedido = findViewById(R.id.textViewFechaPedido);
         recyclerViewLineasPedido = findViewById(R.id.recyclerViewLineasPedido);
 
-
-
-
         // Obtener información del pedido según el ID
         int codPedido = getIntent().getIntExtra("idPedido", -1);
-        idPedido=codPedido;
+        idPedido = codPedido;
+
         // Inicializar la base de datos
         AnderBD anderBD = new AnderBD(this);
 
@@ -56,18 +54,22 @@ public class Actividad_VerPedido extends AppCompatActivity {
 
         // Mostrar información en los TextViews
         textViewIdPedido.setText(String.valueOf(cabeceraPedido.getIdPedido()));
-        textViewIdPartner.setText(String.valueOf(cabeceraPedido.getIdPartner()));
-        textViewIdComercial.setText(String.valueOf(cabeceraPedido.getIdComercial()));
+
+        // Obtener el nombre del Partner
+        String nombrePartner = obtenerNombrePartner(anderBD, cabeceraPedido.getIdPartner());
+        textViewIdPartner.setText(nombrePartner);
+
+        // Obtener el nombre del Comercial
+        String nombreComercial = obtenerNombreComercial(anderBD, cabeceraPedido.getIdComercial());
+        textViewIdComercial.setText(nombreComercial);
+
         textViewFechaPedido.setText(cabeceraPedido.getFechaPedido());
 
         // Configurar el RecyclerView
         LineasPedidoAdapter adapter = new LineasPedidoAdapter(lineasPedido);
         recyclerViewLineasPedido.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewLineasPedido.setAdapter(adapter);
-
-
     }
-
 
     private CabPedidos obtenerCabeceraPedido(AnderBD anderBD, int idPedido) {
         SQLiteDatabase db = anderBD.getReadableDatabase();
@@ -128,5 +130,55 @@ public class Actividad_VerPedido extends AppCompatActivity {
         db.close();
 
         return lineasPedidoList;
+    }
+
+    private String obtenerNombrePartner(AnderBD anderBD, int idPartner) {
+        SQLiteDatabase db = anderBD.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                "PARTNERS",
+                new String[]{"Nombre"},
+                "IdPartner = ?",
+                new String[]{String.valueOf(idPartner)},
+                null,
+                null,
+                null
+        );
+
+        String nombre = "";
+
+        if (cursor.moveToFirst()) {
+            nombre = cursor.getString(cursor.getColumnIndex("Nombre"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return nombre;
+    }
+
+    private String obtenerNombreComercial(AnderBD anderBD, int idComercial) {
+        SQLiteDatabase db = anderBD.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                "COMERCIALES",
+                new String[]{"Nombre"},
+                "IdComercial = ?",
+                new String[]{String.valueOf(idComercial)},
+                null,
+                null,
+                null
+        );
+
+        String nombre = "";
+
+        if (cursor.moveToFirst()) {
+            nombre = cursor.getString(cursor.getColumnIndex("Nombre"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return nombre;
     }
 }
