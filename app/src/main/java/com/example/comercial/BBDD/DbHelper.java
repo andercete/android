@@ -209,10 +209,10 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursorPedidos.moveToFirst()) {
             do {
                 CabPedidos pedido = new CabPedidos();
-                pedido.setIdPedido(cursorPedidos.getInt(cursorPedidos.getColumnIndex("IdPedido")));
-                pedido.setIdPartner(cursorPedidos.getInt(cursorPedidos.getColumnIndex("IdPartner")));
-                pedido.setIdComercial(cursorPedidos.getInt(cursorPedidos.getColumnIndex("IdComercial")));
-                pedido.setFechaPedido(cursorPedidos.getString(cursorPedidos.getColumnIndex("FechaPedido")));
+                pedido.setIdPedido(cursorPedidos.getInt(cursorPedidos.getColumnIndexOrThrow("IdPedido")));
+                pedido.setIdPartner(cursorPedidos.getInt(cursorPedidos.getColumnIndexOrThrow("IdPartner")));
+                pedido.setIdComercial(cursorPedidos.getInt(cursorPedidos.getColumnIndexOrThrow("IdComercial")));
+                pedido.setFechaPedido(cursorPedidos.getString(cursorPedidos.getColumnIndexOrThrow("FechaPedido")));
 
                 // Obtener las líneas de pedido para cada cabecera
                 List<LineasPedido> lineasDelPedido = getLineasPedidoPorPedido(pedido.getIdPedido());
@@ -226,6 +226,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return pedidosDelDia;
     }
 
+
     // Método en AnderBD para obtener las líneas de pedido por ID de pedido
     public List<LineasPedido> getLineasPedidoPorPedido(int idPedido) {
         List<LineasPedido> lineas = new ArrayList<>();
@@ -237,12 +238,12 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursorLineas.moveToFirst()) {
             do {
                 LineasPedido linea = new LineasPedido();
-                linea.setIdLinea(cursorLineas.getInt(cursorLineas.getColumnIndex("IdLinea")));
-                linea.setIdArticulo(cursorLineas.getInt(cursorLineas.getColumnIndex("IdArticulo")));
-                linea.setIdPedido(cursorLineas.getInt(cursorLineas.getColumnIndex("IdPedido")));
-                linea.setCantidad(cursorLineas.getInt(cursorLineas.getColumnIndex("Cantidad")));
-                linea.setDescuento(cursorLineas.getDouble(cursorLineas.getColumnIndex("Descuento")));
-                linea.setPrecio(cursorLineas.getDouble(cursorLineas.getColumnIndex("Precio")));
+                linea.setIdLinea(cursorLineas.getInt(cursorLineas.getColumnIndexOrThrow("IdLinea")));
+                linea.setIdArticulo(cursorLineas.getInt(cursorLineas.getColumnIndexOrThrow("IdArticulo")));
+                linea.setIdPedido(cursorLineas.getInt(cursorLineas.getColumnIndexOrThrow("IdPedido")));
+                linea.setCantidad(cursorLineas.getInt(cursorLineas.getColumnIndexOrThrow("Cantidad")));
+                linea.setDescuento(cursorLineas.getDouble(cursorLineas.getColumnIndexOrThrow("Descuento")));
+                linea.setPrecio(cursorLineas.getDouble(cursorLineas.getColumnIndexOrThrow("Precio")));
 
                 lineas.add(linea);
             } while (cursorLineas.moveToNext());
