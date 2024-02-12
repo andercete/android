@@ -6,12 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import com.example.comercial.BBDD.*;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -191,6 +194,62 @@ public class DbHelper extends SQLiteOpenHelper {
         long id = db.insert("PARTNERS", null, values);
         db.close();
         return id;
+    }
+    public List<CabPedidos> getPedidosYLineasDelDia() {
+        List<CabPedidos> pedidosDelDia = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Obtener la fecha actual en el formato adecuado para comparar con la base de datos
+        String fechaActual = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        // Consulta para obtener las cabeceras de pedidos del día
+        String selectQuery = "SELECT * FROM CAB_PEDIDOS WHERE FechaPedido LIKE ?";
+        Cursor cursorPedidos = db.rawQuery(selectQuery, new String[]{fechaActual + "%"});
+
+        if (cursorPedidos.moveToFirst()) {
+            do {
+                CabPedidos pedido = new CabPedidos();
+                pedido.setIdPedido(cursorPedidos.getInt(cursorPedidos.getColumnIndex("IdPedido")));
+                pedido.setIdPartner(cursorPedidos.getInt(cursorPedidos.getColumnIndex("IdPartner")));
+                pedido.setIdComercial(cursorPedidos.getInt(cursorPedidos.getColumnIndex("IdComercial")));
+                pedido.setFechaPedido(cursorPedidos.getString(cursorPedidos.getColumnIndex("FechaPedido")));
+
+                // Obtener las líneas de pedido para cada cabecera
+                List<LineasPedido> lineasDelPedido = getLineasPedidoPorPedido(pedido.getIdPedido());
+                pedido.setLineasPedido(lineasDelPedido); // Asegúrate de tener un setter para 'lineasPedido' en tu clase 'CabPedidos'
+
+                pedidosDelDia.add(pedido);
+            } while (cursorPedidos.moveToNext());
+        }
+        cursorPedidos.close();
+
+        return pedidosDelDia;
+    }
+
+    // Método en AnderBD para obtener las líneas de pedido por ID de pedido
+    public List<LineasPedido> getLineasPedidoPorPedido(int idPedido) {
+        List<LineasPedido> lineas = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectLineasQuery = "SELECT * FROM LINEAS_PEDIDO WHERE IdPedido = ?";
+        Cursor cursorLineas = db.rawQuery(selectLineasQuery, new String[]{String.valueOf(idPedido)});
+
+        if (cursorLineas.moveToFirst()) {
+            do {
+                LineasPedido linea = new LineasPedido();
+                linea.setIdLinea(cursorLineas.getInt(cursorLineas.getColumnIndex("IdLinea")));
+                linea.setIdArticulo(cursorLineas.getInt(cursorLineas.getColumnIndex("IdArticulo")));
+                linea.setIdPedido(cursorLineas.getInt(cursorLineas.getColumnIndex("IdPedido")));
+                linea.setCantidad(cursorLineas.getInt(cursorLineas.getColumnIndex("Cantidad")));
+                linea.setDescuento(cursorLineas.getDouble(cursorLineas.getColumnIndex("Descuento")));
+                linea.setPrecio(cursorLineas.getDouble(cursorLineas.getColumnIndex("Precio")));
+
+                lineas.add(linea);
+            } while (cursorLineas.moveToNext());
+        }
+        cursorLineas.close();
+
+        return lineas;
     }
 
     public List<Partner> getPartnersOfToday() {
